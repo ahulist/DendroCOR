@@ -23,10 +23,11 @@ import javax.swing.text.StyledDocument;
 public class TextAreaLogHandler extends Handler {
 
     private static TextAreaLogHandler INSTANCE;
-    private Level level = Level.FINEST;
-
-    JTextPane dest;
-    StyledDocument doc;
+    private Level level = Level.WARNING;
+    private final LogsSaver saver = LogsSaver.getInstance();
+    private static Logger log;
+    private JTextPane dest;
+    private StyledDocument doc;
 
     private TextAreaLogHandler() {
     }
@@ -34,6 +35,9 @@ public class TextAreaLogHandler extends Handler {
     public static TextAreaLogHandler getInstance() {
         if( INSTANCE == null ){
             INSTANCE = new TextAreaLogHandler();
+        }
+        if( log == null ){
+            log = Logger.getLogger(INSTANCE.getClass().getCanonicalName());
         }
         return INSTANCE;
     }
@@ -45,40 +49,44 @@ public class TextAreaLogHandler extends Handler {
 
     @Override
     public void publish(LogRecord record) {
-        if( record.getLevel().intValue() >= getLoggingLevel().intValue() ){
-            try {
-                SimpleAttributeSet as = new SimpleAttributeSet();
+        try {
+            SimpleAttributeSet as = new SimpleAttributeSet();
 
-                // SEVERE
-                if( record.getLevel().equals(Level.SEVERE) ){
-                    StyleConstants.setForeground(as, Color.red);
-                    StyleConstants.setBold(as, true);
-
-                    // WARNING
-                } else if( record.getLevel().equals(Level.WARNING) ){
-                    StyleConstants.setForeground(as, Color.red);
-
-                    // INFO
-                } else if( record.getLevel().equals(Level.INFO) ){
-                    StyleConstants.setForeground(as, Color.BLACK);
-
-                    // FINE
-                } else if( record.getLevel().equals(Level.FINE) ){
-                    StyleConstants.setForeground(as, Color.getHSBColor(0.59f, 1, 0.74f));
-
-                    // FINER
-                } else if( record.getLevel().equals(Level.FINER) ){
-                    StyleConstants.setForeground(as, Color.getHSBColor(0.69f, 1, 0.39f));
-
-                    // FINEST
-                } else if( record.getLevel().equals(Level.FINEST) ){
-                    StyleConstants.setForeground(as, Color.getHSBColor(0.99f, 1, 0.44f));
-                }
-
+            // SEVERE
+            if( record.getLevel().equals(Level.SEVERE) ){
+                StyleConstants.setForeground(as, Color.red);
+                StyleConstants.setBold(as, true);
                 doc.insertString(doc.getLength(), record.getMessage() + "\n", as);
-            } catch( BadLocationException ex ) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+
+                // WARNING
+            } else if( record.getLevel().equals(Level.WARNING) && record.getLevel().intValue() >= level.intValue() ){
+                StyleConstants.setForeground(as, Color.red);
+                doc.insertString(doc.getLength(), record.getMessage() + "\n", as);
+
+                // INFO
+            } else if( record.getLevel().equals(Level.INFO) && record.getLevel().intValue() >= level.intValue() ){
+                StyleConstants.setForeground(as, Color.BLACK);
+                doc.insertString(doc.getLength(), record.getMessage() + "\n", as);
+
+                // FINE
+            } else if( record.getLevel().equals(Level.FINE) && record.getLevel().intValue() >= level.intValue() ){
+                StyleConstants.setForeground(as, Color.getHSBColor(0.59f, 1, 0.74f));
+                doc.insertString(doc.getLength(), record.getMessage() + "\n", as);
+
+                // FINER
+            } else if( record.getLevel().equals(Level.FINER) && record.getLevel().intValue() >= level.intValue() ){
+                StyleConstants.setForeground(as, Color.getHSBColor(0.69f, 1, 0.39f));
+                doc.insertString(doc.getLength(), record.getMessage() + "\n", as);
+
+                // FINEST
+            } else if( record.getLevel().equals(Level.FINEST) ){
+                StyleConstants.setForeground(as, Color.getHSBColor(0.99f, 1, 0.44f));
             }
+
+            saver.log(record.getLevel() + ": " + record.getMessage());
+
+        } catch( BadLocationException ex ) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -93,6 +101,7 @@ public class TextAreaLogHandler extends Handler {
     }
 
     public void setLoggingLevel(Level l) {
+        log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/TextAreaLogHandler").getString("ZMIENIONO POZIOM LOGOWANINA NA %S"), l));
         this.level = l;
     }
 

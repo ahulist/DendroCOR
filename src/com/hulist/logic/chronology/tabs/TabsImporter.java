@@ -62,8 +62,9 @@ public class TabsImporter extends BaseImporter implements DataImporter<TabsDataC
                                 Double.parseDouble(data[7]));
                     }
                 } catch( NumberFormatException | AssertionError e ) {
-                    String msg = String.format("b\u0142\u0119dny format pliku %s w linii %s.", f.getName(), counter);
+                    String msg = String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), counter);
                     log.log(Level.WARNING, msg);
+                    log.log(Level.FINEST, msg);
                     throw new IOException(msg);
                 } 
 

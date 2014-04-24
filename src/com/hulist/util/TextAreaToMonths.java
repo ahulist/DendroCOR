@@ -22,7 +22,7 @@ public class TextAreaToMonths {
 
     public TextAreaToMonths(JTextArea a) {
         this.area = a;
-        this.log = Logger.getLogger(this.getClass().getName());
+        this.log = Logger.getLogger(this.getClass().getCanonicalName());
     }
 
     public ArrayList<MonthsPair> getList() {
@@ -55,7 +55,8 @@ public class TextAreaToMonths {
                 list.add(pair);
             } catch( NumberFormatException | AssertionError e ) {
                 if( !line.equals("") && !isLoggingOn ){
-                    log.log(Level.WARNING, String.format("Zakres miesi\u0119cy \"%s\" nie jest poprawny.", line));
+                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/TextAreaToMonths").getString("ZAKRES MIESIĘCY \"%S\" NIE JEST POPRAWNY."), line));
+                    log.log(Level.FINEST, e.getMessage());
                 }
             }
         }

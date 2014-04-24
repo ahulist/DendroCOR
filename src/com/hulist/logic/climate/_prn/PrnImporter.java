@@ -59,12 +59,12 @@ public class PrnImporter extends BaseImporter implements DataImporter<PrnDataCon
                         if( value < PRN_VALUE_MIN || value > PRN_VALUE_MAX ){
                             StringBuilder sb = new StringBuilder();
                             if( value < PRN_VALUE_MIN ){
-                                sb.append("Odczytana wartość < ").append(PRN_VALUE_MIN);
+                                sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("ODCZYTANA WARTOŚĆ < ")).append(PRN_VALUE_MIN);
                             }
                             if( value > PRN_VALUE_MAX ){
-                                sb.append("Odczytana wartość > ").append(PRN_VALUE_MAX);
+                                sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("ODCZYTANA WARTOŚĆ > ")).append(PRN_VALUE_MAX);
                             }
-                            sb.append(", w pliku ").append(f.getCanonicalPath()).append(" dla roku ").append(year).append(", dla miesiąca ").append(month);
+                            sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString(", W PLIKU ")).append(f.getCanonicalPath()).append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString(" DLA ROKU ")).append(year).append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString(", DLA MIESIĄCA ")).append(month);
                             throw new IllegalArgumentException(sb.toString());
                         }
                         lineData.addMonthlyData(month, value);
@@ -73,11 +73,13 @@ public class PrnImporter extends BaseImporter implements DataImporter<PrnDataCon
                     container.addYearlyData(year, lineData);
                 }
             } catch( AssertionError | IOException | NumberFormatException e ) {
-                String msg = String.format("b\u0142\u0119dny format pliku %s.", f.getName());
+                String msg = String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("BŁĘDNY FORMAT PLIKU %S."), f.getName());
                 log.log(Level.WARNING, msg);
+                log.log(Level.FINEST, msg);
                 throw new IOException(msg);
             } catch( IllegalArgumentException e ) {
                 log.log(Level.WARNING, e.getMessage());
+                log.log(Level.FINEST, e.getMessage());
                 throw new IOException();
             }
 

@@ -37,7 +37,7 @@ public class PearsonsCorrelationProcessing {
 
             if( month.yearsShift > 0 ){
                 if( data.primary.getData().length - month.yearsShift < 2 ){
-                    log.log(Level.SEVERE, String.format("Zbyt du\u017ce przesuni\u0119cie lat: %s", month.toString()));
+                    log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/PearsonsCorrelationProcessing").getString("ZBYT DUŻE PRZESUNIĘCIE LAT: %S"), month.toString()));
                     return null;
                 }
 
@@ -66,7 +66,7 @@ public class PearsonsCorrelationProcessing {
             if( climateName.length() > 21 ){
                 climateName = climateName.substring(0, 19)+"...";
             }
-            log.log(Level.INFO, String.format("%-80.80s\n%- 10.10f", "korelacja " + primaryName + " / " + climateName + date, res));
+            log.log(Level.INFO, String.format("%s %-70.70s\n%- 10.10f", java.util.ResourceBundle.getBundle("com/hulist/bundle/PearsonsCorrelationProcessing").getString("KORELACJA"), " " + primaryName + " / " + climateName + date, res));
         }
 
         return results;

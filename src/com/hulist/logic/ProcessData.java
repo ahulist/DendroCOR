@@ -47,9 +47,9 @@ public class ProcessData implements Runnable {
         log.setLevel(Level.ALL);
 
         this.computationThread = new Thread(this);
-
+        
         fc.setAddXlsxExt(true);
-        fc.setOnSaveDialogMessage("Czy zapisać otrzymane dane do pliku?");
+        fc.setOnSaveDialogMessage(java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("CZY ZAPISAĆ OTRZYMANE DANE DO PLIKU?"));
     }
 
     public ProcessData(WindowParams wp, Thread.UncaughtExceptionHandler handler) {
@@ -166,10 +166,10 @@ public class ProcessData implements Runnable {
 
                 if( chronology.isEmpty() || climate.isEmpty() ){
                     if( chronology.isEmpty() ){
-                        log.log(Level.SEVERE, String.format("chronologia %s nie mie\u015bci si\u0119 w zakresie dat.", primaryColumnName));
+                        log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
                     }
                     if( climate.isEmpty() ){
-                        log.log(Level.SEVERE, String.format("dane klimatyczne %s nie mieszcz\u0105 si\u0119 w zakresie dat.", climateColumnsName));
+                        log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), climateColumnsName));
                     }
                     break;
                 }
@@ -190,7 +190,7 @@ public class ProcessData implements Runnable {
     private void save() {
         File[] saveDest = fc.call();
         if( saveDest != null && saveDest.length>0 && saveDest[0]!=null ){
-            log.log(Level.INFO, "Zapisywanie...");
+            log.log(Level.INFO, java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("ZAPISYWANIE..."));
             ResultsSaver saver = new ResultsSaver(wp, saveDest[0], results);
             saver.save();
         }
@@ -198,7 +198,7 @@ public class ProcessData implements Runnable {
 
     @Override
     public void run() {
-        log.log(Level.FINE, "Uruchomiono przetwarzanie danych.");
+        log.log(Level.FINE, java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("URUCHOMIONO PRZETWARZANIE DANYCH."));
         try {
             switch( wp.getChronologyFileType() ) {
                 case TABS:
@@ -221,11 +221,11 @@ public class ProcessData implements Runnable {
             process();
             save();
         } catch( NullPointerException | IOException ex ) {
-            log.log(Level.SEVERE, "Błąd odczytu z pliku.");
+            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("BŁĄD ODCZYTU Z PLIKU."));
             log.log(Level.FINEST, ex.getMessage());
             throw new RuntimeException(ex);
         } catch( Exception ex ) {
-            log.log(Level.SEVERE, "Wystąpił nieznany błąd.");
+            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("WYSTĄPIŁ NIEZNANY BŁĄD."));
             log.log(Level.FINEST, ex.getMessage());
             throw new RuntimeException(ex);
         }

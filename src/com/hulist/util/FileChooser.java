@@ -8,7 +8,7 @@ package com.hulist.util;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.Callable;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -23,7 +23,7 @@ public class FileChooser {
     private final Purpose purpose;
     private Logger log;
     private String prefsDir = null;
-    private boolean openMultipleFiles = false;
+    private boolean openMultipleFilesAndFolders = false;
     private boolean addXlsxExt = false;
     private String yesNoDialogMessageOnSave = null;
 
@@ -34,7 +34,7 @@ public class FileChooser {
 
     public FileChooser(Purpose purpose) {
         this.purpose = purpose;
-        this.log = Logger.getLogger(this.getClass().getName());
+        this.log = Logger.getLogger(this.getClass().getCanonicalName());
         log.setLevel(Level.ALL);
     }
 
@@ -43,9 +43,9 @@ public class FileChooser {
      * @return null if user cancelled action or closed dialog
      */
     public File[] call() {
-        File[] file = null;
+        ArrayList<File> files = new ArrayList<>();
         if( prefsDir == null ){
-            prefsDir = this.getClass().getName() + ":" + purpose;
+            prefsDir = this.getClass().getCanonicalName() + ":" + purpose;
         }
 
         String lastDirName = UserPreferences.getInstance().getPrefs().get(prefsDir, ".");
@@ -66,42 +66,100 @@ public class FileChooser {
                     }
                     break;
                 case OPEN:
-                    fc.setMultiSelectionEnabled(openMultipleFiles);
+                    //fc.setMultiSelectionEnabled(openMultipleFilesAndFolders);
+                    if( openMultipleFilesAndFolders ){
+                        fc.setMultiSelectionEnabled(openMultipleFilesAndFolders);
+                        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+                    }
                     returnVal = fc.showOpenDialog(null);
                     break;
             }
         } catch( HeadlessException e ) {
-            log.log(Level.SEVERE, "Wystąpił błąd podczas otwierania okna dialogowego");
+            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/FileChooser").getString("WYSTĄPIŁ BŁĄD PODCZAS OTWIERANIA OKNA DIALOGOWEGO"));
             log.log(Level.FINEST, e.getMessage());
         }
 
+        File[] filesArray = null;
         if( returnVal == JFileChooser.APPROVE_OPTION ){
-            if( openMultipleFiles ){
-                file = fc.getSelectedFiles();
-            } else {
-                file = new File[]{fc.getSelectedFile()};
-                if( addXlsxExt ){
-                    try {
-                        String n = file[0].getCanonicalPath();
-                        if( n.endsWith(".xls") ){
-                            log.log(Level.WARNING, "Wybrano plik z rozszerzeniem .xls - zmiana na .xlsx");
-                        }
-                        if( !n.endsWith(".xlsx") ){
-                            String n2 = file[0].getCanonicalPath() + ".xlsx";
-                            file = new File[]{new File(n2)};
-                        }
-                    } catch( IOException ex ) {
-                        log.log(Level.FINEST, ex.getMessage());
+            if( fc.getSelectedFiles().length > 0 ){
+                File[] filesArr = fc.getSelectedFiles();
+                for( File file : filesArr ) {
+                    if( file.isDirectory() ){
+                        files.addAll(getFilesFromDir(file));
+                    } else {
+                        files.add(file);
                     }
+                }
+            } else if( fc.getSelectedFile() != null ){
+                if( fc.getSelectedFile().isDirectory() ){
+                    files.addAll(getFilesFromDir(fc.getSelectedFile()));
+                } else {
+                    files.add(fc.getSelectedFile());
                 }
             }
 
-            if( file != null && file.length != 0 ){
-                UserPreferences.getInstance().getPrefs().put(prefsDir, file[0].getParent());
+            filesArray = (File[]) files.toArray(new File[files.size()]);
+            if( !openMultipleFilesAndFolders && addXlsxExt && filesArray.length>0 ){
+                try {
+                    String n = filesArray[0].getCanonicalPath();
+                    if( n.endsWith(".xls") ){
+                        log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/FileChooser").getString("WYBRANO PLIK Z ROZSZERZENIEM .XLS - ZMIANA NA .XLSX"));
+                    }
+                    if( !n.endsWith(".xlsx") ){
+                        String n2 = filesArray[0].getCanonicalPath() + ".xlsx";
+                        filesArray[0] = new File(n2);
+                    }
+                } catch( IOException ex ) {
+                    log.log(Level.FINEST, ex.getMessage());
+                }
+            }
+
+            /*if( openMultipleFilesAndFolders ){
+             if( fc.getSelectedFile() != null && fc.getSelectedFile().isDirectory() ){
+             files = fc.getSelectedFile().listFiles();
+             } else {
+             files = fc.getSelectedFiles();
+             }
+             } else {
+             files = new File[]{fc.getSelectedFile()};
+             if( addXlsxExt ){
+             try {
+             String n = files[0].getCanonicalPath();
+             if( n.endsWith(".xls") ){
+             log.log(Level.WARNING, "Wybrano plik z rozszerzeniem .xls - zmiana na .xlsx");
+             }
+             if( !n.endsWith(".xlsx") ){
+             String n2 = files[0].getCanonicalPath() + ".xlsx";
+             files = new File[]{new File(n2)};
+             }
+             } catch( IOException ex ) {
+             log.log(Level.FINEST, ex.getMessage());
+             }
+             }
+             }
+
+             if( files != null && files.length != 0 ){
+             UserPreferences.getInstance().getPrefs().put(prefsDir, files[0].getParent());
+             }*/
+        }
+
+        return filesArray;
+    }
+
+    private ArrayList<File> getFilesFromDir(File dir) {
+        ArrayList<File> files = new ArrayList<>();
+
+        if( dir.isDirectory() ){
+            for( File file : dir.listFiles() ) {
+                if( file.isDirectory() ){
+                    files.addAll(getFilesFromDir(file));
+                } else {
+                    files.add(file);
+                }
             }
         }
 
-        return file;
+        return files;
     }
 
     /**
@@ -118,11 +176,11 @@ public class FileChooser {
     }
 
     public boolean isOpenMultipleFiles() {
-        return openMultipleFiles;
+        return openMultipleFilesAndFolders;
     }
 
     public void setOpenMultipleFiles(boolean openMultipleFiles) {
-        this.openMultipleFiles = openMultipleFiles;
+        this.openMultipleFilesAndFolders = openMultipleFiles;
     }
 
     public String getPrefsDir() {

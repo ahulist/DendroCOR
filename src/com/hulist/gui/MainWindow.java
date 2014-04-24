@@ -11,6 +11,8 @@ import com.hulist.logic.chronology.ChronologyFileTypes;
 import com.hulist.logic.chronology.tabs.TabsColumnTypes;
 import com.hulist.logic.climate.ClimateFileTypes;
 import com.hulist.util.FileChooser;
+import com.hulist.util.LocaleChangeListener;
+import com.hulist.util.LocaleManager;
 import com.hulist.util.TextAreaLogHandler;
 import com.hulist.util.TextAreaToMonths;
 import com.hulist.util.UserPreferences;
@@ -19,13 +21,19 @@ import com.hulist.validators.YearsRangeValidator;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.io.File;
+import java.util.Hashtable;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JSlider;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.DefaultCaret;
@@ -34,7 +42,7 @@ import javax.swing.text.DefaultCaret;
  *
  * @author alien
  */
-public class MainWindow extends javax.swing.JFrame {
+public class MainWindow extends javax.swing.JFrame implements LocaleChangeListener, ChangeListener {
 
     public static final String APP_NAME = "DendroCOR";
 
@@ -47,37 +55,46 @@ public class MainWindow extends javax.swing.JFrame {
         setUINames();
         setFromPreferences();
 
-        log.log(Level.FINER, "Okno zainicjalizowano.");
+        log.log(Level.FINER, java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("OKNO ZAINICJALIZOWANO."));
     }
 
     private void secondaryInit() {
+        // locale
+        LocaleManager.register(this);
+        LocaleManager.changeDefaultLocale(Locale.getDefault());
+
+        // app name
         this.setTitle(APP_NAME);
 
+        // combo boxes models
         comboBoxClimateFileType.setModel(new DefaultComboBoxModel<>(ClimateFileTypes.getDisplayNames()));
         comboBoxChronoFileType.setModel(new DefaultComboBoxModel<>(ChronologyFileTypes.getDisplayNames()));
         comboBoxColSelect.setModel(new DefaultComboBoxModel<>(TabsColumnTypes.values()));
 
+        // output text pane
         textPane.setEnabled(true);
         textPane.setEditable(false);
         DefaultCaret caret = (DefaultCaret) textPane.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
+        // logger
         TextAreaLogHandler.getInstance().setTextArea(textPane);
         globalLog = Logger.getLogger("com.hulist");
         globalLog.addHandler(TextAreaLogHandler.getInstance());
+        globalLog.setLevel(Level.ALL);
         log = Logger.getLogger(this.getClass().getCanonicalName());
-        log.setLevel(Level.ALL);
 
+        // helper tooltip
         ToolTipManager.sharedInstance().setDismissDelay(10000);
         ToolTipManager.sharedInstance().setInitialDelay(0);
-        labelTextAreaMonthsHelper.setToolTipText("<html>Wprowadź zakresy miesięcy w formacie:<br>numer_mca_początkowego numer_mca_końcowego<br>lub<br>numer_mca_początkowego numer_mca_końcowego przesunięcie_do_tyłu_w_latach</html>");
+        labelTextAreaMonthsHelper.setToolTipText(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WPROWADŹ ZAKRESY MIESIĘCY W FORMACIE"));
 
+        // months change listener
         textAreaMonths.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 setPrefs();
             }
-
             @Override
             public void removeUpdate(DocumentEvent e) {
                 if( textAreaMonths.getText().trim().isEmpty() ){
@@ -86,16 +103,24 @@ public class MainWindow extends javax.swing.JFrame {
                     setPrefs();
                 }
             }
-
             @Override
             public void changedUpdate(DocumentEvent e) {
                 setPrefs();
             }
-
             private void setPrefs() {
                 UserPreferences.getInstance().getPrefs().put(textAreaMonths.getName(), textAreaMonths.getText());
             }
         });
+
+        // logging level slider
+        @SuppressWarnings("UseOfObsoleteCollectionType")
+        Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
+        labelTable.put(0, new JLabel(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("MIN")));
+        labelTable.put(2, new JLabel(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("MAX")));
+        sliderLogLvl.setLabelTable(labelTable);
+        sliderLogLvl.setPaintLabels(true);
+        sliderLogLvl.setPaintTicks(true);
+        sliderLogLvl.addChangeListener(this);
     }
 
     /**
@@ -112,20 +137,20 @@ public class MainWindow extends javax.swing.JFrame {
         labelYearEnd = new javax.swing.JLabel();
         textFieldYearEnd = new javax.swing.JTextField();
         checkBoxAllYears = new javax.swing.JCheckBox();
-        jLabel2 = new javax.swing.JLabel();
+        labelChronologyFile = new javax.swing.JLabel();
         buttonSelectChronoFile = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
+        labelLoadedChrono = new javax.swing.JLabel();
         labelLoadedChronoFile = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        labelFileTypeChrono = new javax.swing.JLabel();
         comboBoxChronoFileType = new javax.swing.JComboBox();
         buttonStart = new javax.swing.JButton();
         comboBoxColSelect = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
+        labelColumn = new javax.swing.JLabel();
         labelLoadedClimateFile = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        labelLoadedClima = new javax.swing.JLabel();
         buttonSelectClimateFile = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        labelClimateFile = new javax.swing.JLabel();
+        labelFileTypeClima = new javax.swing.JLabel();
         comboBoxClimateFileType = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         textPane = new javax.swing.JTextPane();
@@ -134,10 +159,16 @@ public class MainWindow extends javax.swing.JFrame {
         buttonClearTextArea = new javax.swing.JButton();
         labelTextAreaMonthsHelper = new javax.swing.JLabel();
         buttonResetTextAreaMonths = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        labelMonthsRange = new javax.swing.JLabel();
+        labelResults = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
+        labelLoggingDetails = new javax.swing.JLabel();
+        sliderLogLvl = new javax.swing.JSlider();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuLanguage = new javax.swing.JMenu();
+        menuItemPL = new javax.swing.JMenuItem();
+        menuItemEN = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(100, 100));
@@ -166,7 +197,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText(bundle.getString("MainWindow.jLabel2.text")); // NOI18N
+        labelChronologyFile.setText(bundle.getString("MainWindow.labelChronologyFile.text")); // NOI18N
 
         buttonSelectChronoFile.setText(bundle.getString("MainWindow.buttonSelectChronoFile.text")); // NOI18N
         buttonSelectChronoFile.addActionListener(new java.awt.event.ActionListener() {
@@ -175,12 +206,12 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText(bundle.getString("MainWindow.jLabel4.text")); // NOI18N
+        labelLoadedChrono.setText(bundle.getString("MainWindow.labelLoadedChrono.text")); // NOI18N
 
         labelLoadedChronoFile.setForeground(new java.awt.Color(255, 0, 0));
         labelLoadedChronoFile.setText(bundle.getString("MainWindow.labelLoadedChronoFile.text")); // NOI18N
 
-        jLabel3.setText(bundle.getString("MainWindow.jLabel3.text")); // NOI18N
+        labelFileTypeChrono.setText(bundle.getString("MainWindow.labelFileTypeChrono.text")); // NOI18N
 
         comboBoxChronoFileType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,12 +234,12 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText(bundle.getString("MainWindow.jLabel1.text")); // NOI18N
+        labelColumn.setText(bundle.getString("MainWindow.labelColumn.text")); // NOI18N
 
         labelLoadedClimateFile.setForeground(new java.awt.Color(255, 0, 0));
         labelLoadedClimateFile.setText(bundle.getString("MainWindow.labelLoadedClimateFile.text")); // NOI18N
 
-        jLabel6.setText(bundle.getString("MainWindow.jLabel6.text")); // NOI18N
+        labelLoadedClima.setText(bundle.getString("MainWindow.labelLoadedClima.text")); // NOI18N
 
         buttonSelectClimateFile.setText(bundle.getString("MainWindow.buttonSelectClimateFile.text")); // NOI18N
         buttonSelectClimateFile.addActionListener(new java.awt.event.ActionListener() {
@@ -217,9 +248,9 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText(bundle.getString("MainWindow.jLabel5.text")); // NOI18N
+        labelClimateFile.setText(bundle.getString("MainWindow.labelClimateFile.text")); // NOI18N
 
-        jLabel7.setText(bundle.getString("MainWindow.jLabel7.text")); // NOI18N
+        labelFileTypeClima.setText(bundle.getString("MainWindow.labelFileTypeClima.text")); // NOI18N
 
         comboBoxClimateFileType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,7 +273,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         labelTextAreaMonthsHelper.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        labelTextAreaMonthsHelper.setText(bundle.getString("MainWindow.labelTextAreaMonthsHelper.text")); // NOI18N
+        labelTextAreaMonthsHelper.setText("?"); // NOI18N
 
         buttonResetTextAreaMonths.setText(bundle.getString("MainWindow.buttonResetTextAreaMonths.text")); // NOI18N
         buttonResetTextAreaMonths.addActionListener(new java.awt.event.ActionListener() {
@@ -251,11 +282,39 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText(bundle.getString("MainWindow.jLabel8.text")); // NOI18N
+        labelMonthsRange.setText(bundle.getString("MainWindow.labelMonthsRange.text")); // NOI18N
 
-        jLabel9.setText(bundle.getString("MainWindow.jLabel9.text")); // NOI18N
+        labelResults.setText(bundle.getString("MainWindow.labelResults.text")); // NOI18N
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        labelLoggingDetails.setText(bundle.getString("MainWindow.labelLoggingDetails.text")); // NOI18N
+
+        sliderLogLvl.setMajorTickSpacing(1);
+        sliderLogLvl.setMaximum(2);
+        sliderLogLvl.setValue(0);
+
+        menuLanguage.setText(bundle.getString("MainWindow.menuLanguage.text")); // NOI18N
+
+        menuItemPL.setText("polski"); // NOI18N
+        menuItemPL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemPLActionPerformed(evt);
+            }
+        });
+        menuLanguage.add(menuItemPL);
+
+        menuItemEN.setText("english"); // NOI18N
+        menuItemEN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemENActionPerformed(evt);
+            }
+        });
+        menuLanguage.add(menuItemEN);
+
+        jMenuBar1.add(menuLanguage);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -263,7 +322,7 @@ public class MainWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelYearStart)
@@ -276,41 +335,45 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
+                            .addComponent(labelColumn)
                             .addComponent(comboBoxColSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
+                                    .addComponent(labelChronologyFile)
                                     .addComponent(labelLoadedChronoFile)
-                                    .addComponent(jLabel3)
+                                    .addComponent(labelFileTypeChrono)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(labelLoadedChrono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(comboBoxChronoFileType, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(buttonSelectChronoFile, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(145, 145, 145)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
+                                    .addComponent(labelClimateFile)
                                     .addComponent(buttonSelectClimateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(comboBoxClimateFileType, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7)
+                                    .addComponent(labelFileTypeClima)
                                     .addComponent(labelLoadedClimateFile)
-                                    .addComponent(jLabel6)))))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel9)
+                                    .addComponent(labelLoadedClima)))))
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(labelResults)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(buttonClearTextArea)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel8)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(labelTextAreaMonthsHelper))
-                                .addComponent(buttonResetTextAreaMonths)))
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 681, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(55, 55, 55))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(labelLoggingDetails)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sliderLogLvl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelMonthsRange)
+                            .addComponent(buttonResetTextAreaMonths)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelTextAreaMonthsHelper)))))
+                .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,34 +395,34 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
+                                .addComponent(labelChronologyFile)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buttonSelectChronoFile)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4))
+                                .addComponent(labelLoadedChrono))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
+                                .addComponent(labelClimateFile)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buttonSelectClimateFile)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel6))
+                                .addComponent(labelLoadedClima))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(66, 66, 66)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(labelLoadedChronoFile)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel3)
+                                        .addComponent(labelFileTypeChrono)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(comboBoxChronoFileType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(labelLoadedClimateFile)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel7)
+                                        .addComponent(labelFileTypeClima)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(comboBoxClimateFileType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(14, 14, 14)
-                        .addComponent(jLabel1)
+                        .addComponent(labelColumn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboBoxColSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator2))
@@ -368,20 +431,23 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9)
+                        .addComponent(labelResults)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addComponent(labelMonthsRange)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelTextAreaMonthsHelper)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonClearTextArea)
-                    .addComponent(buttonResetTextAreaMonths))
-                .addGap(32, 32, 32))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(buttonClearTextArea)
+                        .addComponent(buttonResetTextAreaMonths)
+                        .addComponent(labelLoggingDetails))
+                    .addComponent(sliderLogLvl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
         );
 
         pack();
@@ -417,23 +483,23 @@ public class MainWindow extends javax.swing.JFrame {
             if( file.length == 1 ){
                 labelLoadedChronoFile.setText(file[0].getName());
             } else {
-                labelLoadedChronoFile.setText("Załadowano plików: "+file.length);
+                labelLoadedChronoFile.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("ZAŁADOWANO PLIKÓW: ") + file.length);
             }
             selectedChronoFile = file;
             for( int i = 0; i < file.length; i++ ) {
-                log.log(Level.FINE, String.format("Załadowano plik(i) chronologii: %s", file[i].getAbsolutePath()));
+                log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("ZAŁADOWANO PLIK(I) CHRONOLOGII: %S"), file[i].getAbsolutePath()));
             }
         }
     }//GEN-LAST:event_buttonSelectChronoFileActionPerformed
 
     private void comboBoxColSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxColSelectActionPerformed
-        log.log(Level.FINE, String.format("wybrano kolumn\u0119 %s", comboBoxColSelect.getSelectedItem().toString()));
+        log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WYBRANO KOLUMNĘ %S"), comboBoxColSelect.getSelectedItem().toString()));
     }//GEN-LAST:event_comboBoxColSelectActionPerformed
 
     private void comboBoxChronoFileTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxChronoFileTypeActionPerformed
         JComboBox comboBox = (JComboBox) evt.getSource();
         String choice = comboBox.getSelectedItem().toString();
-        log.log(Level.FINE, String.format("Wybrano rodzaj pliku: %s", choice));
+        log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WYBRANO RODZAJ PLIKU: %S"), choice));
         if( choice.equals(ChronologyFileTypes.TABS.getDisplayName()) ){
             comboBoxColSelect.setEnabled(true);
         } else {
@@ -494,15 +560,12 @@ public class MainWindow extends javax.swing.JFrame {
                     .append(climateFileType).append("]");
             log.log(Level.FINEST, sb.toString());
 
-            /*ThreadPoolExecutor e = new ThreadPoolExecutor(1, 1, 1, TimeUnit.DAYS, new LinkedBlockingQueue<>());
-             Future<Results> future = e.submit(new ProcessData(wp));
-             new ResultsHandler(future).go();*/
             new ProcessData(wp).go();
         }
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void comboBoxClimateFileTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxClimateFileTypeActionPerformed
-        log.log(Level.FINE, String.format("wybrano kolumn\u0119 %s", comboBoxClimateFileType.getSelectedItem().toString()));
+        log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WYBRANO KOLUMNĘ %S"), comboBoxClimateFileType.getSelectedItem().toString()));
     }//GEN-LAST:event_comboBoxClimateFileTypeActionPerformed
 
     private void buttonSelectClimateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSelectClimateFileActionPerformed
@@ -516,11 +579,11 @@ public class MainWindow extends javax.swing.JFrame {
             if( file.length == 1 ){
                 labelLoadedClimateFile.setText(file[0].getName());
             } else {
-                labelLoadedClimateFile.setText("Załadowano plików: "+file.length);
+                labelLoadedClimateFile.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("ZAŁADOWANO PLIKÓW: ") + file.length);
             }
             selectedClimateFile = file;
             for( int i = 0; i < file.length; i++ ) {
-                log.log(Level.FINE, String.format("Załadowano plik(i) klimatyczny: %s", file[i].getAbsolutePath()));
+                log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("ZAŁADOWANO PLIK(I) KLIMATYCZNY: %S"), file[i].getAbsolutePath()));
             }
         }
     }//GEN-LAST:event_buttonSelectClimateFileActionPerformed
@@ -532,6 +595,14 @@ public class MainWindow extends javax.swing.JFrame {
     private void buttonResetTextAreaMonthsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetTextAreaMonthsActionPerformed
         textAreaMonths.setText(getDefaultMonths());
     }//GEN-LAST:event_buttonResetTextAreaMonthsActionPerformed
+
+    private void menuItemENActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemENActionPerformed
+        LocaleManager.changeDefaultLocale(new Locale("en"));
+    }//GEN-LAST:event_menuItemENActionPerformed
+
+    private void menuItemPLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPLActionPerformed
+        LocaleManager.changeDefaultLocale(new Locale("pl"));
+    }//GEN-LAST:event_menuItemPLActionPerformed
 
     /**
      * @param args the command line arguments
@@ -571,24 +642,30 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JComboBox comboBoxChronoFileType;
     private javax.swing.JComboBox comboBoxClimateFileType;
     private javax.swing.JComboBox comboBoxColSelect;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel labelChronologyFile;
+    private javax.swing.JLabel labelClimateFile;
+    private javax.swing.JLabel labelColumn;
+    private javax.swing.JLabel labelFileTypeChrono;
+    private javax.swing.JLabel labelFileTypeClima;
+    private javax.swing.JLabel labelLoadedChrono;
     private javax.swing.JLabel labelLoadedChronoFile;
+    private javax.swing.JLabel labelLoadedClima;
     private javax.swing.JLabel labelLoadedClimateFile;
+    private javax.swing.JLabel labelLoggingDetails;
+    private javax.swing.JLabel labelMonthsRange;
+    private javax.swing.JLabel labelResults;
     private javax.swing.JLabel labelTextAreaMonthsHelper;
     private javax.swing.JLabel labelYearEnd;
     private javax.swing.JLabel labelYearStart;
+    private javax.swing.JMenuItem menuItemEN;
+    private javax.swing.JMenuItem menuItemPL;
+    private javax.swing.JMenu menuLanguage;
+    private javax.swing.JSlider sliderLogLvl;
     private javax.swing.JTextArea textAreaMonths;
     private javax.swing.JTextField textFieldYearEnd;
     private javax.swing.JTextField textFieldYearStart;
@@ -634,40 +711,40 @@ public class MainWindow extends javax.swing.JFrame {
         boolean valid = true;
 
         if( !checkBoxAllYears.isSelected() && !YearsRangeValidator.validate(textFieldYearStart.getText(), textFieldYearEnd.getText()) ){
-            log.log(Level.WARNING, "Wprowadź poprawny zakres lat.");
+            log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WPROWADŹ POPRAWNY ZAKRES LAT."));
             valid = false;
         }
 
         if( selectedChronoFile == null || selectedChronoFile.length == 0 || (selectedChronoFile.length == 1 && (selectedChronoFile[0] == null || !selectedChronoFile[0].isFile())) ){
             valid = false;
-            log.log(Level.WARNING, "Wybierz plik chronologii.");
+            log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WYBIERZ PLIK CHRONOLOGII."));
         } else {
             for( File oneSelectedChronoFile : selectedChronoFile ) {
                 if( oneSelectedChronoFile == null ){
                     valid = false;
-                    log.log(Level.WARNING, "Niepoprawny plik chronologii.");
+                    log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("NIEPOPRAWNY PLIK CHRONOLOGII."));
                 } else if( !oneSelectedChronoFile.isFile() ){
                     valid = false;
-                    log.log(Level.WARNING, String.format("Plik chronologii %s nie jest plikiem", oneSelectedChronoFile.getName()));
+                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("PLIK CHRONOLOGII %S NIE JEST PLIKIEM"), oneSelectedChronoFile.getName()));
                 }
             }
         }
 
         if( selectedClimateFile == null || selectedClimateFile.length == 0 || (selectedClimateFile.length == 1 && (selectedClimateFile[0] == null || !selectedClimateFile[0].isFile())) ){
             valid = false;
-            log.log(Level.WARNING, "Wybierz plik klimatyczny.");
+            log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WYBIERZ PLIK KLIMATYCZNY."));
         } else {
             for( File oneSelectedClimateFile : selectedClimateFile ) {
                 if( oneSelectedClimateFile == null ){
                     valid = false;
-                    log.log(Level.WARNING, "Niepoprawny plik klimatyczny.");
+                    log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("NIEPOPRAWNY PLIK KLIMATYCZNY."));
                 } else if( !oneSelectedClimateFile.isFile() ){
                     valid = false;
-                    log.log(Level.WARNING, String.format("Plik klimatyczny %s nie jest plikiem", oneSelectedClimateFile.getName()));
+                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("PLIK KLIMATYCZNY %S NIE JEST PLIKIEM"), oneSelectedClimateFile.getName()));
                 }
             }
         }
-        
+
         if( ta.getList().isEmpty() ){
             valid = false;
         }
@@ -701,5 +778,55 @@ public class MainWindow extends javax.swing.JFrame {
                 + "11 11 1\n"
                 + "12 12 1\n\n"
                 + "1 12";
+    }
+
+    @Override
+    public void onLocaleChange() {
+        labelChronologyFile.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelChronologyFile.text"));
+        labelClimateFile.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelClimateFile.text"));
+        labelColumn.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelColumn.text"));
+        labelFileTypeChrono.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelFileTypeChrono.text"));
+        labelFileTypeClima.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelFileTypeClima.text"));
+        labelLoadedChrono.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelLoadedChrono.text"));
+        labelLoadedChronoFile.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelLoadedChronoFile.text"));
+        labelLoadedClima.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelLoadedClima.text"));
+        labelLoadedClimateFile.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelLoadedChronoFile.text"));
+        labelResults.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelResults.text"));
+        labelYearEnd.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelYearEnd.text"));
+        labelYearStart.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelYearStart.text"));
+        labelMonthsRange.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelMonthsRange.text"));
+        labelLoggingDetails.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelLoggingDetails.text"));
+
+        menuLanguage.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.menuLanguage.text"));
+
+        checkBoxAllYears.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.checkBoxAllYears.text"));
+        buttonStart.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.buttonStart.text"));
+        buttonClearTextArea.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.buttonClearTextArea.text"));
+        buttonResetTextAreaMonths.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.buttonResetTextAreaMonths.text"));
+        buttonSelectChronoFile.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.buttonSelectChronoFile.text"));
+        buttonSelectClimateFile.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.buttonSelectClimateFile.text"));
+
+        labelTextAreaMonthsHelper.setToolTipText(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WPROWADŹ ZAKRESY MIESIĘCY W FORMACIE"));
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        JSlider s = (JSlider) e.getSource();
+        if( !s.getValueIsAdjusting() ){
+            switch(s.getValue()){
+                case 0:
+                    TextAreaLogHandler.getInstance().setLoggingLevel(Level.WARNING);
+                    break;
+                case 1:
+                    TextAreaLogHandler.getInstance().setLoggingLevel(Level.INFO);
+                    break;
+                case 2:
+                    //TextAreaLogHandler.getInstance().setLoggingLevel(Level.FINE);
+                    //break;
+                //case 3:
+                    TextAreaLogHandler.getInstance().setLoggingLevel(Level.FINER);
+                    break;
+            }
+        }
     }
 }
