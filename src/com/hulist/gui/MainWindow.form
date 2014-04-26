@@ -29,6 +29,13 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="menuAbout">
+          <Properties>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="com/hulist/bundle/Bundle.properties" key="MainWindow.menuAbout.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
+          </Properties>
+        </Menu>
       </SubComponents>
     </Menu>
   </NonVisualComponents>
@@ -466,7 +473,7 @@
       <Properties>
         <Property name="majorTickSpacing" type="int" value="1"/>
         <Property name="maximum" type="int" value="2"/>
-        <Property name="value" type="int" value="0"/>
+        <Property name="value" type="int" value="1"/>
       </Properties>
     </Component>
   </SubComponents>

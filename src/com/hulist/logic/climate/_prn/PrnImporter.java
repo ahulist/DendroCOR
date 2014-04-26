@@ -7,6 +7,7 @@ package com.hulist.logic.climate._prn;
 
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
+import com.hulist.util.Misc;
 import com.hulist.util.Months;
 import java.io.BufferedReader;
 import java.io.File;
@@ -43,44 +44,46 @@ public class PrnImporter extends BaseImporter implements DataImporter<PrnDataCon
         br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
         int lineCounter = 1;
         while( (line = br.readLine()) != null ) {
-            String[] data = line.trim().split("[\\s\\t]+");
-            try {
-                if( allYears
-                        || (!allYears
-                        && Integer.parseInt(data[0]) >= startYear
-                        && Integer.parseInt(data[0]) <= endYear) ){
+            if( !line.startsWith("#") ){
+                String[] data = line.trim().split("[\\s\\t]+");
+                try {
+                    if( allYears
+                            || (!allYears
+                            && Integer.parseInt(data[0]) >= startYear
+                            && Integer.parseInt(data[0]) <= endYear) ){
 
-                    assert data.length == 13;
-                    int year = Integer.parseInt(data[0]);
-                    PrnLineContainer lineData = new PrnLineContainer(year);
-                    int counter = 1;
-                    for( Months month : Months.values() ) {
-                        double value = Double.parseDouble(data[counter]);
-                        if( value < PRN_VALUE_MIN || value > PRN_VALUE_MAX ){
-                            StringBuilder sb = new StringBuilder();
-                            if( value < PRN_VALUE_MIN ){
-                                sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("ODCZYTANA WARTOŚĆ < ")).append(PRN_VALUE_MIN);
+                        assert data.length == 13;
+                        int year = Integer.parseInt(data[0]);
+                        PrnLineContainer lineData = new PrnLineContainer(year);
+                        int counter = 1;
+                        for( Months month : Months.values() ) {
+                            double value = Double.parseDouble(data[counter]);
+                            if( value < PRN_VALUE_MIN || value > PRN_VALUE_MAX ){
+                                StringBuilder sb = new StringBuilder();
+                                if( value < PRN_VALUE_MIN ){
+                                    sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("ODCZYTANA WARTOŚĆ < ")).append(PRN_VALUE_MIN);
+                                }
+                                if( value > PRN_VALUE_MAX ){
+                                    sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("ODCZYTANA WARTOŚĆ > ")).append(PRN_VALUE_MAX);
+                                }
+                                sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString(", W PLIKU ")).append(f.getCanonicalPath()).append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString(" DLA ROKU ")).append(year).append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString(", DLA MIESIĄCA ")).append(month);
+                                throw new IllegalArgumentException(sb.toString());
                             }
-                            if( value > PRN_VALUE_MAX ){
-                                sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("ODCZYTANA WARTOŚĆ > ")).append(PRN_VALUE_MAX);
-                            }
-                            sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString(", W PLIKU ")).append(f.getCanonicalPath()).append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString(" DLA ROKU ")).append(year).append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString(", DLA MIESIĄCA ")).append(month);
-                            throw new IllegalArgumentException(sb.toString());
+                            lineData.addMonthlyData(month, value);
+                            counter++;
                         }
-                        lineData.addMonthlyData(month, value);
-                        counter++;
+                        container.addYearlyData(year, lineData);
                     }
-                    container.addYearlyData(year, lineData);
+                } catch( AssertionError | IOException | NumberFormatException e ) {
+                    String msg = String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("BŁĘDNY FORMAT PLIKU %S."), f.getName());
+                    log.log(Level.WARNING, msg);
+                    log.log(Level.FINEST, msg);
+                    throw new IOException(msg);
+                } catch( IllegalArgumentException e ) {
+                    log.log(Level.WARNING, e.getMessage());
+                    log.log(Level.FINEST, Misc.stackTraceToString(e));
+                    throw new IOException();
                 }
-            } catch( AssertionError | IOException | NumberFormatException e ) {
-                String msg = String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("BŁĘDNY FORMAT PLIKU %S."), f.getName());
-                log.log(Level.WARNING, msg);
-                log.log(Level.FINEST, msg);
-                throw new IOException(msg);
-            } catch( IllegalArgumentException e ) {
-                log.log(Level.WARNING, e.getMessage());
-                log.log(Level.FINEST, e.getMessage());
-                throw new IOException();
             }
 
             lineCounter++;

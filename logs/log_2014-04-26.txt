@@ -1,0 +1,129 @@
+15:36:17 ===================================================
+
+FINER: Okno zainicjalizowano.
+FINE: Wybrano rodzaj pliku: dekadowy
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\abi.rwl
+FINE: Zmieniono poziom logowanina na INFO
+FINE: Zmieniono poziom logowanina na FINER
+FINE: Załadowano plik(i) klimatyczny: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\igiss_al_nh_m.dat.txt
+FINEST: WindowParams: [true, -1, -1, [Ljava.io.File;@6b58ba23, [Ljava.io.File;@5eb1e5ba, DEKADOWY, SEG, ICRU]
+FINE: Uruchomiono przetwarzanie danych.
+WARNING: błędny format pliku abi.rwl w linii 1.
+FINEST: błędny format pliku abi.rwl w linii 1.
+SEVERE: Błąd odczytu z pliku.
+FINEST: błędny format pliku abi.rwl w linii 1.
+15:38:20 ===================================================
+
+FINER: Okno zainicjalizowano.
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\abi.rwl
+15:38:41 ===================================================
+
+FINER: Okno zainicjalizowano.
+15:39:08 ===================================================
+
+FINER: Okno zainicjalizowano.
+15:40:46 ===================================================
+
+FINER: Okno zainicjalizowano.
+15:43:47 ===================================================
+
+FINER: Okno zainicjalizowano.
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\abi.rwl
+FINE: Załadowano plik(i) klimatyczny: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\igiss_al_nh_m.dat.txt
+15:46:26 ===================================================
+
+FINER: Okno zainicjalizowano.
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\abi.rwl
+FINE: Załadowano plik(i) klimatyczny: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\igiss_al_nh_m.dat.txt
+FINEST: WindowParams: [true, -1, -1, [Ljava.io.File;@6d567cf4, [Ljava.io.File;@6d4b2f76, DEKADOWY, SEG, ICRU]
+FINE: Uruchomiono przetwarzanie danych.
+WARNING: błędny format pliku abi.rwl w linii 1.
+FINEST: For input string: "Abisko"
+SEVERE: Błąd odczytu z pliku.
+FINEST: błędny format pliku abi.rwl w linii 1.
+15:50:17 ===================================================
+
+FINER: Okno zainicjalizowano.
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\abi.rwl
+FINE: Załadowano plik(i) klimatyczny: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\igiss_al_nh_m.dat.txt
+FINE: Zmieniono poziom logowanina na INFO
+FINE: Zmieniono poziom logowanina na FINER
+FINEST: WindowParams: [true, -1, -1, [Ljava.io.File;@57300fb2, [Ljava.io.File;@67c5b0fa, DEKADOWY, SEG, ICRU]
+FINE: Uruchomiono przetwarzanie danych.
+WARNING: błędny format pliku abi.rwl w linii 1.
+FINEST: For input string: "Abisko"
+SEVERE: Błąd odczytu z pliku.
+FINEST: błędny format pliku abi.rwl w linii 1.
+16:05:55 ===================================================
+
+FINER: Okno zainicjalizowano.
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\abi.rwl
+FINE: Zmieniono poziom logowanina na INFO
+FINE: Zmieniono poziom logowanina na FINER
+FINE: Załadowano plik(i) klimatyczny: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\igiss_al_nh_m.dat.txt
+FINEST: WindowParams: [true, -1, -1, [Ljava.io.File;@55664ef1, [Ljava.io.File;@d675c30, DEKADOWY, SEG, ICRU]
+FINE: Uruchomiono przetwarzanie danych.
+WARNING: błędny format pliku abi.rwl w linii 1.
+FINEST: java.lang.NumberFormatException: For input string: "Abisko"
+	at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043)
+	at sun.misc.FloatingDecimal.parseDouble(FloatingDecimal.java:110)
+	at java.lang.Double.parseDouble(Double.java:538)
+	at com.hulist.logic.chronology.deka.DekaImporter.getData(DekaImporter.java:59)
+	at com.hulist.logic.ProcessData.getDeka(ProcessData.java:104)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:209)
+	at java.lang.Thread.run(Thread.java:744)
+
+SEVERE: Błąd odczytu z pliku.
+FINEST: java.io.IOException: błędny format pliku abi.rwl w linii 1.
+	at com.hulist.logic.chronology.deka.DekaImporter.getData(DekaImporter.java:72)
+	at com.hulist.logic.ProcessData.getDeka(ProcessData.java:104)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:209)
+	at java.lang.Thread.run(Thread.java:744)
+
+16:08:56 ===================================================
+
+FINER: Okno zainicjalizowano.
+16:09:18 ===================================================
+
+FINER: Okno zainicjalizowano.
+FINE: Zmieniono poziom logowanina na FINER
+FINE: Zmieniono poziom logowanina na WARNING
+FINE: Zmieniono poziom logowanina na INFO
+FINE: Zmieniono poziom logowanina na FINER
+FINE: Zmieniono poziom logowanina na INFO
+FINE: Zmieniono poziom logowanina na FINER
+16:13:03 ===================================================
+
+FINER: Okno zainicjalizowano.
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+16:17:52 ===================================================
+
+FINER: Okno zainicjalizowano.
+16:23:28 ===================================================
+
+FINER: Okno zainicjalizowano.
+16:28:31 ===================================================
+
+FINER: Okno zainicjalizowano.
+16:29:15 ===================================================
+
+FINER: Okno zainicjalizowano.
+16:29:32 ===================================================
+
+FINER: Okno zainicjalizowano.
+16:29:45 ===================================================
+
+FINER: Okno zainicjalizowano.
+16:31:00 ===================================================
+
+FINER: Okno zainicjalizowano.
+16:31:36 ===================================================
+
+FINER: Okno zainicjalizowano.
+16:32:32 ===================================================
+
+FINER: Okno zainicjalizowano.
+16:34:32 ===================================================
+
+FINER: Okno zainicjalizowano.

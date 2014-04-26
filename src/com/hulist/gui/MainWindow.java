@@ -21,6 +21,7 @@ import com.hulist.validators.YearsRangeValidator;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.io.File;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -29,13 +30,17 @@ import java.util.prefs.Preferences;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSlider;
+import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import javax.swing.text.DefaultCaret;
 
 /**
@@ -45,6 +50,7 @@ import javax.swing.text.DefaultCaret;
 public class MainWindow extends javax.swing.JFrame implements LocaleChangeListener, ChangeListener {
 
     public static final String APP_NAME = "DendroCOR";
+    public static final String APP_VERSION = "2.2";
 
     /**
      * Creates new form MainWindow
@@ -95,6 +101,7 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
             public void insertUpdate(DocumentEvent e) {
                 setPrefs();
             }
+
             @Override
             public void removeUpdate(DocumentEvent e) {
                 if( textAreaMonths.getText().trim().isEmpty() ){
@@ -103,10 +110,12 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
                     setPrefs();
                 }
             }
+
             @Override
             public void changedUpdate(DocumentEvent e) {
                 setPrefs();
             }
+
             private void setPrefs() {
                 UserPreferences.getInstance().getPrefs().put(textAreaMonths.getName(), textAreaMonths.getText());
             }
@@ -121,6 +130,9 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
         sliderLogLvl.setPaintLabels(true);
         sliderLogLvl.setPaintTicks(true);
         sliderLogLvl.addChangeListener(this);
+
+        // menu about
+        menuAbout.addMenuListener(this.getMenuAboutListener());
     }
 
     /**
@@ -169,6 +181,7 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
         menuLanguage = new javax.swing.JMenu();
         menuItemPL = new javax.swing.JMenuItem();
         menuItemEN = new javax.swing.JMenuItem();
+        menuAbout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(100, 100));
@@ -292,7 +305,7 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
 
         sliderLogLvl.setMajorTickSpacing(1);
         sliderLogLvl.setMaximum(2);
-        sliderLogLvl.setValue(0);
+        sliderLogLvl.setValue(1);
 
         menuLanguage.setText(bundle.getString("MainWindow.menuLanguage.text")); // NOI18N
 
@@ -313,6 +326,9 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
         menuLanguage.add(menuItemEN);
 
         jMenuBar1.add(menuLanguage);
+
+        menuAbout.setText(bundle.getString("MainWindow.menuAbout.text")); // NOI18N
+        jMenuBar1.add(menuAbout);
 
         setJMenuBar(jMenuBar1);
 
@@ -553,8 +569,8 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
                     .append(allYears).append(", ")
                     .append(startYear).append(", ")
                     .append(endYear).append(", ")
-                    .append(selectedChronoFile).append(", ")
-                    .append(selectedClimateFile).append(", ")
+                    .append(Arrays.toString(selectedChronoFile)).append(", ")
+                    .append(Arrays.toString(selectedClimateFile)).append(", ")
                     .append(chronologyFileType).append(", ")
                     .append(tabsColumnType).append(", ")
                     .append(climateFileType).append("]");
@@ -662,6 +678,7 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
     private javax.swing.JLabel labelTextAreaMonthsHelper;
     private javax.swing.JLabel labelYearEnd;
     private javax.swing.JLabel labelYearStart;
+    private javax.swing.JMenu menuAbout;
     private javax.swing.JMenuItem menuItemEN;
     private javax.swing.JMenuItem menuItemPL;
     private javax.swing.JMenu menuLanguage;
@@ -798,6 +815,7 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
         labelLoggingDetails.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.labelLoggingDetails.text"));
 
         menuLanguage.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.menuLanguage.text"));
+        menuAbout.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.menuAbout.text"));
 
         checkBoxAllYears.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.checkBoxAllYears.text"));
         buttonStart.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.buttonStart.text"));
@@ -813,7 +831,7 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
     public void stateChanged(ChangeEvent e) {
         JSlider s = (JSlider) e.getSource();
         if( !s.getValueIsAdjusting() ){
-            switch(s.getValue()){
+            switch( s.getValue() ) {
                 case 0:
                     TextAreaLogHandler.getInstance().setLoggingLevel(Level.WARNING);
                     break;
@@ -823,10 +841,40 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
                 case 2:
                     //TextAreaLogHandler.getInstance().setLoggingLevel(Level.FINE);
                     //break;
-                //case 3:
+                    //case 3:
                     TextAreaLogHandler.getInstance().setLoggingLevel(Level.FINER);
                     break;
             }
         }
+    }
+
+    private MenuListener getMenuAboutListener() {
+        return new MenuListener() {
+
+            @Override
+            public void menuSelected(MenuEvent e) {
+                SwingUtilities.invokeLater(() -> {
+                    String title1 = "<html><body>"
+                            + "<h3>DendroCOR v. "+APP_VERSION+"</h3><br>"
+                            + "\u00a9 Aleksander Hulist (2014)<br>"
+                            + "aleksander.hulist@gmail.com<br><br>"
+                            + "</body></html>";
+                                /*"<html><body style='width: 200px; padding: 5px;'>"
+                                + "<h1>Do U C Me?</h1>"
+                                + "Here is a long string that will wrap.  "
+                                + "The effect we want is a multi-line label.";*/
+                    JLabel textLabel = new JLabel(title1);
+                    JOptionPane.showMessageDialog(null, textLabel);
+                });
+            }
+
+            @Override
+            public void menuDeselected(MenuEvent e) {
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+            }
+        };
     }
 }

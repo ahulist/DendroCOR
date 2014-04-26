@@ -11,8 +11,8 @@ package com.hulist.logic.climate;
  */
 public enum ClimateFileTypes {
 
-    ICRU("icru*.dat.txt"),
-    PRN("*.prn");
+    ICRU("icru*.dat.txt");//,
+    //PRN("*.prn");
 
     String displayName;
 

@@ -76,7 +76,7 @@ public class FileChooser {
             }
         } catch( HeadlessException e ) {
             log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/FileChooser").getString("WYSTĄPIŁ BŁĄD PODCZAS OTWIERANIA OKNA DIALOGOWEGO"));
-            log.log(Level.FINEST, e.getMessage());
+            log.log(Level.FINEST, Misc.stackTraceToString(e));
         }
 
         File[] filesArray = null;
@@ -99,7 +99,7 @@ public class FileChooser {
             }
 
             filesArray = (File[]) files.toArray(new File[files.size()]);
-            if( !openMultipleFilesAndFolders && addXlsxExt && filesArray.length>0 ){
+            if( !openMultipleFilesAndFolders && addXlsxExt && filesArray.length > 0 ){
                 try {
                     String n = filesArray[0].getCanonicalPath();
                     if( n.endsWith(".xls") ){
@@ -110,7 +110,7 @@ public class FileChooser {
                         filesArray[0] = new File(n2);
                     }
                 } catch( IOException ex ) {
-                    log.log(Level.FINEST, ex.getMessage());
+                    log.log(Level.FINEST, Misc.stackTraceToString(ex));
                 }
             }
 
@@ -136,11 +136,10 @@ public class FileChooser {
              log.log(Level.FINEST, ex.getMessage());
              }
              }
-             }
-
-             if( files != null && files.length != 0 ){
-             UserPreferences.getInstance().getPrefs().put(prefsDir, files[0].getParent());
              }*/
+            if( !files.isEmpty() ){
+                UserPreferences.getInstance().getPrefs().put(prefsDir, files.get(0).getParent());
+            }
         }
 
         return filesArray;

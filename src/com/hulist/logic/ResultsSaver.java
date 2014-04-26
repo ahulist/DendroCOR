@@ -6,6 +6,7 @@
 package com.hulist.logic;
 
 import com.hulist.util.ExcelUtil;
+import com.hulist.util.Misc;
 import com.hulist.util.MonthsPair;
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,7 +55,7 @@ public class ResultsSaver {
                 wb = new XSSFWorkbook(fos);
             } catch( IOException ex ) {
                 log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/ResultsSaver").getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
-                log.log(Level.FINEST, ex.getMessage());
+                log.log(Level.FINEST, Misc.stackTraceToString(ex));
                 throw new RuntimeException();
             }
         } else {
@@ -105,7 +106,7 @@ public class ResultsSaver {
                     + "\n-------------------------------------", file.getName()));
         } catch( IOException ex ) {
             log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/ResultsSaver").getString("BŁĄD ZAPISU PLIKU."));
-            log.log(Level.FINEST, ex.getMessage());
+            log.log(Level.FINEST, Misc.stackTraceToString(ex));
         }
     }
 

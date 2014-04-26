@@ -7,6 +7,7 @@ package com.hulist.logic.chronology.deka;
 
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
+import com.hulist.util.Misc;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -67,7 +68,7 @@ public class DekaImporter extends BaseImporter implements DataImporter<DekaSerie
             } catch( NumberFormatException | AssertionError e ) {
                 String msg = String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), lineCounter);
                 log.log(Level.WARNING, msg);
-                log.log(Level.FINEST, msg);
+                log.log(Level.FINEST, Misc.stackTraceToString(e));
                 throw new IOException(msg);
             }
 

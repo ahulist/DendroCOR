@@ -15,6 +15,7 @@ import com.hulist.logic.climate._prn.PrnImporter;
 import com.hulist.logic.climate.icru.IcruDataContainer;
 import com.hulist.logic.climate.icru.IcruImporter;
 import com.hulist.util.FileChooser;
+import com.hulist.util.Misc;
 import com.hulist.util.MonthsPair;
 import java.io.File;
 import java.io.IOException;
@@ -156,11 +157,11 @@ public class ProcessData implements Runnable {
                             Column icruC = new Column(climateColumnsName, icruData);
                             dataToCorrelate.columns.put(months, icruC);
                             break;
-                        case PRN:
+                        /*case PRN:
                             double[] prnData = ((PrnDataContainer) climate).getArray(months, commonYearStartLimit, commonYearEndLimit);
                             Column prnC = new Column(climateColumnsName, prnData);
                             dataToCorrelate.columns.put(months, prnC);
-                            break;
+                            break;*/
                     }
                 }
 
@@ -213,20 +214,20 @@ public class ProcessData implements Runnable {
                 case ICRU:
                     getIcru();
                     break;
-                case PRN:
+                /*case PRN:
                     getPrn();
-                    break;
+                    break;*/
             }
 
             process();
             save();
         } catch( NullPointerException | IOException ex ) {
             log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("BŁĄD ODCZYTU Z PLIKU."));
-            log.log(Level.FINEST, ex.getMessage());
+            log.log(Level.FINEST, Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
         } catch( Exception ex ) {
             log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("WYSTĄPIŁ NIEZNANY BŁĄD."));
-            log.log(Level.FINEST, ex.getMessage());
+            log.log(Level.FINEST, Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
         }
     }

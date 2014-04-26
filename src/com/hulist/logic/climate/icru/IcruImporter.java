@@ -7,6 +7,7 @@ package com.hulist.logic.climate.icru;
 
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
+import com.hulist.util.Misc;
 import com.hulist.util.Months;
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,8 +26,8 @@ import java.util.logging.Level;
  */
 public class IcruImporter extends BaseImporter implements DataImporter<IcruDataContainer> {
 
-    public static final double ICRU_VALUE_MAX = 200.0;
-    public static final double ICRU_VALUE_MIN = -200.0;
+    public static final double ICRU_VALUE_MAX = Double.MAX_VALUE;
+    public static final double ICRU_VALUE_MIN = Double.MIN_VALUE;
 
     public IcruImporter(boolean isAllYears, int startYear, int endYear) {
         super(isAllYears, startYear, endYear);
@@ -43,7 +44,8 @@ public class IcruImporter extends BaseImporter implements DataImporter<IcruDataC
         br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
         int lineCounter = 1;
         while( (line = br.readLine()) != null ) {
-            if( lineCounter > 4 ){
+            if( !line.startsWith("#") ){
+                String msg = String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("BŁĘDNY FORMAT PLIKU %S."), f.getName());
                 String[] data = line.trim().split("[\\s\\t]+");
                 try {
                     if( allYears
@@ -74,13 +76,12 @@ public class IcruImporter extends BaseImporter implements DataImporter<IcruDataC
                         container.addYearlyData(year, lineData);
                     }
                 } catch( AssertionError | IOException | NumberFormatException e ) {
-                    String msg = String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("BŁĘDNY FORMAT PLIKU %S."), f.getName());
                     log.log(Level.WARNING, msg);
-                    log.log(Level.FINEST, msg);
+                    log.log(Level.FINEST, Misc.stackTraceToString(e));
                     throw new IOException(msg);
                 } catch( IllegalArgumentException e ) {
-                    log.log(Level.WARNING, e.getMessage());
-                    log.log(Level.FINEST, e.getMessage());
+                    log.log(Level.WARNING, msg);
+                    log.log(Level.FINEST, Misc.stackTraceToString(e));
                     throw new RuntimeException();
                 }
 
