@@ -27,7 +27,7 @@ import java.util.logging.Level;
 public class IcruImporter extends BaseImporter implements DataImporter<IcruDataContainer> {
 
     public static final double ICRU_VALUE_MAX = Double.MAX_VALUE;
-    public static final double ICRU_VALUE_MIN = Double.MIN_VALUE;
+    public static final double ICRU_VALUE_MIN = -Double.MAX_VALUE;
 
     public IcruImporter(boolean isAllYears, int startYear, int endYear) {
         super(isAllYears, startYear, endYear);

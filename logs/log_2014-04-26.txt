@@ -127,3 +127,305 @@ FINER: Okno zainicjalizowano.
 16:34:32 ===================================================
 
 FINER: Okno zainicjalizowano.
+16:56:28 ===================================================
+
+FINER: Okno zainicjalizowano.
+17:16:01 ===================================================
+
+FINER: Okno zainicjalizowano.
+17:21:26 ===================================================
+
+FINER: Okno zainicjalizowano.
+17:23:24 ===================================================
+
+FINER: Okno zainicjalizowano.
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\51.rwl_tabs.txt
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\cz28\CZ28.rwl
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\cz28\CZ29.rwl
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\cz28\CZ30.rwl
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\CZ28.rwl
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\dendroklimat-CZW.xlsx
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\icru31_tmp_19.5-20.0E_49.0-49.5N_n.dat.txt
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\klimat 1901-2012 CRUTS3 BR.xlsx
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\Niemcy_temp.dat
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\abi.rwl
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_nao.dat.txt
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\igiss_al_nh_m.dat.txt
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\inao_ijs_azo.dat.txt
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\tok.rwl
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowy.xlsx
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\SG1.pos
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\SG1_BLUEVALUES.wid
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\us.prn
+FINE: Załadowano plik(i) klimatyczny: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\tok.rwl
+FINEST: WindowParams: [true, -1, -1, [E:\Praca\Katedra Dendrologii\TABSY\pliki\51.rwl_tabs.txt, E:\Praca\Katedra Dendrologii\TABSY\pliki\cz28\CZ28.rwl, E:\Praca\Katedra Dendrologii\TABSY\pliki\cz28\CZ29.rwl, E:\Praca\Katedra Dendrologii\TABSY\pliki\cz28\CZ30.rwl, E:\Praca\Katedra Dendrologii\TABSY\pliki\CZ28.rwl, E:\Praca\Katedra Dendrologii\TABSY\pliki\dendroklimat-CZW.xlsx, E:\Praca\Katedra Dendrologii\TABSY\pliki\icru31_tmp_19.5-20.0E_49.0-49.5N_n.dat.txt, E:\Praca\Katedra Dendrologii\TABSY\pliki\klimat 1901-2012 CRUTS3 BR.xlsx, E:\Praca\Katedra Dendrologii\TABSY\pliki\Niemcy_temp.dat, E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\abi.rwl, E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt, E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_nao.dat.txt, E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\igiss_al_nh_m.dat.txt, E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\inao_ijs_azo.dat.txt, E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\tok.rwl, E:\Praca\Katedra Dendrologii\TABSY\pliki\nowy.xlsx, E:\Praca\Katedra Dendrologii\TABSY\pliki\SG1.pos, E:\Praca\Katedra Dendrologii\TABSY\pliki\SG1_BLUEVALUES.wid, E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt, E:\Praca\Katedra Dendrologii\TABSY\pliki\us.prn], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\tok.rwl], DEKADOWY, SEG, ICRU]
+FINE: Uruchomiono przetwarzanie danych.
+WARNING: błędny format pliku 51.rwl_tabs.txt w linii 1.
+FINEST: java.lang.NumberFormatException: For input string: "num"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+	at java.lang.Integer.parseInt(Integer.java:580)
+	at java.lang.Integer.parseInt(Integer.java:615)
+	at com.hulist.logic.chronology.deka.DekaImporter.getData(DekaImporter.java:48)
+	at com.hulist.logic.ProcessData.getDeka(ProcessData.java:104)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:209)
+	at java.lang.Thread.run(Thread.java:744)
+
+SEVERE: Błąd odczytu z pliku.
+FINEST: java.io.IOException: błędny format pliku 51.rwl_tabs.txt w linii 1.
+	at com.hulist.logic.chronology.deka.DekaImporter.getData(DekaImporter.java:72)
+	at com.hulist.logic.ProcessData.getDeka(ProcessData.java:104)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:209)
+	at java.lang.Thread.run(Thread.java:744)
+
+17:54:19 ===================================================
+
+FINER: Okno zainicjalizowano.
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt
+FINE: Wybrano rodzaj pliku: *_tabs.txt
+FINE: wybrano kolumnę RES
+FINE: Załadowano plik(i) klimatyczny: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\inao_ijs_azo.dat.txt
+FINE: Zmieniono poziom logowania na FINER
+FINEST: WindowParams: [false, 1865, 2002, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\inao_ijs_azo.dat.txt], TABS, RES, ICRU]
+FINE: Uruchomiono przetwarzanie danych.
+18:00:59 ===================================================
+
+FINER: Okno zainicjalizowano.
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt
+FINE: Załadowano plik(i) klimatyczny: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\inao_ijs_azo.dat.txt
+FINE: Wybrano rodzaj pliku: *_tabs.txt
+FINE: wybrano kolumnę RES
+FINEST: WindowParams: [false, 1865, 2002, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\inao_ijs_azo.dat.txt], TABS, RES, ICRU]
+FINE: Uruchomiono przetwarzanie danych.
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 JAN-JAN)     
+ 0,0314811092
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 FEB-FEB)     
+-0,1066616670
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 MAR-MAR)     
+-0,0870598577
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 APR-APR)     
+-0,0973484896
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 MAY-MAY)     
+-0,1640086341
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 JUN-JUN)     
+ 0,0756794255
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 JUL-JUL)     
+ 0,0982910591
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 AUG-AUG)     
+ 0,0356720141
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 SEP-SEP)     
+ 0,0352876675
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 OCT-OCT)     
+-0,0458820355
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 NOV-NOV)     
+-0,0873668420
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 DEC-DEC)     
+ 0,0724161472
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 JAN-JAN (1)) 
+-0,0093729441
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 FEB-FEB (1)) 
+-0,0272133887
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 MAR-MAR (1)) 
+ 0,0158302957
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 APR-APR (1)) 
+ 0,0874335076
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 MAY-MAY (1)) 
+ 0,0183533849
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 JUN-JUN (1)) 
+ 0,0480425445
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 JUL-JUL (1)) 
+ 0,1035741194
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 AUG-AUG (1)) 
+-0,0823214870
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 SEP-SEP (1)) 
+ 0,0718170634
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 OCT-OCT (1)) 
+-0,0425150298
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 NOV-NOV (1)) 
+ 0,0435297958
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 DEC-DEC (1)) 
+-0,0229004511
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 JAN-DEC)     
+ 0,0332409800
+FINE: Zmieniono poziom logowania na FINER
+FINEST: WindowParams: [false, 1865, 2002, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\inao_ijs_azo.dat.txt], TABS, RES, ICRU]
+FINE: Uruchomiono przetwarzanie danych.
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 JAN-JAN)     
+ 0,0314811092
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 FEB-FEB)     
+-0,1066616670
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 MAR-MAR)     
+-0,0870598577
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 APR-APR)     
+-0,0973484896
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 MAY-MAY)     
+-0,1640086341
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 JUN-JUN)     
+ 0,0756794255
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 JUL-JUL)     
+ 0,0982910591
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 AUG-AUG)     
+ 0,0356720141
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 SEP-SEP)     
+ 0,0352876675
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 OCT-OCT)     
+-0,0458820355
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 NOV-NOV)     
+-0,0873668420
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 DEC-DEC)     
+ 0,0724161472
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 JAN-JAN (1)) 
+-0,0093729441
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 FEB-FEB (1)) 
+-0,0272133887
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 MAR-MAR (1)) 
+ 0,0158302957
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 APR-APR (1)) 
+ 0,0874335076
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 MAY-MAY (1)) 
+ 0,0183533849
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 JUN-JUN (1)) 
+ 0,0480425445
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 JUL-JUL (1)) 
+ 0,1035741194
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 AUG-AUG (1)) 
+-0,0823214870
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 SEP-SEP (1)) 
+ 0,0718170634
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 OCT-OCT (1)) 
+-0,0425150298
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 NOV-NOV (1)) 
+ 0,0435297958
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 DEC-DEC (1)) 
+-0,0229004511
+INFO: korelacja  tk.rwl_tabs.txt (RES) / inao_ijs_azo.dat.txt (1865-2002 JAN-DEC)     
+ 0,0332409800
+18:06:54 ===================================================
+
+FINER: Okno zainicjalizowano.
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+FINE: Zmieniono poziom logowania na WARNING
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+FINE: Zmieniono poziom logowania na INFO
+FINE: Zmieniono poziom logowania na FINER
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+FINE: Zmieniono poziom logowania na INFO
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+FINE: Zmieniono poziom logowania na WARNING
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+FINE: Zmieniono poziom logowania na INFO
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+18:12:10 ===================================================
+
+FINER: Okno zainicjalizowano.
+FINE: Zmieniono poziom logowania na FINER
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+18:13:22 ===================================================
+
+FINER: Okno zainicjalizowano.
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+18:14:16 ===================================================
+
+FINE: Zmieniono poziom logowania na INFO
+FINER: Okno zainicjalizowano.
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+FINE: Zmieniono poziom logowania na WARNING
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+FINE: Zmieniono poziom logowania na INFO
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.
+FINE: Zmieniono poziom logowania na FINER
+SEVERE: severe
+WARNING: warning
+INFO: info
+FINE: fine
+FINER: finer
+WARNING: Wybierz plik chronologii.
+WARNING: Wybierz plik klimatyczny.

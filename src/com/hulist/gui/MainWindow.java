@@ -130,6 +130,7 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
         sliderLogLvl.setPaintLabels(true);
         sliderLogLvl.setPaintTicks(true);
         sliderLogLvl.addChangeListener(this);
+        sliderLogLvl.setValue(1);
 
         // menu about
         menuAbout.addMenuListener(this.getMenuAboutListener());
@@ -305,7 +306,8 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
 
         sliderLogLvl.setMajorTickSpacing(1);
         sliderLogLvl.setMaximum(2);
-        sliderLogLvl.setValue(1);
+        sliderLogLvl.setToolTipText(bundle.getString("MainWindow.sliderLogLvl.toolTipText")); // NOI18N
+        sliderLogLvl.setValue(0);
 
         menuLanguage.setText(bundle.getString("MainWindow.menuLanguage.text")); // NOI18N
 
@@ -524,6 +526,13 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
     }//GEN-LAST:event_comboBoxChronoFileTypeActionPerformed
 
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
+        // for logging testing
+        /*log.log(Level.SEVERE, "severe");
+        log.log(Level.WARNING, "warning");
+        log.log(Level.INFO, "info");
+        log.log(Level.FINE, "fine");
+        log.log(Level.FINER, "finer");*/
+
         if( isDataValid() ){
             boolean allYears = checkBoxAllYears.isSelected();
             int startYear = -1, endYear = -1;
@@ -829,21 +838,23 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        JSlider s = (JSlider) e.getSource();
-        if( !s.getValueIsAdjusting() ){
-            switch( s.getValue() ) {
-                case 0:
-                    TextAreaLogHandler.getInstance().setLoggingLevel(Level.WARNING);
-                    break;
-                case 1:
-                    TextAreaLogHandler.getInstance().setLoggingLevel(Level.INFO);
-                    break;
-                case 2:
+        if( e.getSource() instanceof JSlider && e.getSource().equals(sliderLogLvl) ){
+            JSlider s = (JSlider) e.getSource();
+            if( !s.getValueIsAdjusting() ){
+                switch( s.getValue() ) {
+                    case 0:
+                        TextAreaLogHandler.getInstance().setLoggingLevel(Level.WARNING);
+                        break;
+                    case 1:
+                        TextAreaLogHandler.getInstance().setLoggingLevel(Level.INFO);
+                        break;
+                    case 2:
                     //TextAreaLogHandler.getInstance().setLoggingLevel(Level.FINE);
-                    //break;
-                    //case 3:
-                    TextAreaLogHandler.getInstance().setLoggingLevel(Level.FINER);
-                    break;
+                        //break;
+                        //case 3:
+                        TextAreaLogHandler.getInstance().setLoggingLevel(Level.FINER);
+                        break;
+                }
             }
         }
     }
@@ -855,14 +866,16 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
             public void menuSelected(MenuEvent e) {
                 SwingUtilities.invokeLater(() -> {
                     String title1 = "<html><body>"
-                            + "<h3>DendroCOR v. "+APP_VERSION+"</h3><br>"
+                            + "<h3>DendroCOR v. " + APP_VERSION + "</h3><br>"
+                            + java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("dla Katedry Paleogeografii")
+                            + "<br><br>"
                             + "\u00a9 Aleksander Hulist (2014)<br>"
                             + "aleksander.hulist@gmail.com<br><br>"
                             + "</body></html>";
-                                /*"<html><body style='width: 200px; padding: 5px;'>"
-                                + "<h1>Do U C Me?</h1>"
-                                + "Here is a long string that will wrap.  "
-                                + "The effect we want is a multi-line label.";*/
+                    /*"<html><body style='width: 200px; padding: 5px;'>"
+                     + "<h1>Do U C Me?</h1>"
+                     + "Here is a long string that will wrap.  "
+                     + "The effect we want is a multi-line label.";*/
                     JLabel textLabel = new JLabel(title1);
                     JOptionPane.showMessageDialog(null, textLabel);
                 });
