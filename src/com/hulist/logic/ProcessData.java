@@ -12,6 +12,8 @@ import com.hulist.logic.chronology.tabs.TabsDataContainer;
 import com.hulist.logic.chronology.tabs.TabsImporter;
 import com.hulist.logic.climate._prn.PrnDataContainer;
 import com.hulist.logic.climate._prn.PrnImporter;
+import com.hulist.logic.climate.ao.AoDataContainer;
+import com.hulist.logic.climate.ao.AoImporter;
 import com.hulist.logic.climate.icru.IcruDataContainer;
 import com.hulist.logic.climate.icru.IcruImporter;
 import com.hulist.util.FileChooser;
@@ -35,8 +37,8 @@ public class ProcessData implements Runnable {
     private final Logger log;
     private Thread computationThread;
 
-    private final ArrayList<DetailedFileDataContainer> chronologyDataContainer = new ArrayList<>();
-    private final ArrayList<DetailedFileDataContainer> climateDataContainer = new ArrayList<>();
+    private final ArrayList<FileDataContainer> chronologyDataContainer = new ArrayList<>();
+    private final ArrayList<FileDataContainer> climateDataContainer = new ArrayList<>();
     private final DataToCorrelate dataToCorrelate = new DataToCorrelate();
     private final ArrayList<Results> results = new ArrayList<>();
 
@@ -50,7 +52,7 @@ public class ProcessData implements Runnable {
         this.computationThread = new Thread(this);
         
         fc.setAddXlsxExt(true);
-        fc.setOnSaveDialogMessage(java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("CZY ZAPISAĆ OTRZYMANE DANE DO PLIKU?"));
+        fc.setOnSaveDialogMessage(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("CZY ZAPISAĆ OTRZYMANE DANE DO PLIKU?"));
     }
 
     public ProcessData(WindowParams wp, Thread.UncaughtExceptionHandler handler) {
@@ -117,6 +119,15 @@ public class ProcessData implements Runnable {
             climateDataContainer.add(icruCont);
         }
     }
+    
+    private void getAo() throws IOException {
+        for( File file : wp.getClimateFiles() ) {
+            AoImporter aoImporter = new AoImporter(wp.isAllYears(), wp.getStartYear(), wp.getEndYear());
+            AoDataContainer aoCont = aoImporter.getData(file).get(0);
+
+            climateDataContainer.add(aoCont);
+        }
+    }
 
     private void getPrn() throws IOException {
         for( File file : wp.getClimateFiles() ) {
@@ -128,9 +139,9 @@ public class ProcessData implements Runnable {
     }
 
     private void process() {
-        for( DetailedFileDataContainer chronology : chronologyDataContainer ) {
+        for( FileDataContainer chronology : chronologyDataContainer ) {
 
-            for( DetailedFileDataContainer climate : climateDataContainer ) {
+            for( FileDataContainer climate : climateDataContainer ) {
                 String primaryColumnName = chronology.getSourceFile().getName();
                 int commonYearStartLimit = Math.max(chronology.getYearMin(), climate.getYearMin());
                 int commonYearEndLimit = Math.min(chronology.getYearMax(), climate.getYearMax());
@@ -162,15 +173,20 @@ public class ProcessData implements Runnable {
                             Column prnC = new Column(climateColumnsName, prnData);
                             dataToCorrelate.columns.put(months, prnC);
                             break;*/
+                        case AO:
+                            double[] aoData = ((AoDataContainer) climate).getArray(months, commonYearStartLimit, commonYearEndLimit);
+                            Column aoC = new Column(climateColumnsName, aoData);
+                            dataToCorrelate.columns.put(months, aoC);
+                            break;
                     }
                 }
 
                 if( chronology.isEmpty() || climate.isEmpty() ){
                     if( chronology.isEmpty() ){
-                        log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
+                        log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
                     }
                     if( climate.isEmpty() ){
-                        log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), climateColumnsName));
+                        log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), climateColumnsName));
                     }
                     break;
                 }
@@ -191,7 +207,7 @@ public class ProcessData implements Runnable {
     private void save() {
         File[] saveDest = fc.call();
         if( saveDest != null && saveDest.length>0 && saveDest[0]!=null ){
-            log.log(Level.INFO, java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("ZAPISYWANIE..."));
+            log.log(Level.INFO, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ZAPISYWANIE..."));
             ResultsSaver saver = new ResultsSaver(wp, saveDest[0], results);
             saver.save();
         }
@@ -199,7 +215,7 @@ public class ProcessData implements Runnable {
 
     @Override
     public void run() {
-        log.log(Level.FINE, java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("URUCHOMIONO PRZETWARZANIE DANYCH."));
+        log.log(Level.FINE, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("URUCHOMIONO PRZETWARZANIE DANYCH."));
         try {
             switch( wp.getChronologyFileType() ) {
                 case TABS:
@@ -217,16 +233,19 @@ public class ProcessData implements Runnable {
                 /*case PRN:
                     getPrn();
                     break;*/
+                case AO:
+                    getAo();
+                    break;
             }
 
             process();
             save();
         } catch( NullPointerException | IOException ex ) {
-            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("BŁĄD ODCZYTU Z PLIKU."));
+            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("BŁĄD ODCZYTU Z PLIKU."));
             log.log(Level.FINEST, Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
         } catch( Exception ex ) {
-            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/ProcessData").getString("WYSTĄPIŁ NIEZNANY BŁĄD."));
+            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("WYSTĄPIŁ NIEZNANY BŁĄD."));
             log.log(Level.FINEST, Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
         }

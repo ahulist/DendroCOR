@@ -26,8 +26,8 @@ import java.util.logging.Level;
  */
 public class IcruImporter extends BaseImporter implements DataImporter<IcruDataContainer> {
 
-    public static final double ICRU_VALUE_MAX = Double.MAX_VALUE;
-    public static final double ICRU_VALUE_MIN = -Double.MAX_VALUE;
+    public static final double ICRU_VALUE_MAX = 998;//Double.MAX_VALUE;
+    public static final double ICRU_VALUE_MIN = -998;//-Double.MAX_VALUE;
 
     public IcruImporter(boolean isAllYears, int startYear, int endYear) {
         super(isAllYears, startYear, endYear);
@@ -45,7 +45,7 @@ public class IcruImporter extends BaseImporter implements DataImporter<IcruDataC
         int lineCounter = 1;
         while( (line = br.readLine()) != null ) {
             if( !line.startsWith("#") ){
-                String msg = String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("BŁĘDNY FORMAT PLIKU %S."), f.getName());
+                String msg = String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("BŁĘDNY FORMAT PLIKU %S."), f.getName());
                 String[] data = line.trim().split("[\\s\\t]+");
                 try {
                     if( allYears
@@ -62,12 +62,12 @@ public class IcruImporter extends BaseImporter implements DataImporter<IcruDataC
                             if( value < ICRU_VALUE_MIN || value > ICRU_VALUE_MAX ){
                                 StringBuilder sb = new StringBuilder();
                                 if( value < ICRU_VALUE_MIN ){
-                                    sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("ODCZYTANA WARTOŚĆ < ")).append(ICRU_VALUE_MIN);
+                                    sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ODCZYTANA WARTOŚĆ < ")).append(ICRU_VALUE_MIN);
                                 }
                                 if( value > ICRU_VALUE_MAX ){
-                                    sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString("ODCZYTANA WARTOŚĆ > ")).append(ICRU_VALUE_MAX);
+                                    sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ODCZYTANA WARTOŚĆ > ")).append(ICRU_VALUE_MAX);
                                 }
-                                sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString(", W PLIKU ")).append(f.getCanonicalPath()).append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString(" DLA ROKU ")).append(year).append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Importers").getString(", DLA MIESIĄCA ")).append(month);
+                                sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString(", W PLIKU ")).append(f.getCanonicalPath()).append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString(" DLA ROKU ")).append(year).append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString(", DLA MIESIĄCA ")).append(month);
                                 throw new IllegalArgumentException(sb.toString());
                             }
                             lineData.addMonthlyData(month, value);

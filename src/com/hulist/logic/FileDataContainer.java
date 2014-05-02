@@ -12,12 +12,12 @@ import java.io.File;
  *
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
-public abstract class DetailedFileDataContainer{
+public abstract class FileDataContainer{
 
     private File sourceFile;
     private int yearMin = Integer.MAX_VALUE, yearMax = Integer.MIN_VALUE;
 
-    public DetailedFileDataContainer(File sourceFile) {
+    public FileDataContainer(File sourceFile) {
         this.sourceFile = sourceFile;
     }
     

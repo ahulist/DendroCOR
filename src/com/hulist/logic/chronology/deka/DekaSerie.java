@@ -5,7 +5,7 @@
  */
 package com.hulist.logic.chronology.deka;
 
-import com.hulist.logic.DetailedFileDataContainer;
+import com.hulist.logic.FileDataContainer;
 import java.io.File;
 import java.util.HashMap;
 
@@ -13,7 +13,7 @@ import java.util.HashMap;
  *
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
-public class DekaSerie extends DetailedFileDataContainer {
+public class DekaSerie extends FileDataContainer {
 
     private String chronoCode;
     private HashMap<Integer, Double> data;

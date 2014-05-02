@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  * @param <K>
  */
-public interface DataImporter<K extends DetailedFileDataContainer> {
+public interface DataImporter<K extends FileDataContainer> {
     
     public ArrayList<K> getData(File f) throws FileNotFoundException, IOException;
     

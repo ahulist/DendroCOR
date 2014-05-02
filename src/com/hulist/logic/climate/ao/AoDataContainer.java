@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hulist.logic.climate._prn;
+package com.hulist.logic.climate.ao;
 
 import com.hulist.logic.FileDataContainer;
 import com.hulist.util.Months;
 import com.hulist.util.MonthsPair;
+import com.hulist.util.Pair;
 import java.io.File;
 import java.util.HashMap;
 
@@ -15,28 +16,44 @@ import java.util.HashMap;
  *
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
-public class PrnDataContainer extends FileDataContainer {
+public class AoDataContainer extends FileDataContainer {
 
-    private final HashMap<Integer, PrnLineContainer> data = new HashMap<>();
-
-    public PrnDataContainer(File sourceFile) {
+    //private final HashMap<Integer, AoLineContainer> data = new HashMap<>();
+    private final HashMap<Pair<Integer, Months>, Double> data = new HashMap<>();
+    
+    public AoDataContainer(File sourceFile) {
         super(sourceFile);
     }
 
-    public double getTemp(int year, Months month) {
+    /*public double getTemp(int year, Months month) {
         return data.get(year).getTemp(month);
     }
 
-    public PrnLineContainer getYearlyTemps(int year) {
+    public AoLineContainer getYearlyTemps(int year) {
         return data.get(year);
     }
 
-    public void addYearlyData(int year, PrnLineContainer ilc) {
+    public void addYearlyData(int year, AoLineContainer ilc) {
         this.data.put(year, ilc);
         updateMinMax(ilc.getYear());
+    }*/
+    
+    /**
+     * 
+     * @param year
+     * @param month 1-based
+     * @param data 
+     */
+    public void addLine(int year, int month, double data){
+        addLine(year, Months.getMonth(month), data);
+    }
+    
+    public void addLine(int year, Months month, double data){
+        this.data.put(new Pair<>(year, month), data);
+        updateMinMax(year);
     }
 
-    public HashMap<Integer, PrnLineContainer> getData() {
+    public HashMap<Pair<Integer, Months>, Double> getData() {
         return data;
     }
 
@@ -48,19 +65,20 @@ public class PrnDataContainer extends FileDataContainer {
         int numOfYears = yearEnd - yearStart + 1;
         double[] arr = new double[numOfYears];
         for( int i = yearStart; i <= yearEnd; i++ ) {
+            //System.out.println(col.toString()+"\t"+i);
             double sum = 0;
             double dividers = 0;
             Months currMonth = col.start;
             int currMonthOrdinal = currMonth.ordinal();
             while( currMonthOrdinal <= col.end.ordinal() ) {
-                sum += this.data.get(i).getTemp(currMonth);
+                sum += this.data.get( new Pair<>(i, currMonth) );
                 currMonth = currMonth.getNext();
                 currMonthOrdinal++;
                 dividers++;
             }
             sum /= dividers;
 
-            arr[i - yearStart] = sum;
+            arr[i - yearStart/*getYearMin()*/] = sum;
         }
         return arr;
     }

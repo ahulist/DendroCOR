@@ -55,7 +55,7 @@ public class TextAreaToMonths {
                 list.add(pair);
             } catch( NumberFormatException | AssertionError e ) {
                 if( !line.equals("") && !isLoggingOn ){
-                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/TextAreaToMonths").getString("ZAKRES MIESIĘCY \"%S\" NIE JEST POPRAWNY."), line));
+                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ZAKRES MIESIĘCY %S NIE JEST POPRAWNY."), line));
                     log.log(Level.FINEST, Misc.stackTraceToString(e));
                 }
             }

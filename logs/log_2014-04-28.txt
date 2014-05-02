@@ -1,0 +1,8 @@
+17:46:00 ===================================================
+
+FINE: Zmieniono poziom logowania na INFO
+FINER: Okno zainicjalizowano.
+17:47:16 ===================================================
+
+FINE: Zmieniono poziom logowania na INFO
+FINER: Okno zainicjalizowano.

@@ -1,0 +1,11 @@
+23:00:01 ===================================================
+
+FINE: Zmieniono poziom logowania na INFO
+FINER: Okno zainicjalizowano.
+FINE: Logging level changed to FINER.
+WARNING: Choose chronology file.
+WARNING: Choose climate file.
+23:01:38 ===================================================
+
+FINE: Zmieniono poziom logowania na INFO
+FINER: Okno zainicjalizowano.

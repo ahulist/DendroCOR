@@ -429,3 +429,455 @@ FINE: fine
 FINER: finer
 WARNING: Wybierz plik chronologii.
 WARNING: Wybierz plik klimatyczny.
+20:27:58 ===================================================
+
+FINE: Zmieniono poziom logowania na INFO
+FINER: Okno zainicjalizowano.
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt
+FINE: Wybrano rodzaj pliku: *_tabs.txt
+FINE: wybrano kolumnę RES
+FINE: wybrano kolumnę _ao.dat.txt
+FINE: Załadowano plik(i) klimatyczny: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt
+FINE: Zmieniono poziom logowania na FINER
+FINEST: WindowParams: [true, -1, -1, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt], TABS, RES, AO]
+FINE: Uruchomiono przetwarzanie danych.
+SEVERE: Błąd odczytu z pliku.
+FINEST: java.lang.NullPointerException
+	at com.hulist.logic.PearsonsCorrelationProcessing.go(PearsonsCorrelationProcessing.java:55)
+	at com.hulist.logic.ProcessData.process(ProcessData.java:190)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:236)
+	at java.lang.Thread.run(Thread.java:744)
+
+20:40:38 ===================================================
+
+FINE: Zmieniono poziom logowania na INFO
+FINER: Okno zainicjalizowano.
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt
+FINE: Wybrano rodzaj pliku: *_tabs.txt
+FINE: wybrano kolumnę RES
+FINE: Załadowano plik(i) klimatyczny: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt
+FINE: wybrano kolumnę _ao.dat.txt
+FINEST: WindowParams: [true, -1, -1, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt], TABS, RES, AO]
+FINE: Uruchomiono przetwarzanie danych.
+20:46:18 ===================================================
+
+FINE: Zmieniono poziom logowania na INFO
+FINER: Okno zainicjalizowano.
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt
+FINE: Załadowano plik(i) klimatyczny: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt
+FINE: wybrano kolumnę _ao.dat.txt
+FINE: Wybrano rodzaj pliku: *_tabs.txt
+FINE: wybrano kolumnę STD
+FINE: Zmieniono poziom logowania na FINER
+FINEST: WindowParams: [true, -1, -1, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt], TABS, STD, AO]
+FINE: Uruchomiono przetwarzanie danych.
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 JAN-J
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 FEB-F
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 MAR-M
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 APR-A
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 MAY-M
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 JUN-J
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 JUL-J
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 AUG-A
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 SEP-S
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 OCT-O
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 NOV-N
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 DEC-D
+NaN       
+SEVERE: Zbyt duże przesunięcie lat: JAN-JAN (1)
+FINEST: WindowParams: [true, -1, -1, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt], TABS, STD, AO]
+FINE: Uruchomiono przetwarzanie danych.
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 JAN-J
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 FEB-F
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 MAR-M
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 APR-A
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 MAY-M
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 JUN-J
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 JUL-J
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 AUG-A
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 SEP-S
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 OCT-O
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 NOV-N
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (2147483647--2147483648 DEC-D
+NaN       
+SEVERE: Zbyt duże przesunięcie lat: JAN-JAN (1)
+20:49:56 ===================================================
+
+FINE: Zmieniono poziom logowania na INFO
+FINER: Okno zainicjalizowano.
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt
+FINE: Wybrano rodzaj pliku: *_tabs.txt
+FINE: wybrano kolumnę RES
+FINE: Załadowano plik(i) klimatyczny: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt
+FINE: wybrano kolumnę _ao.dat.txt
+FINE: Zmieniono poziom logowania na FINER
+FINEST: WindowParams: [true, -1, -1, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt], TABS, RES, AO]
+FINE: Uruchomiono przetwarzanie danych.
+INFO: korelacja  tk.rwl_tabs.txt (RES) / icpc_ao.dat.txt (2147483647--2147483648 JAN-J
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (RES) / icpc_ao.dat.txt (2147483647--2147483648 FEB-F
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (RES) / icpc_ao.dat.txt (2147483647--2147483648 MAR-M
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (RES) / icpc_ao.dat.txt (2147483647--2147483648 APR-A
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (RES) / icpc_ao.dat.txt (2147483647--2147483648 MAY-M
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (RES) / icpc_ao.dat.txt (2147483647--2147483648 JUN-J
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (RES) / icpc_ao.dat.txt (2147483647--2147483648 JUL-J
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (RES) / icpc_ao.dat.txt (2147483647--2147483648 AUG-A
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (RES) / icpc_ao.dat.txt (2147483647--2147483648 SEP-S
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (RES) / icpc_ao.dat.txt (2147483647--2147483648 OCT-O
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (RES) / icpc_ao.dat.txt (2147483647--2147483648 NOV-N
+NaN       
+INFO: korelacja  tk.rwl_tabs.txt (RES) / icpc_ao.dat.txt (2147483647--2147483648 DEC-D
+NaN       
+20:52:15 ===================================================
+
+FINE: Zmieniono poziom logowania na INFO
+FINER: Okno zainicjalizowano.
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt
+FINE: Załadowano plik(i) klimatyczny: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt
+FINE: wybrano kolumnę _ao.dat.txt
+FINE: Wybrano rodzaj pliku: *_tabs.txt
+FINE: wybrano kolumnę RES
+FINE: Zmieniono poziom logowania na FINER
+FINEST: WindowParams: [true, -1, -1, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt], TABS, RES, AO]
+FINE: Uruchomiono przetwarzanie danych.
+20:56:12 ===================================================
+
+FINE: Zmieniono poziom logowania na INFO
+FINER: Okno zainicjalizowano.
+FINE: Załadowano plik(i) chronologii: E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt
+FINE: Załadowano plik(i) klimatyczny: E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt
+FINE: wybrano kolumnę _ao.dat.txt
+FINE: Wybrano rodzaj pliku: *_tabs.txt
+FINE: wybrano kolumnę STD
+FINE: Zmieniono poziom logowania na FINER
+FINEST: WindowParams: [true, -1, -1, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt], TABS, STD, AO]
+FINE: Uruchomiono przetwarzanie danych.
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JAN-JAN (1))      
+-0,5100828349
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 FEB-FEB (1))      
+-0,2152094159
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAR-MAR (1))      
+-0,1982620580
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 APR-APR (1))      
+ 0,0960760635
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAY-MAY (1))      
+-0,1164041662
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUN-JUN (1))      
+ 0,0668348772
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUL-JUL (1))      
+-0,0393630834
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 AUG-AUG (1))      
+-0,3547139534
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 SEP-SEP (1))      
+-0,0006570614
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 OCT-OCT (1))      
+-0,1194797251
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 NOV-NOV (1))      
+-0,2185562845
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 DEC-DEC (1))      
+-0,1751894088
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JAN-DEC)          
+-0,1749195876
+FINEST: WindowParams: [true, -1, -1, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt], TABS, STD, AO]
+FINE: Uruchomiono przetwarzanie danych.
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JAN-JAN)          
+-0,1915992759
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 FEB-FEB)          
+-0,1526502976
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAR-MAR)          
+-0,2653508518
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 APR-APR)          
+ 0,0909042340
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAY-MAY)          
+-0,0445222724
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUN-JUN)          
+-0,0106252249
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUL-JUL)          
+-0,0469550486
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 AUG-AUG)          
+-0,0811063363
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 SEP-SEP)          
+ 0,0200333343
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 OCT-OCT)          
+ 0,0536931104
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 NOV-NOV)          
+-0,1471815219
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 DEC-DEC)          
+ 0,0852216823
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JAN-JAN (1))      
+-0,5100828349
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 FEB-FEB (1))      
+-0,2152094159
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAR-MAR (1))      
+-0,1982620580
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 APR-APR (1))      
+ 0,0960760635
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAY-MAY (1))      
+-0,1164041662
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUN-JUN (1))      
+ 0,0668348772
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUL-JUL (1))      
+-0,0393630834
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 AUG-AUG (1))      
+-0,3547139534
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 SEP-SEP (1))      
+-0,0006570614
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 OCT-OCT (1))      
+-0,1194797251
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 NOV-NOV (1))      
+-0,2185562845
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 DEC-DEC (1))      
+-0,1751894088
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JAN-DEC)          
+-0,1749195876
+INFO: Zapisywanie...
+INFO: 
+Dane zapisano do pliku aaa.xlsx
+-------------------------------------
+FINE: Zmieniono poziom logowania na INFO
+FINE: Zmieniono poziom logowania na WARNING
+FINEST: WindowParams: [true, -1, -1, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt], TABS, STD, AO]
+FINE: Uruchomiono przetwarzanie danych.
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JAN-JAN)          
+-0,1915992759
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 FEB-FEB)          
+-0,1526502976
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAR-MAR)          
+-0,2653508518
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 APR-APR)          
+ 0,0909042340
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAY-MAY)          
+-0,0445222724
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUN-JUN)          
+-0,0106252249
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUL-JUL)          
+-0,0469550486
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 AUG-AUG)          
+-0,0811063363
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 SEP-SEP)          
+ 0,0200333343
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 OCT-OCT)          
+ 0,0536931104
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 NOV-NOV)          
+-0,1471815219
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 DEC-DEC)          
+ 0,0852216823
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JAN-JAN (1))      
+-0,5100828349
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 FEB-FEB (1))      
+-0,2152094159
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAR-MAR (1))      
+-0,1982620580
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 APR-APR (1))      
+ 0,0960760635
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAY-MAY (1))      
+-0,1164041662
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUN-JUN (1))      
+ 0,0668348772
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUL-JUL (1))      
+-0,0393630834
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 AUG-AUG (1))      
+-0,3547139534
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 SEP-SEP (1))      
+-0,0006570614
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 OCT-OCT (1))      
+-0,1194797251
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 NOV-NOV (1))      
+-0,2185562845
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 DEC-DEC (1))      
+-0,1751894088
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JAN-DEC)          
+-0,1749195876
+FINE: Zmieniono poziom logowania na INFO
+FINEST: WindowParams: [true, -1, -1, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt], TABS, STD, AO]
+FINE: Uruchomiono przetwarzanie danych.
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JAN-JAN)          
+-0,1915992759
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 FEB-FEB)          
+-0,1526502976
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAR-MAR)          
+-0,2653508518
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 APR-APR)          
+ 0,0909042340
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAY-MAY)          
+-0,0445222724
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUN-JUN)          
+-0,0106252249
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUL-JUL)          
+-0,0469550486
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 AUG-AUG)          
+-0,0811063363
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 SEP-SEP)          
+ 0,0200333343
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 OCT-OCT)          
+ 0,0536931104
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 NOV-NOV)          
+-0,1471815219
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 DEC-DEC)          
+ 0,0852216823
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JAN-JAN (1))      
+-0,5100828349
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 FEB-FEB (1))      
+-0,2152094159
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAR-MAR (1))      
+-0,1982620580
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 APR-APR (1))      
+ 0,0960760635
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAY-MAY (1))      
+-0,1164041662
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUN-JUN (1))      
+ 0,0668348772
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUL-JUL (1))      
+-0,0393630834
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 AUG-AUG (1))      
+-0,3547139534
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 SEP-SEP (1))      
+-0,0006570614
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 OCT-OCT (1))      
+-0,1194797251
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 NOV-NOV (1))      
+-0,2185562845
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 DEC-DEC (1))      
+-0,1751894088
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JAN-DEC)          
+-0,1749195876
+FINEST: WindowParams: [true, -1, -1, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt], TABS, STD, AO]
+FINE: Uruchomiono przetwarzanie danych.
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JAN-JAN)          
+-0,1915992759
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 FEB-FEB)          
+-0,1526502976
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAR-MAR)          
+-0,2653508518
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 APR-APR)          
+ 0,0909042340
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAY-MAY)          
+-0,0445222724
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUN-JUN)          
+-0,0106252249
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUL-JUL)          
+-0,0469550486
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 AUG-AUG)          
+-0,0811063363
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 SEP-SEP)          
+ 0,0200333343
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 OCT-OCT)          
+ 0,0536931104
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 NOV-NOV)          
+-0,1471815219
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 DEC-DEC)          
+ 0,0852216823
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JAN-JAN (1))      
+-0,5100828349
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 FEB-FEB (1))      
+-0,2152094159
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAR-MAR (1))      
+-0,1982620580
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 APR-APR (1))      
+ 0,0960760635
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 MAY-MAY (1))      
+-0,1164041662
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUN-JUN (1))      
+ 0,0668348772
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JUL-JUL (1))      
+-0,0393630834
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 AUG-AUG (1))      
+-0,3547139534
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 SEP-SEP (1))      
+-0,0006570614
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 OCT-OCT (1))      
+-0,1194797251
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 NOV-NOV (1))      
+-0,2185562845
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 DEC-DEC (1))      
+-0,1751894088
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2012 JAN-DEC)          
+-0,1749195876
+FINE: Zmieniono poziom logowania na FINER
+FINEST: WindowParams: [false, 1865, 2002, [E:\Praca\Katedra Dendrologii\TABSY\pliki\tk.rwl_tabs.txt], [E:\Praca\Katedra Dendrologii\TABSY\pliki\nowe\icpc_ao.dat.txt], TABS, STD, AO]
+FINE: Uruchomiono przetwarzanie danych.
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 JAN-JAN)          
+-0,2122176000
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 FEB-FEB)          
+-0,1884692305
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 MAR-MAR)          
+-0,2544298156
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 APR-APR)          
+ 0,0829217699
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 MAY-MAY)          
+-0,0150814304
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 JUN-JUN)          
+-0,0565454805
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 JUL-JUL)          
+-0,0979392475
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 AUG-AUG)          
+-0,0924083065
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 SEP-SEP)          
+ 0,0463896842
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 OCT-OCT)          
+ 0,0140645462
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 NOV-NOV)          
+-0,1319390804
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 DEC-DEC)          
+ 0,0662214706
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 JAN-JAN (1))      
+-0,4825921785
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 FEB-FEB (1))      
+-0,1854168542
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 MAR-MAR (1))      
+-0,1582744034
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 APR-APR (1))      
+ 0,1480423374
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 MAY-MAY (1))      
+-0,0915840125
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 JUN-JUN (1))      
+ 0,0560021997
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 JUL-JUL (1))      
+-0,0823160312
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 AUG-AUG (1))      
+-0,3747688706
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 SEP-SEP (1))      
+ 0,0130768503
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 OCT-OCT (1))      
+-0,1676208688
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 NOV-NOV (1))      
+-0,2704906156
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 DEC-DEC (1))      
+-0,2525275599
+INFO: korelacja  tk.rwl_tabs.txt (STD) / icpc_ao.dat.txt (1950-2002 JAN-DEC)          
+-0,2107860753
+21:04:06 ===================================================
+
+FINE: Zmieniono poziom logowania na INFO
+FINER: Okno zainicjalizowano.

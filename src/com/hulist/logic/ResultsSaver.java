@@ -54,7 +54,7 @@ public class ResultsSaver {
                 fos = new FileInputStream(file);
                 wb = new XSSFWorkbook(fos);
             } catch( IOException ex ) {
-                log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/ResultsSaver").getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
+                log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
                 log.log(Level.FINEST, Misc.stackTraceToString(ex));
                 throw new RuntimeException();
             }
@@ -69,7 +69,7 @@ public class ResultsSaver {
         }
 
         if( appendingToExistingFile && !isFirstRowCoherent(sh) ){
-            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/ResultsSaver").getString("NIESPÓJNE KOLUMNY W ISTNIEJĄCYM PLIKU."));
+            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("NIESPÓJNE KOLUMNY W ISTNIEJĄCYM PLIKU."));
             return;
         }
 
@@ -102,10 +102,10 @@ public class ResultsSaver {
 
         try {
             ExcelUtil.saveToFile(file, wb);
-            log.log(Level.INFO, String.format("\n"+java.util.ResourceBundle.getBundle("com/hulist/bundle/ResultsSaver").getString("DANE ZAPISANO DO PLIKU %S")
+            log.log(Level.INFO, String.format("\n"+java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("DANE ZAPISANO DO PLIKU %S")
                     + "\n-------------------------------------", file.getName()));
         } catch( IOException ex ) {
-            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/ResultsSaver").getString("BŁĄD ZAPISU PLIKU."));
+            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("BŁĄD ZAPISU PLIKU."));
             log.log(Level.FINEST, Misc.stackTraceToString(ex));
         }
     }

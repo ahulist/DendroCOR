@@ -6,14 +6,14 @@
 package com.hulist.logic.chronology.tabs;
 
 import java.util.HashMap;
-import com.hulist.logic.DetailedFileDataContainer;
+import com.hulist.logic.FileDataContainer;
 import java.io.File;
 
 /**
  *
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
-public class TabsDataContainer extends DetailedFileDataContainer {
+public class TabsDataContainer extends FileDataContainer {
 
     /**
      * key (Integer) is a year

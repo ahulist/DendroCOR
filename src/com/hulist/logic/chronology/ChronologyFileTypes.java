@@ -11,7 +11,7 @@ package com.hulist.logic.chronology;
  */
 public enum ChronologyFileTypes {
 
-    DEKADOWY("dekadowy"),
+    DEKADOWY(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("dekadowy")),
     TABS("*_tabs.txt");
 
     String displayName;

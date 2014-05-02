@@ -75,7 +75,7 @@ public class FileChooser {
                     break;
             }
         } catch( HeadlessException e ) {
-            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/FileChooser").getString("WYSTĄPIŁ BŁĄD PODCZAS OTWIERANIA OKNA DIALOGOWEGO"));
+            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("WYSTĄPIŁ BŁĄD PODCZAS OTWIERANIA OKNA DIALOGOWEGO"));
             log.log(Level.FINEST, Misc.stackTraceToString(e));
         }
 
@@ -103,7 +103,7 @@ public class FileChooser {
                 try {
                     String n = filesArray[0].getCanonicalPath();
                     if( n.endsWith(".xls") ){
-                        log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/FileChooser").getString("WYBRANO PLIK Z ROZSZERZENIEM .XLS - ZMIANA NA .XLSX"));
+                        log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("WYBRANO PLIK Z ROZSZERZENIEM .XLS - ZMIANA NA .XLSX"));
                     }
                     if( !n.endsWith(".xlsx") ){
                         String n2 = filesArray[0].getCanonicalPath() + ".xlsx";

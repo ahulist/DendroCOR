@@ -5,7 +5,7 @@
  */
 package com.hulist.logic.climate.icru;
 
-import com.hulist.logic.DetailedFileDataContainer;
+import com.hulist.logic.FileDataContainer;
 import com.hulist.util.Months;
 import com.hulist.util.MonthsPair;
 import java.io.File;
@@ -15,7 +15,7 @@ import java.util.HashMap;
  *
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
-public class IcruDataContainer extends DetailedFileDataContainer {
+public class IcruDataContainer extends FileDataContainer {
 
     private final HashMap<Integer, IcruLineContainer> data = new HashMap<>();
 

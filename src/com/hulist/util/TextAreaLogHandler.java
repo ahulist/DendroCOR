@@ -101,7 +101,7 @@ public class TextAreaLogHandler extends Handler {
     }
 
     public void setLoggingLevel(Level l) {
-        log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/TextAreaLogHandler").getString("ZMIENIONO POZIOM LOGOWANINA NA %S"), l));
+        log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ZMIENIONO POZIOM LOGOWANINA NA %S"), l));
         this.level = l;
     }
 

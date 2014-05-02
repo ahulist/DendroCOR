@@ -50,7 +50,7 @@ import javax.swing.text.DefaultCaret;
 public class MainWindow extends javax.swing.JFrame implements LocaleChangeListener, ChangeListener {
 
     public static final String APP_NAME = "DendroCOR";
-    public static final String APP_VERSION = "2.2";
+    public static final String APP_VERSION = "2.3.2";
 
     /**
      * Creates new form MainWindow
@@ -61,7 +61,7 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
         setUINames();
         setFromPreferences();
 
-        log.log(Level.FINER, java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("OKNO ZAINICJALIZOWANO."));
+        log.log(Level.FINER, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("OKNO ZAINICJALIZOWANO."));
     }
 
     private void secondaryInit() {
@@ -93,7 +93,7 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
         // helper tooltip
         ToolTipManager.sharedInstance().setDismissDelay(10000);
         ToolTipManager.sharedInstance().setInitialDelay(0);
-        labelTextAreaMonthsHelper.setToolTipText(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WPROWADŹ ZAKRESY MIESIĘCY W FORMACIE"));
+        labelTextAreaMonthsHelper.setToolTipText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("WPROWADŹ ZAKRESY MIESIĘCY W FORMACIE"));
 
         // months change listener
         textAreaMonths.getDocument().addDocumentListener(new DocumentListener() {
@@ -124,8 +124,8 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
         // logging level slider
         @SuppressWarnings("UseOfObsoleteCollectionType")
         Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
-        labelTable.put(0, new JLabel(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("MIN")));
-        labelTable.put(2, new JLabel(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("MAX")));
+        labelTable.put(0, new JLabel(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MIN")));
+        labelTable.put(2, new JLabel(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MAX")));
         sliderLogLvl.setLabelTable(labelTable);
         sliderLogLvl.setPaintLabels(true);
         sliderLogLvl.setPaintTicks(true);
@@ -501,23 +501,23 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
             if( file.length == 1 ){
                 labelLoadedChronoFile.setText(file[0].getName());
             } else {
-                labelLoadedChronoFile.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("ZAŁADOWANO PLIKÓW: ") + file.length);
+                labelLoadedChronoFile.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ZAŁADOWANO PLIKÓW: ") + file.length);
             }
             selectedChronoFile = file;
             for( int i = 0; i < file.length; i++ ) {
-                log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("ZAŁADOWANO PLIK(I) CHRONOLOGII: %S"), file[i].getAbsolutePath()));
+                log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ZAŁADOWANO PLIK(I) CHRONOLOGII: %S"), file[i].getAbsolutePath()));
             }
         }
     }//GEN-LAST:event_buttonSelectChronoFileActionPerformed
 
     private void comboBoxColSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxColSelectActionPerformed
-        log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WYBRANO KOLUMNĘ %S"), comboBoxColSelect.getSelectedItem().toString()));
+        log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("WYBRANO KOLUMNĘ %S"), comboBoxColSelect.getSelectedItem().toString()));
     }//GEN-LAST:event_comboBoxColSelectActionPerformed
 
     private void comboBoxChronoFileTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxChronoFileTypeActionPerformed
         JComboBox comboBox = (JComboBox) evt.getSource();
         String choice = comboBox.getSelectedItem().toString();
-        log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WYBRANO RODZAJ PLIKU: %S"), choice));
+        log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("WYBRANO RODZAJ PLIKU: %S"), choice));
         if( choice.equals(ChronologyFileTypes.TABS.getDisplayName()) ){
             comboBoxColSelect.setEnabled(true);
         } else {
@@ -590,7 +590,7 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void comboBoxClimateFileTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxClimateFileTypeActionPerformed
-        log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WYBRANO KOLUMNĘ %S"), comboBoxClimateFileType.getSelectedItem().toString()));
+        log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("WYBRANO KOLUMNĘ %S"), comboBoxClimateFileType.getSelectedItem().toString()));
     }//GEN-LAST:event_comboBoxClimateFileTypeActionPerformed
 
     private void buttonSelectClimateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSelectClimateFileActionPerformed
@@ -604,11 +604,11 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
             if( file.length == 1 ){
                 labelLoadedClimateFile.setText(file[0].getName());
             } else {
-                labelLoadedClimateFile.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("ZAŁADOWANO PLIKÓW: ") + file.length);
+                labelLoadedClimateFile.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ZAŁADOWANO PLIKÓW: ") + file.length);
             }
             selectedClimateFile = file;
             for( int i = 0; i < file.length; i++ ) {
-                log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("ZAŁADOWANO PLIK(I) KLIMATYCZNY: %S"), file[i].getAbsolutePath()));
+                log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ZAŁADOWANO PLIK(I) KLIMATYCZNY: %S"), file[i].getAbsolutePath()));
             }
         }
     }//GEN-LAST:event_buttonSelectClimateFileActionPerformed
@@ -737,36 +737,36 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
         boolean valid = true;
 
         if( !checkBoxAllYears.isSelected() && !YearsRangeValidator.validate(textFieldYearStart.getText(), textFieldYearEnd.getText()) ){
-            log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WPROWADŹ POPRAWNY ZAKRES LAT."));
+            log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("WPROWADŹ POPRAWNY ZAKRES LAT."));
             valid = false;
         }
 
         if( selectedChronoFile == null || selectedChronoFile.length == 0 || (selectedChronoFile.length == 1 && (selectedChronoFile[0] == null || !selectedChronoFile[0].isFile())) ){
             valid = false;
-            log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WYBIERZ PLIK CHRONOLOGII."));
+            log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("WYBIERZ PLIK CHRONOLOGII."));
         } else {
             for( File oneSelectedChronoFile : selectedChronoFile ) {
                 if( oneSelectedChronoFile == null ){
                     valid = false;
-                    log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("NIEPOPRAWNY PLIK CHRONOLOGII."));
+                    log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("NIEPOPRAWNY PLIK CHRONOLOGII."));
                 } else if( !oneSelectedChronoFile.isFile() ){
                     valid = false;
-                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("PLIK CHRONOLOGII %S NIE JEST PLIKIEM"), oneSelectedChronoFile.getName()));
+                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("PLIK CHRONOLOGII %S NIE JEST PLIKIEM"), oneSelectedChronoFile.getName()));
                 }
             }
         }
 
         if( selectedClimateFile == null || selectedClimateFile.length == 0 || (selectedClimateFile.length == 1 && (selectedClimateFile[0] == null || !selectedClimateFile[0].isFile())) ){
             valid = false;
-            log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WYBIERZ PLIK KLIMATYCZNY."));
+            log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("WYBIERZ PLIK KLIMATYCZNY."));
         } else {
             for( File oneSelectedClimateFile : selectedClimateFile ) {
                 if( oneSelectedClimateFile == null ){
                     valid = false;
-                    log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("NIEPOPRAWNY PLIK KLIMATYCZNY."));
+                    log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("NIEPOPRAWNY PLIK KLIMATYCZNY."));
                 } else if( !oneSelectedClimateFile.isFile() ){
                     valid = false;
-                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("PLIK KLIMATYCZNY %S NIE JEST PLIKIEM"), oneSelectedClimateFile.getName()));
+                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("PLIK KLIMATYCZNY %S NIE JEST PLIKIEM"), oneSelectedClimateFile.getName()));
                 }
             }
         }
@@ -833,7 +833,7 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
         buttonSelectChronoFile.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.buttonSelectChronoFile.text"));
         buttonSelectClimateFile.setText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("MainWindow.buttonSelectClimateFile.text"));
 
-        labelTextAreaMonthsHelper.setToolTipText(java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("WPROWADŹ ZAKRESY MIESIĘCY W FORMACIE"));
+        labelTextAreaMonthsHelper.setToolTipText(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("WPROWADŹ ZAKRESY MIESIĘCY W FORMACIE"));
     }
 
     @Override
@@ -867,7 +867,7 @@ public class MainWindow extends javax.swing.JFrame implements LocaleChangeListen
                 SwingUtilities.invokeLater(() -> {
                     String title1 = "<html><body>"
                             + "<h3>DendroCOR v. " + APP_VERSION + "</h3><br>"
-                            + java.util.ResourceBundle.getBundle("com/hulist/bundle/MainWindow").getString("dla Katedry Paleogeografii")
+                            + java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("dla Katedry Paleogeografii")
                             + "<br><br>"
                             + "\u00a9 Aleksander Hulist (2014)<br>"
                             + "aleksander.hulist@gmail.com<br><br>"
