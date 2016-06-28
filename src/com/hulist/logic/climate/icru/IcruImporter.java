@@ -5,6 +5,7 @@
  */
 package com.hulist.logic.climate.icru;
 
+import com.hulist.gui.MainWindow;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
 import com.hulist.util.Misc;
@@ -45,7 +46,6 @@ public class IcruImporter extends BaseImporter implements DataImporter<IcruDataC
         int lineCounter = 1;
         while( (line = br.readLine()) != null ) {
             if( !line.startsWith("#") ){
-                String msg = String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("BŁĘDNY FORMAT PLIKU %S."), f.getName());
                 String[] data = line.trim().split("[\\s\\t]+");
                 try {
                     if( allYears
@@ -53,7 +53,10 @@ public class IcruImporter extends BaseImporter implements DataImporter<IcruDataC
                             && Integer.parseInt(data[0]) >= startYear
                             && Integer.parseInt(data[0]) <= endYear) ){
 
-                        assert data.length == 13;
+                        //assert data.length == 13;
+                        if (!(data.length == 13)) {
+                            throw new IOException();
+                        }
                         int year = Integer.parseInt(data[0]);
                         IcruLineContainer lineData = new IcruLineContainer(year);
                         int counter = 1;
@@ -62,12 +65,12 @@ public class IcruImporter extends BaseImporter implements DataImporter<IcruDataC
                             if( value < ICRU_VALUE_MIN || value > ICRU_VALUE_MAX ){
                                 StringBuilder sb = new StringBuilder();
                                 if( value < ICRU_VALUE_MIN ){
-                                    sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ODCZYTANA WARTOŚĆ < ")).append(ICRU_VALUE_MIN);
+                                    sb.append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ODCZYTANA WARTOŚĆ < ")).append(ICRU_VALUE_MIN);
                                 }
                                 if( value > ICRU_VALUE_MAX ){
-                                    sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ODCZYTANA WARTOŚĆ > ")).append(ICRU_VALUE_MAX);
+                                    sb.append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ODCZYTANA WARTOŚĆ > ")).append(ICRU_VALUE_MAX);
                                 }
-                                sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString(", W PLIKU ")).append(f.getCanonicalPath()).append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString(" DLA ROKU ")).append(year).append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString(", DLA MIESIĄCA ")).append(month);
+                                sb.append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString(", W PLIKU ")).append(f.getCanonicalPath()).append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString(" DLA ROKU ")).append(year).append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString(", DLA MIESIĄCA ")).append(month);
                                 throw new IllegalArgumentException(sb.toString());
                             }
                             lineData.addMonthlyData(month, value);
@@ -75,14 +78,26 @@ public class IcruImporter extends BaseImporter implements DataImporter<IcruDataC
                         }
                         container.addYearlyData(year, lineData);
                     }
-                } catch( AssertionError | IOException | NumberFormatException e ) {
+                } catch( AssertionError e ) {
+                    String msg = String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("błędna liczba kolumn"), f.getName(), lineCounter);
+                    log.log(Level.WARNING, msg);
+                    log.log(Level.FINEST, Misc.stackTraceToString(e));
+                    throw new IOException(msg);
+                } catch( NumberFormatException e ) {
+                    String msg = String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("błędny format liczby"), f.getName(), lineCounter);
                     log.log(Level.WARNING, msg);
                     log.log(Level.FINEST, Misc.stackTraceToString(e));
                     throw new IOException(msg);
                 } catch( IllegalArgumentException e ) {
+                    String msg = e.getMessage();
                     log.log(Level.WARNING, msg);
                     log.log(Level.FINEST, Misc.stackTraceToString(e));
-                    throw new RuntimeException();
+                    throw new IOException();
+                } catch( IOException e ) {
+                    String msg = String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĘDNY FORMAT PLIKU %S W LINII %D."), f.getName(), lineCounter);
+                    log.log(Level.WARNING, msg);
+                    log.log(Level.FINEST, Misc.stackTraceToString(e));
+                    throw new IOException(msg);
                 }
 
             }

@@ -5,23 +5,27 @@
  */
 package com.hulist.logic.chronology;
 
+import static com.hulist.gui.MainWindow.BUNDLE;
+import java.util.ResourceBundle;
+
 /**
  *
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
 public enum ChronologyFileTypes {
 
-    DEKADOWY(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("dekadowy")),
-    TABS("*_tabs.txt");
+    DEKADOWY("ID Tucson (*.rwl)"/*java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("dekadowy")*/),
+    TABS("ID Arstan (*_tabs.txt)"),
+    TABS_MULTICOL("ID Arstan multicol");
 
-    String displayName;
+    String displayNameId;
 
-    private ChronologyFileTypes(String displayName) {
-        this.displayName = displayName;
+    private ChronologyFileTypes(String displayNameId) {
+        this.displayNameId = displayNameId;
     }
 
     public String getDisplayName() {
-        return displayName;
+        return ResourceBundle.getBundle(BUNDLE).getString(this.displayNameId);
     }
     
     /**

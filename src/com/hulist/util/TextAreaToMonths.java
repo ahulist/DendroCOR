@@ -5,6 +5,8 @@
  */
 package com.hulist.util;
 
+import com.hulist.gui.MainWindow;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,22 +42,34 @@ public class TextAreaToMonths {
         for( String line : lines ) {
             String[] elems = line.trim().split("\\s");
             try {
-                assert elems.length == 2 || elems.length == 3;
+//                assert elems.length == 2 || elems.length == 3;
+                if (!(elems.length == 2 || elems.length == 3)) {
+                    throw new IOException();
+                }
                 int start = Integer.parseInt(elems[0]);
                 int end = Integer.parseInt(elems[1]);
                 int yearsShift = 0;
-                assert start <= end;
-                assert start >= 1 && start <= 12;
-                assert end >= 1 && end <= 12;
+//                assert start <= end;
+//                assert start >= 1 && start <= 12;
+//                assert end >= 1 && end <= 12;
+                if (!(start <= end)) {
+                    throw new IOException();
+                }
+                if (!(start >= 1 && start <= 12)) {
+                    throw new IOException();
+                }
+                if (!(end >= 1 && end  <= 12)) {
+                    throw new IOException();
+                }
                 if( elems.length == 3 ){
                     yearsShift = Integer.parseInt(elems[2]);
                     assert yearsShift >= 0;
                 }
                 MonthsPair pair = new MonthsPair(Months.getMonth(start), Months.getMonth(end), yearsShift);
                 list.add(pair);
-            } catch( NumberFormatException | AssertionError e ) {
+            } catch( IOException | NumberFormatException | AssertionError e ) {
                 if( !line.equals("") && !isLoggingOn ){
-                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ZAKRES MIESIĘCY %S NIE JEST POPRAWNY."), line));
+                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ZAKRES MIESIĘCY %S NIE JEST POPRAWNY."), line));
                     log.log(Level.FINEST, Misc.stackTraceToString(e));
                 }
             }

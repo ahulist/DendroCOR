@@ -1,0 +1,889 @@
+15:31:06 ===================================================
+
+FINE: Logging level changed to FINER.
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [icru_cld_0-360E_-90-90N_n.dat.txt], DEKADOWY, RAW, ICRU]
+FINE: Data processing started.
+WARNING: Incorrect file format of 10TRW-CW.rwl_tabs.txt in line 1
+FINEST: java.lang.NumberFormatException: For input string: "num"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+	at java.lang.Integer.parseInt(Integer.java:580)
+	at java.lang.Integer.parseInt(Integer.java:615)
+	at com.hulist.logic.chronology.deka.DekaImporter.getData(DekaImporter.java:58)
+	at com.hulist.logic.ProcessData.getDeka(ProcessData.java:117)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:249)
+	at java.lang.Thread.run(Thread.java:745)
+
+SEVERE: File read error occured.
+FINEST: java.io.IOException: Incorrect file format of 10TRW-CW.rwl_tabs.txt in line 1
+	at com.hulist.logic.chronology.deka.DekaImporter.getData(DekaImporter.java:85)
+	at com.hulist.logic.ProcessData.getDeka(ProcessData.java:117)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:249)
+	at java.lang.Thread.run(Thread.java:745)
+
+FINEST: WindowParams: [true, -1, -1, [8TRW-nCW.rwl], [icru_cld_0-360E_-90-90N_n.dat.txt], DEKADOWY, RAW, ICRU]
+FINE: Data processing started.
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 JUN-JUN (1))
+-0.0516495091
+T-Student significance level: -0.4879117233906797, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: JUN-JUN (1))
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 JUL-JUL (1))
+-0.1057549211
+T-Student significance level: -1.003316302953222, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: JUL-JUL (1))
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 AUG-AUG (1))
+-0.1575951794
+T-Student significance level: -1.5055637719614265, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: AUG-AUG (1))
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 SEP-SEP (1))
+ 0.0067437884
+T-Student significance level: 0.06362221933710026, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: SEP-SEP (1))
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 OCT-OCT (1))
+ 0.1331154804
+T-Student significance level: 1.2670853125606851, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: OCT-OCT (1))
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 NOV-NOV (1))
+ 0.0066219154
+T-Student significance level: 0.062472394383828796, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: NOV-NOV (1))
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 DEC-DEC (1))
+ 0.0731742606
+T-Student significance level: 0.6921802111709987, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: DEC-DEC (1))
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 JAN-JAN)    
+ 0.1223969112
+T-Student significance level: 1.1699556794816761, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: JAN-JAN)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 FEB-FEB)    
+ 0.1459053500
+T-Student significance level: 1.3991526434100872, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: FEB-FEB)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 MAR-MAR)    
+ 0.2147471521
+T-Student significance level: 2.0859359210814614, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: MAR-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 APR-APR)    
+ 0.0964121165
+T-Student significance level: 0.9189264648239622, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: APR-APR)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 MAY-MAY)    
+-0.0259309316
+T-Student significance level: -0.24608516634426364, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: MAY-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 JUN-JUN)    
+-0.0992280470
+T-Student significance level: -0.9460288270651215, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: JUN-JUN)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 JUL-JUL)    
+-0.1278734871
+T-Student significance level: -1.2231559280974094, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: JUL-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 AUG-AUG)    
+-0.1336429184
+T-Student significance level: -1.27932415860151, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: AUG-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 SEP-SEP)    
+ 0.0482576197
+T-Student significance level: 0.4583459870036995, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: SEP-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 OCT-OCT)    
+ 0.1487262076
+T-Student significance level: 1.4268090728863727, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: OCT-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 JAN-MAR)    
+ 0.2065769882
+T-Student significance level: 2.0029646330584385, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: JAN-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 APR-MAY)    
+ 0.0447272637
+T-Student significance level: 0.4247451501336781, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: APR-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 JUN-JUL)    
+-0.1276981090
+T-Student significance level: -1.2214505456062819, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: JUN-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 JUN-AUG)    
+-0.1537674139
+T-Student significance level: -1.476323586554677, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: JUN-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 SEP-OCT)    
+ 0.1133178612
+T-Student significance level: 1.081996996713165, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: SEP-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 NOV-DEC)    
+ 0.0558631269
+T-Student significance level: 0.5307930215376899, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: NOV-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 APR-SEP)    
+-0.0509934899
+T-Student significance level: -0.48439692884764324, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: APR-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 MAY-OCT)    
+-0.0441035661
+T-Student significance level: -0.4188106830785245, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: MAY-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 APR-OCT)    
+-0.0151314029
+T-Student significance level: -0.14356552802966788, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: APR-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV04N) / icru_cld_0-360E_-90... (1921-2012 JAN-DEC)    
+ 0.0778175390
+T-Student significance level: 0.740487436470099, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1921-2012 (window: 31, term: JAN-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 JUN-JUN (1))
+-0.2397986772
+T-Student significance level: -2.317118392104546, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: JUN-JUN (1))
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 JUL-JUL (1))
+-0.3991990959
+T-Student significance level: -4.084377154808892, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: JUL-JUL (1))
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 AUG-AUG (1))
+-0.4893706644
+T-Student significance level: -5.264110407824477, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: AUG-AUG (1))
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 SEP-SEP (1))
+-0.4036663135
+T-Student significance level: -4.138921927114826, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: SEP-SEP (1))
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 OCT-OCT (1))
+-0.3279568197
+T-Student significance level: -3.2566226301062824, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: OCT-OCT (1))
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 NOV-NOV (1))
+-0.3185131363
+T-Student significance level: -3.1520834708474252, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: NOV-NOV (1))
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 DEC-DEC (1))
+-0.1732076947
+T-Student significance level: -1.6497679154741016, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: DEC-DEC (1))
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 JAN-JAN)    
+-0.2530093039
+T-Student significance level: -2.467156794207088, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: JAN-JAN)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 FEB-FEB)    
+-0.2385552921
+T-Student significance level: -2.3174329237791365, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: FEB-FEB)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 MAR-MAR)    
+-0.1998127013
+T-Student significance level: -1.9238248936625322, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: MAR-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 APR-APR)    
+-0.1983361247
+T-Student significance level: -1.909023804531489, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: APR-APR)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 MAY-MAY)    
+-0.2821945145
+T-Student significance level: -2.7750015302138133, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: MAY-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 JUN-JUN)    
+-0.2737380685
+T-Student significance level: -2.6849950990794094, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: JUN-JUN)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 JUL-JUL)    
+-0.4009435937
+T-Student significance level: -4.128897472773426, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: JUL-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 AUG-AUG)    
+-0.4640501702
+T-Student significance level: -4.942195161984029, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: AUG-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 SEP-SEP)    
+-0.3656393952
+T-Student significance level: -3.7060550384275435, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: SEP-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 OCT-OCT)    
+-0.3134527240
+T-Student significance level: -3.114042996638963, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: OCT-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 JAN-MAR)    
+-0.2925051584
+T-Student significance level: -2.8856971552839843, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: JAN-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 APR-MAY)    
+-0.3031436607
+T-Student significance level: -3.0010671882818767, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: APR-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 JUN-JUL)    
+-0.3775733507
+T-Student significance level: -3.8467581411384195, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: JUN-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 JUN-AUG)    
+-0.4829618625
+T-Student significance level: -5.203332281485213, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: JUN-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 SEP-OCT)    
+-0.4054362728
+T-Student significance level: -4.184203706241299, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: SEP-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 NOV-DEC)    
+-0.3812571359
+T-Student significance level: -3.8906361288746294, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: NOV-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 APR-SEP)    
+-0.4852201837
+T-Student significance level: -5.235132580050533, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: APR-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 MAY-OCT)    
+-0.5158992700
+T-Student significance level: -5.681419741394991, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: MAY-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 APR-OCT)    
+-0.5008600454
+T-Student significance level: -5.4592140906100814, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: APR-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV05N) / icru_cld_0-360E_-90... (1922-2012 JAN-DEC)    
+-0.5172367934
+T-Student significance level: -5.701519964394856, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1922-2012 (window: 31, term: JAN-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 JUN-JUN (1))
+-0.1792996500
+T-Student significance level: -1.8316215080150022, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: JUN-JUN (1))
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 JUL-JUL (1))
+-0.3049914431
+T-Student significance level: -3.218469767463067, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: JUL-JUL (1))
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 AUG-AUG (1))
+-0.3578494750
+T-Student significance level: -3.851384125282874, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: AUG-AUG (1))
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 SEP-SEP (1))
+-0.1877486442
+T-Student significance level: -1.9210116659071212, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: SEP-SEP (1))
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 OCT-OCT (1))
+-0.1528963472
+T-Student significance level: -1.5548710872999147, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: OCT-OCT (1))
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 NOV-NOV (1))
+-0.2431912847
+T-Student significance level: -2.5196873355504916, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: NOV-NOV (1))
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 DEC-DEC (1))
+ 0.0364473121
+T-Student significance level: 0.366534487441881, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: DEC-DEC (1))
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 JAN-JAN)    
+-0.0909678339
+T-Student significance level: -0.9225551574556415, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: JAN-JAN)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 FEB-FEB)    
+-0.1784841293
+T-Student significance level: -1.8320184482571453, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: FEB-FEB)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 MAR-MAR)    
+-0.2209884542
+T-Student significance level: -2.2884527190914485, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: MAR-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 APR-APR)    
+-0.0594874229
+T-Student significance level: -0.6018593809204701, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: APR-APR)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 MAY-MAY)    
+-0.1677107730
+T-Student significance level: -1.7181309705591639, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: MAY-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 JUN-JUN)    
+-0.1773088276
+T-Student significance level: -1.8195618604832338, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: JUN-JUN)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 JUL-JUL)    
+-0.2775033806
+T-Student significance level: -2.917221632535792, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: JUL-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 AUG-AUG)    
+-0.3143634523
+T-Student significance level: -3.3444708761453112, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: AUG-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 SEP-SEP)    
+-0.1892557116
+T-Student significance level: -1.9465676835180912, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: SEP-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 OCT-OCT)    
+-0.1559059790
+T-Student significance level: -1.594065599468575, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: OCT-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 JAN-MAR)    
+-0.2138780718
+T-Student significance level: -2.2112296927764596, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: JAN-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 APR-MAY)    
+-0.1427279265
+T-Student significance level: -1.4563919969406909, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: APR-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 JUN-JUL)    
+-0.2547797873
+T-Student significance level: -2.660963923717736, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: JUN-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 JUN-AUG)    
+-0.3235452566
+T-Student significance level: -3.453395763179986, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: JUN-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 SEP-OCT)    
+-0.2064930115
+T-Student significance level: -2.1314132466850175, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: SEP-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 NOV-DEC)    
+-0.1490416708
+T-Student significance level: -1.5222492197046773, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: NOV-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 APR-SEP)    
+-0.2871814482
+T-Student significance level: -3.027938738552235, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: APR-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 MAY-OCT)    
+-0.3142550195
+T-Student significance level: -3.3431908403876403, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: MAY-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 APR-OCT)    
+-0.2904695122
+T-Student significance level: -3.0657817610138753, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: APR-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV08N) / icru_cld_0-360E_-90... (1909-2012 JAN-DEC)    
+-0.3019258345
+T-Student significance level: -3.1985743916168246, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1909-2012 (window: 31, term: JAN-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 JUN-JUN (1))
+-0.1706933672
+T-Student significance level: -1.6158354191603135, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: JUN-JUN (1))
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 JUL-JUL (1))
+-0.3000384488
+T-Student significance level: -2.9337381402298277, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: JUL-JUL (1))
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 AUG-AUG (1))
+-0.3710947679
+T-Student significance level: -3.7275039892007245, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: AUG-AUG (1))
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 SEP-SEP (1))
+-0.2616139575
+T-Student significance level: -2.5282240308963706, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: SEP-SEP (1))
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 OCT-OCT (1))
+-0.2244746539
+T-Student significance level: -2.148592418561014, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: OCT-OCT (1))
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 NOV-NOV (1))
+-0.2520162961
+T-Student significance level: -2.4290541241295918, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: NOV-NOV (1))
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 DEC-DEC (1))
+-0.1499935626
+T-Student significance level: -1.4150553728870359, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: DEC-DEC (1))
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 JAN-JAN)    
+-0.1250360971
+T-Student significance level: -1.1822203977113448, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: JAN-JAN)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 FEB-FEB)    
+-0.1867842469
+T-Student significance level: -1.7835808631072183, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: FEB-FEB)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 MAR-MAR)    
+-0.1190595987
+T-Student significance level: -1.1248791791951485, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: MAR-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 APR-APR)    
+-0.1524583154
+T-Student significance level: -1.4471025410534835, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: APR-APR)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 MAY-MAY)    
+-0.2593929469
+T-Student significance level: -2.519561415900481, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: MAY-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 JUN-JUN)    
+-0.2388640618
+T-Student significance level: -2.3075398381409253, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: JUN-JUN)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 JUL-JUL)    
+-0.3859644709
+T-Student significance level: -3.9247849499885845, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: JUL-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 AUG-AUG)    
+-0.4025556737
+T-Student significance level: -4.125328268953639, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: AUG-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 SEP-SEP)    
+-0.2720999557
+T-Student significance level: -2.6526094684862054, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: SEP-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 OCT-OCT)    
+-0.2360330486
+T-Student significance level: -2.278567111714925, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: OCT-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 JAN-MAR)    
+-0.1847179559
+T-Student significance level: -1.7631490434977548, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: JAN-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 APR-MAY)    
+-0.2598762327
+T-Student significance level: -2.524595371055185, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: APR-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 JUN-JUL)    
+-0.3491468727
+T-Student significance level: -3.4952510831900474, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: JUN-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 JUN-AUG)    
+-0.4355639864
+T-Student significance level: -4.539151358645387, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: JUN-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 SEP-OCT)    
+-0.3036344417
+T-Student significance level: -2.989481114456615, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: SEP-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 NOV-DEC)    
+-0.2834518390
+T-Student significance level: -2.7727335273465243, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: NOV-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 APR-SEP)    
+-0.4160127266
+T-Student significance level: -4.291535239012338, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: APR-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 MAY-OCT)    
+-0.4401057824
+T-Student significance level: -4.597780378408129, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: MAY-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 APR-OCT)    
+-0.4228155857
+T-Student significance level: -4.376840488383476, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: APR-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV09N) / icru_cld_0-360E_-90... (1923-2012 JAN-DEC)    
+-0.4058805988
+T-Student significance level: -4.166088988940358, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1923-2012 (window: 31, term: JAN-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 JUN-JUN (1))
+-0.2657757318
+T-Student significance level: -2.556653062577144, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: JUN-JUN (1))
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 JUL-JUL (1))
+-0.3832578088
+T-Student significance level: -3.8480157669086013, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: JUL-JUL (1))
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 AUG-AUG (1))
+-0.4391199812
+T-Student significance level: -4.532616119625479, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: AUG-AUG (1))
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 SEP-SEP (1))
+-0.2592215555
+T-Student significance level: -2.4890011373274152, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: SEP-SEP (1))
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 OCT-OCT (1))
+-0.1907120206
+T-Student significance level: -1.8016581027172622, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: OCT-OCT (1))
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 NOV-NOV (1))
+-0.2574620494
+T-Student significance level: -2.4709028858796023, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: NOV-NOV (1))
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 DEC-DEC (1))
+-0.1844745749
+T-Student significance level: -1.7406206027784477, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: DEC-DEC (1))
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 JAN-JAN)    
+-0.1205163666
+T-Student significance level: -1.1323551844240884, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: JAN-JAN)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 FEB-FEB)    
+-0.1851666582
+T-Student significance level: -1.7575120308499816, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: FEB-FEB)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 MAR-MAR)    
+-0.1113154019
+T-Student significance level: -1.0447740849453537, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: MAR-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 APR-APR)    
+-0.1625973583
+T-Student significance level: -1.5370616341139343, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: APR-APR)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 MAY-MAY)    
+-0.2449149506
+T-Student significance level: -2.3561728446468386, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: MAY-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 JUN-JUN)    
+-0.2750802981
+T-Student significance level: -2.6687346439630284, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: JUN-JUN)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 JUL-JUL)    
+-0.3994827245
+T-Student significance level: -4.064537227879872, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: JUL-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 AUG-AUG)    
+-0.4004004120
+T-Student significance level: -4.075654529031778, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: AUG-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 SEP-SEP)    
+-0.2308089824
+T-Student significance level: -2.212584685774999, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: SEP-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 OCT-OCT)    
+-0.1999312171
+T-Student significance level: -1.9032612147555303, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: OCT-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 JAN-MAR)    
+-0.1795312886
+T-Student significance level: -1.702213496170837, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: JAN-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 APR-MAY)    
+-0.2568107354
+T-Student significance level: -2.4784955653054177, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: APR-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 JUN-JUL)    
+-0.3773847884
+T-Student significance level: -3.8010756420048355, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: JUN-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 JUN-AUG)    
+-0.4559694674
+T-Student significance level: -4.778676351220529, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: JUN-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 SEP-OCT)    
+-0.2575441770
+T-Student significance level: -2.4860761497929302, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: SEP-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 NOV-DEC)    
+-0.2728087382
+T-Student significance level: -2.6449167275503322, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: NOV-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 APR-SEP)    
+-0.4148751916
+T-Student significance level: -4.252984211899514, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: APR-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 MAY-OCT)    
+-0.4278990738
+T-Student significance level: -4.415866052375459, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: MAY-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 APR-OCT)    
+-0.4144140751
+T-Student significance level: -4.2472763966420555, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: APR-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV10N) / icru_cld_0-360E_-90... (1924-2012 JAN-DEC)    
+-0.3964920011
+T-Student significance level: -4.0284067493184805, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1924-2012 (window: 31, term: JAN-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 JUN-JUN (1))
+-0.2453903834
+T-Student significance level: -2.292189631517777, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: JUN-JUN (1))
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 JUL-JUL (1))
+-0.3832511502
+T-Student significance level: -3.757385015267119, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: JUL-JUL (1))
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 AUG-AUG (1))
+-0.4358607042
+T-Student significance level: -4.385360608223003, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: AUG-AUG (1))
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 SEP-SEP (1))
+-0.3815071550
+T-Student significance level: -3.7373666369223377, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: SEP-SEP (1))
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 OCT-OCT (1))
+-0.2894533460
+T-Student significance level: -2.7383337827545375, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: OCT-OCT (1))
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 NOV-NOV (1))
+-0.2361403622
+T-Student significance level: -2.2005765283425154, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: NOV-NOV (1))
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 DEC-DEC (1))
+-0.1646395578
+T-Student significance level: -1.511500850109435, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: DEC-DEC (1))
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 JAN-JAN)    
+-0.1836235265
+T-Student significance level: -1.7018267081365344, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: JAN-JAN)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 FEB-FEB)    
+-0.2322274128
+T-Student significance level: -2.175157935576461, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: FEB-FEB)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 MAR-MAR)    
+-0.1504119873
+T-Student significance level: -1.3860873768186313, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: MAR-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 APR-APR)    
+-0.1304798207
+T-Student significance level: -1.1989778434307, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: APR-APR)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 MAY-MAY)    
+-0.2647330563
+T-Student significance level: -2.501066644082075, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: MAY-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 JUN-JUN)    
+-0.2727299305
+T-Student significance level: -2.582592360427853, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: JUN-JUN)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 JUL-JUL)    
+-0.3769571215
+T-Student significance level: -3.7077617701850216, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: JUL-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 AUG-AUG)    
+-0.4070350332
+T-Student significance level: -4.059792746652568, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: AUG-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 SEP-SEP)    
+-0.3925595360
+T-Student significance level: -3.8885333917352547, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: SEP-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 OCT-OCT)    
+-0.2666928144
+T-Student significance level: -2.5209935636649066, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: OCT-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 JAN-MAR)    
+-0.2399299729
+T-Student significance level: -2.2516359213671637, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: JAN-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 APR-MAY)    
+-0.2494444287
+T-Student significance level: -2.346729084284386, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: APR-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 JUN-JUL)    
+-0.3667651228
+T-Student significance level: -3.591680682448513, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: JUN-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 JUN-AUG)    
+-0.4559321796
+T-Student significance level: -4.6670472683178135, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: JUN-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 SEP-OCT)    
+-0.3971318735
+T-Student significance level: -3.942247884844805, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: SEP-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 NOV-DEC)    
+-0.2545956276
+T-Student significance level: -2.3985133184165615, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: NOV-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 APR-SEP)    
+-0.4528823371
+T-Student significance level: -4.627738810988964, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: APR-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 MAY-OCT)    
+-0.4915573062
+T-Student significance level: -5.142475418053402, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: MAY-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 APR-OCT)    
+-0.4624241886
+T-Student significance level: -4.751415924638586, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: APR-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV11N) / icru_cld_0-360E_-90... (1928-2012 JAN-DEC)    
+-0.4463020184
+T-Student significance level: -4.543619248888494, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1928-2012 (window: 31, term: JAN-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 JUN-JUN (1))
+-0.2005797415
+T-Student significance level: -1.9638029167336388, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: JUN-JUN (1))
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 JUL-JUL (1))
+-0.3924403338
+T-Student significance level: -4.092463223867037, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: JUL-JUL (1))
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 AUG-AUG (1))
+-0.4284598029
+T-Student significance level: -4.548273743524161, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: AUG-AUG (1))
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 SEP-SEP (1))
+-0.3158310938
+T-Student significance level: -3.192765774685427, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: SEP-SEP (1))
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 OCT-OCT (1))
+-0.2400928222
+T-Student significance level: -2.3722787582667095, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: OCT-OCT (1))
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 NOV-NOV (1))
+-0.1928799671
+T-Student significance level: -1.8854438397533058, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: NOV-NOV (1))
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 DEC-DEC (1))
+-0.0500493575
+T-Student significance level: -0.480658960424793, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: DEC-DEC (1))
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 JAN-JAN)    
+-0.1723516897
+T-Student significance level: -1.6873498864841547, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: JAN-JAN)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 FEB-FEB)    
+-0.0816593664
+T-Student significance level: -0.7901332212420377, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: FEB-FEB)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 MAR-MAR)    
+-0.1671408044
+T-Student significance level: -1.6348448488892946, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: MAR-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 APR-APR)    
+-0.0846649316
+T-Student significance level: -0.8194211813607359, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: APR-APR)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 MAY-MAY)    
+-0.1947867032
+T-Student significance level: -1.9151382141344104, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: MAY-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 JUN-JUN)    
+-0.2301028042
+T-Student significance level: -2.2802176994653096, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: JUN-JUN)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 JUL-JUL)    
+-0.4029777925
+T-Student significance level: -4.246214669848654, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: JUL-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 AUG-AUG)    
+-0.3275181612
+T-Student significance level: -3.3428458140457264, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: AUG-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 SEP-SEP)    
+-0.2857985318
+T-Student significance level: -2.876104327704214, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: SEP-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 OCT-OCT)    
+-0.2257698582
+T-Student significance level: -2.234950599733278, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: OCT-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 JAN-MAR)    
+-0.1771671825
+T-Student significance level: -1.7360006260995868, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: JAN-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 APR-MAY)    
+-0.1761840089
+T-Student significance level: -1.7260573349946668, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: APR-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 JUN-JUL)    
+-0.3556869943
+T-Student significance level: -3.6701287176121737, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: JUN-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 JUN-AUG)    
+-0.4096387580
+T-Student significance level: -4.330416611838671, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: JUN-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 SEP-OCT)    
+-0.3069353452
+T-Student significance level: -3.110100690259398, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: SEP-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 NOV-DEC)    
+-0.1462202363
+T-Student significance level: -1.425417188529041, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: NOV-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 APR-SEP)    
+-0.3720427793
+T-Student significance level: -3.865320399611252, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: APR-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 MAY-OCT)    
+-0.4105479757
+T-Student significance level: -4.341974080187589, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: MAY-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 APR-OCT)    
+-0.3810757754
+T-Student significance level: -3.9748918959676476, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: APR-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV13N) / icru_cld_0-360E_-90... (1918-2012 JAN-DEC)    
+-0.3458217745
+T-Student significance level: -3.5542828962902284, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1918-2012 (window: 31, term: JAN-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 JUN-JUN (1))
+-0.1867416787
+T-Student significance level: -1.813299739808036, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: JUN-JUN (1))
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 JUL-JUL (1))
+-0.3753365870
+T-Student significance level: -3.862905319410212, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: JUL-JUL (1))
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 AUG-AUG (1))
+-0.4789332338
+T-Student significance level: -5.204448304791843, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: AUG-AUG (1))
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 SEP-SEP (1))
+-0.3985490254
+T-Student significance level: -4.145371752633041, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: SEP-SEP (1))
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 OCT-OCT (1))
+-0.2716375164
+T-Student significance level: -2.692495567473803, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: OCT-OCT (1))
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 NOV-NOV (1))
+-0.2148557878
+T-Student significance level: -2.0986048540079723, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: NOV-NOV (1))
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 DEC-DEC (1))
+-0.0898768531
+T-Student significance level: -0.8608545110166407, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: DEC-DEC (1))
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 JAN-JAN)    
+-0.2083828203
+T-Student significance level: -2.0436002574090066, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: JAN-JAN)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 FEB-FEB)    
+-0.1430709552
+T-Student significance level: -1.3865526464171816, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: FEB-FEB)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 MAR-MAR)    
+-0.1697906140
+T-Student significance level: -1.652569400036668, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: MAR-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 APR-APR)    
+-0.0857012378
+T-Student significance level: -0.8250528628785088, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: APR-APR)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 MAY-MAY)    
+-0.2395923634
+T-Student significance level: -2.3670324096745143, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: MAY-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 JUN-JUN)    
+-0.2469538661
+T-Student significance level: -2.4444083495665216, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: JUN-JUN)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 JUL-JUL)    
+-0.4361876458
+T-Student significance level: -4.649372979854318, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: JUL-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 AUG-AUG)    
+-0.4228553123
+T-Student significance level: -4.475720764056732, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: AUG-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 SEP-SEP)    
+-0.3667144952
+T-Student significance level: -3.7807966229547256, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: SEP-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 OCT-OCT)    
+-0.2832217411
+T-Student significance level: -2.832547721249499, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: OCT-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 JAN-MAR)    
+-0.2197625168
+T-Student significance level: -2.160710024951926, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: JAN-MAR)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 APR-MAY)    
+-0.2050330681
+T-Student significance level: -2.00929549194393, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: APR-MAY)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 JUN-JUL)    
+-0.3844983692
+T-Student significance level: -3.9950993844315974, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: JUN-JUL)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 JUN-AUG)    
+-0.4711966032
+T-Student significance level: -5.124052725207941, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: JUN-AUG)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 SEP-OCT)    
+-0.3904233085
+T-Student significance level: -4.0676348086439695, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: SEP-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 NOV-DEC)    
+-0.1846882157
+T-Student significance level: -1.8024748142152436, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: NOV-DEC)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 APR-SEP)    
+-0.4383017204
+T-Student significance level: -4.677249553122544, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: APR-SEP)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 MAY-OCT)    
+-0.4922933389
+T-Student significance level: -5.4248076302816015, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: MAY-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 APR-OCT)    
+-0.4526532025
+T-Student significance level: -4.869083781119871, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: APR-OCT)
+INFO: correlation  8TRW-nCW.rwl (KV15N) / icru_cld_0-360E_-90... (1919-2012 JAN-DEC)    
+-0.4162913595
+T-Student significance level: -4.391541048952001, critical level: 2.1874310727872905
+INFO: Running correlation computed for years 1919-2012 (window: 31, term: JAN-DEC)
+FINEST: runtime: 1819ms

@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
-public abstract class BaseImporter {
+public abstract class BaseImporter{
     
     protected int startYear = Integer.MIN_VALUE, endYear = Integer.MAX_VALUE;     // both inclusive
     protected boolean allYears = true;

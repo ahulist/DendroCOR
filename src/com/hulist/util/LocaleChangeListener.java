@@ -5,11 +5,13 @@
  */
 package com.hulist.util;
 
+import java.util.Locale;
+
 /**
  *
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
 public interface LocaleChangeListener {
 
-    void onLocaleChange();
+    void onLocaleChange(Locale oldLocale);
 }

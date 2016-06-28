@@ -5,6 +5,7 @@
  */
 package com.hulist.util;
 
+import com.hulist.gui.MainWindow;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class FileChooser {
     private Logger log;
     private String prefsDir = null;
     private boolean openMultipleFilesAndFolders = false;
-    private boolean addXlsxExt = false;
+    private boolean addXlsmExt = false;
     private String yesNoDialogMessageOnSave = null;
 
     public enum Purpose {
@@ -75,7 +76,7 @@ public class FileChooser {
                     break;
             }
         } catch( HeadlessException e ) {
-            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("WYSTĄPIŁ BŁĄD PODCZAS OTWIERANIA OKNA DIALOGOWEGO"));
+            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("WYSTĄPIŁ BŁĄD PODCZAS OTWIERANIA OKNA DIALOGOWEGO"));
             log.log(Level.FINEST, Misc.stackTraceToString(e));
         }
 
@@ -99,14 +100,14 @@ public class FileChooser {
             }
 
             filesArray = (File[]) files.toArray(new File[files.size()]);
-            if( !openMultipleFilesAndFolders && addXlsxExt && filesArray.length > 0 ){
+            if( !openMultipleFilesAndFolders && addXlsmExt && filesArray.length > 0 ){
                 try {
                     String n = filesArray[0].getCanonicalPath();
-                    if( n.endsWith(".xls") ){
-                        log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("WYBRANO PLIK Z ROZSZERZENIEM .XLS - ZMIANA NA .XLSX"));
-                    }
-                    if( !n.endsWith(".xlsx") ){
-                        String n2 = filesArray[0].getCanonicalPath() + ".xlsx";
+                    /*if( n.endsWith(".xls") ){
+                        log.log(Level.WARNING, java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("WYBRANO PLIK Z ROZSZERZENIEM .XLS - ZMIANA NA .XLSX"));
+                    }*/
+                    if( !n.endsWith(".xlsm") ){
+                        String n2 = filesArray[0].getCanonicalPath() + ".xlsm";
                         filesArray[0] = new File(n2);
                     }
                 } catch( IOException ex ) {
@@ -191,10 +192,10 @@ public class FileChooser {
     }
 
     public boolean isAddXlsxExt() {
-        return addXlsxExt;
+        return addXlsmExt;
     }
 
-    public void setAddXlsxExt(boolean addXlsxExt) {
-        this.addXlsxExt = addXlsxExt;
+    public void setAddXlsmExt(boolean addXlsmExt) {
+        this.addXlsmExt = addXlsmExt;
     }
 }

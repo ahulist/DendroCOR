@@ -59,12 +59,12 @@ public class TabsDataContainer extends FileDataContainer {
         double[] arr = new double[yearEnd - yearStart + 1];
         for( int i = yearStart; i <= yearEnd; i++ ) {
             switch( type ) {
-                case SEG:
+                /*case SEG:
                     arr[i - yearStart] = data.get(i).getSeg();
-                    break;
-                case AGE:
+                    break;*/
+                /*case AGE:
                     arr[i - yearStart] = data.get(i).getAge();
-                    break;
+                    break;*/
                 case RAW:
                     arr[i - yearStart] = data.get(i).getRaw();
                     break;

@@ -5,11 +5,14 @@
  */
 package com.hulist.logic;
 
+import com.hulist.gui.MainWindow;
 import com.hulist.logic.chronology.deka.DekaImporter;
 import com.hulist.logic.chronology.deka.DekaSerie;
 import com.hulist.logic.chronology.deka.DekaSeriesDataContainer;
 import com.hulist.logic.chronology.tabs.TabsDataContainer;
 import com.hulist.logic.chronology.tabs.TabsImporter;
+import com.hulist.logic.chronology.tabs_multicol.TabsMulticolDataContainer;
+import com.hulist.logic.chronology.tabs_multicol.TabsMulticolImporter;
 import com.hulist.logic.climate._prn.PrnDataContainer;
 import com.hulist.logic.climate._prn.PrnImporter;
 import com.hulist.logic.climate.ao.AoDataContainer;
@@ -17,6 +20,7 @@ import com.hulist.logic.climate.ao.AoImporter;
 import com.hulist.logic.climate.icru.IcruDataContainer;
 import com.hulist.logic.climate.icru.IcruImporter;
 import com.hulist.util.FileChooser;
+import com.hulist.util.LogsSaver;
 import com.hulist.util.Misc;
 import com.hulist.util.MonthsPair;
 import java.io.File;
@@ -31,7 +35,7 @@ import java.util.logging.Logger;
  */
 public class ProcessData implements Runnable {
 
-    WindowParams wp = null;
+    RunParams wp = null;
     Thread.UncaughtExceptionHandler handler = null;
 
     private final Logger log;
@@ -44,18 +48,18 @@ public class ProcessData implements Runnable {
 
     private final FileChooser fc = new FileChooser(FileChooser.Purpose.SAVE);
 
-    public ProcessData(WindowParams wp) {
+    public ProcessData(RunParams wp) {
         this.wp = wp;
         this.log = Logger.getLogger(this.getClass().getCanonicalName());
         log.setLevel(Level.ALL);
 
         this.computationThread = new Thread(this);
-        
-        fc.setAddXlsxExt(true);
-        fc.setOnSaveDialogMessage(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("CZY ZAPISAĆ OTRZYMANE DANE DO PLIKU?"));
+
+        fc.setAddXlsmExt(true);
+        fc.setOnSaveDialogMessage(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("CZY ZAPISAĆ OTRZYMANE DANE DO PLIKU?"));
     }
 
-    public ProcessData(WindowParams wp, Thread.UncaughtExceptionHandler handler) {
+    public ProcessData(RunParams wp, Thread.UncaughtExceptionHandler handler) {
         this(wp);
         this.handler = handler;
     }
@@ -91,8 +95,15 @@ public class ProcessData implements Runnable {
      }
      t.start();
      }*/
+    private void getTabsExt() throws IOException, NullPointerException {
+        for (File file : wp.getChronologyFiles()) {
+            TabsMulticolImporter tabsImporter = new TabsMulticolImporter(wp.isAllYears(), wp.getStartYear(), wp.getEndYear());
+            chronologyDataContainer.addAll(tabsImporter.getData(file));
+        }
+    }
+
     private void getTabs() throws IOException, NullPointerException {
-        for( File file : wp.getChronologyFiles() ) {
+        for (File file : wp.getChronologyFiles()) {
             TabsImporter tabsImporter = new TabsImporter(wp.isAllYears(), wp.getStartYear(), wp.getEndYear());
             TabsDataContainer tabsCont = tabsImporter.getData(file).get(0);
 
@@ -101,27 +112,27 @@ public class ProcessData implements Runnable {
     }
 
     private void getDeka() throws IOException {
-        for( File file : wp.getChronologyFiles() ) {
+        for (File file : wp.getChronologyFiles()) {
             DekaImporter dekaImporter = new DekaImporter(wp.isAllYears(), wp.getStartYear(), wp.getEndYear());
             DekaSeriesDataContainer dekaCont = new DekaSeriesDataContainer(dekaImporter.getData(file));
 
-            dekaCont.getSeries().stream().forEach(( serie ) -> {
+            dekaCont.getSeries().stream().forEach((serie) -> {
                 chronologyDataContainer.add(serie);
             });
         }
     }
 
     private void getIcru() throws IOException {
-        for( File file : wp.getClimateFiles() ) {
+        for (File file : wp.getClimateFiles()) {
             IcruImporter icruImporter = new IcruImporter(wp.isAllYears(), wp.getStartYear(), wp.getEndYear());
             IcruDataContainer icruCont = icruImporter.getData(file).get(0);
 
             climateDataContainer.add(icruCont);
         }
     }
-    
+
     private void getAo() throws IOException {
-        for( File file : wp.getClimateFiles() ) {
+        for (File file : wp.getClimateFiles()) {
             AoImporter aoImporter = new AoImporter(wp.isAllYears(), wp.getStartYear(), wp.getEndYear());
             AoDataContainer aoCont = aoImporter.getData(file).get(0);
 
@@ -130,7 +141,7 @@ public class ProcessData implements Runnable {
     }
 
     private void getPrn() throws IOException {
-        for( File file : wp.getClimateFiles() ) {
+        for (File file : wp.getClimateFiles()) {
             PrnImporter prnImporter = new PrnImporter(wp.isAllYears(), wp.getStartYear(), wp.getEndYear());
             PrnDataContainer prnCont = prnImporter.getData(file).get(0);
 
@@ -138,17 +149,21 @@ public class ProcessData implements Runnable {
         }
     }
 
-    private void process() {
-        for( FileDataContainer chronology : chronologyDataContainer ) {
+    private void process() throws IOException {
+        for (FileDataContainer chronology : chronologyDataContainer) {
 
-            for( FileDataContainer climate : climateDataContainer ) {
+            for (FileDataContainer climate : climateDataContainer) {
                 String primaryColumnName = chronology.getSourceFile().getName();
                 int commonYearStartLimit = Math.max(chronology.getYearMin(), climate.getYearMin());
                 int commonYearEndLimit = Math.min(chronology.getYearMax(), climate.getYearMax());
 
+                if (commonYearStartLimit > commonYearEndLimit) {
+                    throw new DataException(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("niepokrywające się lata"));
+                }
+
                 double[] primaryColumnData = null;
 
-                switch( wp.getChronologyFileType() ) {
+                switch (wp.getChronologyFileType()) {
                     case TABS:
                         primaryColumnData = ((TabsDataContainer) chronology).getArray(wp.getChronologyColumn(), commonYearStartLimit, commonYearEndLimit);
                         primaryColumnName += " (" + wp.getChronologyColumn() + ")";
@@ -157,22 +172,25 @@ public class ProcessData implements Runnable {
                         primaryColumnData = ((DekaSerie) chronology).getArrayData(commonYearStartLimit, commonYearEndLimit);
                         primaryColumnName += " (" + ((DekaSerie) chronology).getChronoCode() + ")";
                         break;
+                    case TABS_MULTICOL:
+                        primaryColumnData = ((TabsMulticolDataContainer) chronology).getArray(commonYearStartLimit, commonYearEndLimit);
+                        primaryColumnName += " (" + ((TabsMulticolDataContainer) chronology).getColumnNumber() + ". column)";
                 }
                 dataToCorrelate.primary = new Column(primaryColumnName, primaryColumnData);
 
                 String climateColumnsName = climate.getSourceFile().getName();
-                for( MonthsPair months : wp.getMonthsColumns() ) {
-                    switch( wp.getClimateFileType() ) {
+                for (MonthsPair months : wp.getMonthsColumns()) {
+                    switch (wp.getClimateFileType()) {
                         case ICRU:
                             double[] icruData = ((IcruDataContainer) climate).getArray(months, commonYearStartLimit, commonYearEndLimit);
                             Column icruC = new Column(climateColumnsName, icruData);
                             dataToCorrelate.columns.put(months, icruC);
                             break;
                         /*case PRN:
-                            double[] prnData = ((PrnDataContainer) climate).getArray(months, commonYearStartLimit, commonYearEndLimit);
-                            Column prnC = new Column(climateColumnsName, prnData);
-                            dataToCorrelate.columns.put(months, prnC);
-                            break;*/
+                         double[] prnData = ((PrnDataContainer) climate).getArray(months, commonYearStartLimit, commonYearEndLimit);
+                         Column prnC = new Column(climateColumnsName, prnData);
+                         dataToCorrelate.columns.put(months, prnC);
+                         break;*/
                         case AO:
                             double[] aoData = ((AoDataContainer) climate).getArray(months, commonYearStartLimit, commonYearEndLimit);
                             Column aoC = new Column(climateColumnsName, aoData);
@@ -181,19 +199,19 @@ public class ProcessData implements Runnable {
                     }
                 }
 
-                if( chronology.isEmpty() || climate.isEmpty() ){
-                    if( chronology.isEmpty() ){
-                        log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
+                if (chronology.isEmpty() || climate.isEmpty()) {
+                    if (chronology.isEmpty()) {
+                        log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
                     }
-                    if( climate.isEmpty() ){
-                        log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), climateColumnsName));
+                    if (climate.isEmpty()) {
+                        log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), climateColumnsName));
                     }
                     break;
                 }
 
-                PearsonsCorrelationProcessing pearsons = new PearsonsCorrelationProcessing(wp, dataToCorrelate);
+                CorrelationProcessing pearsons = new CorrelationProcessing(wp, dataToCorrelate);
                 Results result = pearsons.go(commonYearStartLimit, commonYearEndLimit);
-                if( result != null ){
+                if (result != null) {
                     result.yearStart = commonYearStartLimit;
                     result.yearEnd = commonYearEndLimit;
                     result.chronoTitle = primaryColumnName;
@@ -206,8 +224,8 @@ public class ProcessData implements Runnable {
 
     private void save() {
         File[] saveDest = fc.call();
-        if( saveDest != null && saveDest.length>0 && saveDest[0]!=null ){
-            log.log(Level.INFO, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ZAPISYWANIE..."));
+        if (saveDest != null && saveDest.length > 0 && saveDest[0] != null) {
+            log.log(Level.INFO, java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ZAPISYWANIE..."));
             ResultsSaver saver = new ResultsSaver(wp, saveDest[0], results);
             saver.save();
         }
@@ -215,37 +233,54 @@ public class ProcessData implements Runnable {
 
     @Override
     public void run() {
-        log.log(Level.FINE, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("URUCHOMIONO PRZETWARZANIE DANYCH."));
+        LogsSaver.getInstance().setIsLoggingOn(wp.getPreferencesFrame().getCheckBoxLogging().isSelected());
+        enablePreferences(false);
+        long start = System.currentTimeMillis();
+        log.log(Level.FINE, java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("URUCHOMIONO PRZETWARZANIE DANYCH."));
+        /*
+         load all data to respective data containers
+         */
         try {
-            switch( wp.getChronologyFileType() ) {
+            switch (wp.getChronologyFileType()) {
                 case TABS:
                     getTabs();
                     break;
                 case DEKADOWY:
                     getDeka();
                     break;
+                case TABS_MULTICOL:
+                    getTabsExt();
+                    break;
             }
 
-            switch( wp.getClimateFileType() ) {
+            switch (wp.getClimateFileType()) {
                 case ICRU:
                     getIcru();
                     break;
                 /*case PRN:
-                    getPrn();
-                    break;*/
+                 getPrn();
+                 break;*/
                 case AO:
                     getAo();
                     break;
             }
 
             process();
+            long end = System.currentTimeMillis();
+            LogsSaver.getInstance().setIsLoggingOn(true);
+            log.log(Level.FINEST, "runtime: " + (end - start) + "ms");
+            enablePreferences(true);
             save();
-        } catch( NullPointerException | IOException ex ) {
-            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("BŁĄD ODCZYTU Z PLIKU."));
+        } catch (DataException ex) {
+            log.log(Level.SEVERE, ex.getMessage());
             log.log(Level.FINEST, Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
-        } catch( Exception ex ) {
-            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("WYSTĄPIŁ NIEZNANY BŁĄD."));
+        } catch (NullPointerException | IOException ex) {
+            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD ODCZYTU Z PLIKU."));
+            log.log(Level.FINEST, Misc.stackTraceToString(ex));
+            throw new RuntimeException(ex);
+        } catch (Exception ex) {
+            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("WYSTĄPIŁ NIEZNANY BŁĄD."));
             log.log(Level.FINEST, Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
         }
@@ -255,4 +290,28 @@ public class ProcessData implements Runnable {
         computationThread.start();
     }
 
+    private void enablePreferences(boolean b) {
+        if (!b) { // disable
+            wp.getPreferencesFrame().dispose();
+        }
+        wp.getMainWindow().menuItemPreferences.setEnabled(b);
+    }
+
+    class DataException extends IOException {
+
+        public DataException() {
+        }
+
+        public DataException(String message) {
+            super(message);
+        }
+
+        public DataException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+        public DataException(Throwable cause) {
+            super(cause);
+        }
+    }
 }

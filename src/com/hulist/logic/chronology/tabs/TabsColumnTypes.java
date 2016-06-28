@@ -11,8 +11,8 @@ package com.hulist.logic.chronology.tabs;
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
 public enum TabsColumnTypes {
-    SEG,
-    AGE,
+    //SEG,
+    //AGE,
     RAW,
     STD,
     RES,

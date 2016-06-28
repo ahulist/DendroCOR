@@ -5,6 +5,7 @@
  */
 package com.hulist.logic.climate._prn;
 
+import com.hulist.gui.MainWindow;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
 import com.hulist.util.Misc;
@@ -52,7 +53,10 @@ public class PrnImporter extends BaseImporter implements DataImporter<PrnDataCon
                             && Integer.parseInt(data[0]) >= startYear
                             && Integer.parseInt(data[0]) <= endYear) ){
 
-                        assert data.length == 13;
+//                        assert data.length == 13;
+                        if (!(data.length == 13)) {
+                            throw new IOException();
+                        }
                         int year = Integer.parseInt(data[0]);
                         PrnLineContainer lineData = new PrnLineContainer(year);
                         int counter = 1;
@@ -61,12 +65,12 @@ public class PrnImporter extends BaseImporter implements DataImporter<PrnDataCon
                             if( value < PRN_VALUE_MIN || value > PRN_VALUE_MAX ){
                                 StringBuilder sb = new StringBuilder();
                                 if( value < PRN_VALUE_MIN ){
-                                    sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ODCZYTANA WARTOŚĆ < ")).append(PRN_VALUE_MIN);
+                                    sb.append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ODCZYTANA WARTOŚĆ < ")).append(PRN_VALUE_MIN);
                                 }
                                 if( value > PRN_VALUE_MAX ){
-                                    sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("ODCZYTANA WARTOŚĆ > ")).append(PRN_VALUE_MAX);
+                                    sb.append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ODCZYTANA WARTOŚĆ > ")).append(PRN_VALUE_MAX);
                                 }
-                                sb.append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString(", W PLIKU ")).append(f.getCanonicalPath()).append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString(" DLA ROKU ")).append(year).append(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString(", DLA MIESIĄCA ")).append(month);
+                                sb.append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString(", W PLIKU ")).append(f.getCanonicalPath()).append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString(" DLA ROKU ")).append(year).append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString(", DLA MIESIĄCA ")).append(month);
                                 throw new IllegalArgumentException(sb.toString());
                             }
                             lineData.addMonthlyData(month, value);
@@ -75,7 +79,7 @@ public class PrnImporter extends BaseImporter implements DataImporter<PrnDataCon
                         container.addYearlyData(year, lineData);
                     }
                 } catch( AssertionError | IOException | NumberFormatException e ) {
-                    String msg = String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("BŁĘDNY FORMAT PLIKU %S."), f.getName());
+                    String msg = String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĘDNY FORMAT PLIKU %S."), f.getName());
                     log.log(Level.WARNING, msg);
                     log.log(Level.FINEST, msg);
                     throw new IOException(msg);

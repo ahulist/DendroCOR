@@ -17,6 +17,10 @@ import java.util.HashMap;
  */
 public class IcruDataContainer extends FileDataContainer {
 
+    /**
+     * Integer              - year
+     * IcruLineContainer    - line in Icru file (i.e. month=>value)
+     */
     private final HashMap<Integer, IcruLineContainer> data = new HashMap<>();
 
     public IcruDataContainer(File sourceFile) {

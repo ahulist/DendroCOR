@@ -5,6 +5,7 @@
  */
 package com.hulist.logic.chronology.deka;
 
+import com.hulist.gui.MainWindow;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
 import com.hulist.util.Misc;
@@ -17,7 +18,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 
 /**
@@ -41,33 +41,45 @@ public class DekaImporter extends BaseImporter implements DataImporter<DekaSerie
         br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
         int lineCounter = 1;
         DekaSerie serie = null;
-        while( (line = br.readLine()) != null ) {
+        while ((line = br.readLine()) != null) {
+            /*
+             if chrono code consists of 8 characters, it's 'glued' together with year
+             add space just to be sure it does not happen
+             */
+            line = new StringBuilder(line).insert(8, ' ').toString();
+
             String[] data = line.trim().split("[\\s\\t]+");
-            assert data.length > 2;
+//            assert data.length > 2;
             try {
+                if (!(data.length > 2)) {
+                    throw new IOException();
+                }
                 String chronoCode = data[0];
                 int yearStart = Integer.parseInt(data[1]);
 //                boolean newChrono = false;
-                if( serie == null ){
+                if (serie == null) {
                     serie = new DekaSerie(f, chronoCode);
                 }
-                if( !chronoCode.equals(serie.getChronoCode()) ){
+                if (!chronoCode.equals(serie.getChronoCode())) {
 //                    newChrono = true;
                     d.add(serie);
                     serie = new DekaSerie(f, chronoCode);
                 }
-                for( int i = 2; i < data.length; i++ ) {
+                for (int i = 2; i < data.length; i++) {
                     double val = Double.parseDouble(data[i]);
-                    if( val == 999 || val == -9999 ){
+                    if (val == 999 || val == -9999) {   // TODO: instead it could read the last value in file -> it is the serie termination value
+                        /*
+                         what if there is a value == -999 inside a serie (like in 09TRWres.rwl)? it's silently accepted
+                         */
                         break;
                     }
 
-                    if( allYears || (!allYears && yearStart + i - 2 >= startYear && yearStart + i - 2 <= endYear) ){
+                    if (allYears || (!allYears && yearStart + i - 2 >= startYear && yearStart + i - 2 <= endYear)) {
                         serie.addYear(yearStart + i - 2, val);
                     }
                 }
-            } catch( NumberFormatException | AssertionError e ) {
-                String msg = String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), lineCounter);
+            } catch (IOException | NumberFormatException | AssertionError e) {
+                String msg = String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), lineCounter);
                 log.log(Level.WARNING, msg);
                 log.log(Level.FINEST, Misc.stackTraceToString(e));
                 throw new IOException(msg);

@@ -28,11 +28,12 @@ public final class LocaleManager {
     }
 
     public static void changeDefaultLocale(Locale l) {
-        if( !l.equals(Locale.getDefault()) ){
+        Locale oldLocale = Locale.getDefault();
+        if( !l.equals(oldLocale) ){
             Locale.setDefault(l);
             ResourceBundle.clearCache();
             for( LocaleChangeListener localeChangeListener : listeners ) {
-                localeChangeListener.onLocaleChange();
+                localeChangeListener.onLocaleChange(oldLocale);
             }
         }
     }

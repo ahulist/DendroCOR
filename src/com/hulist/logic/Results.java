@@ -7,6 +7,7 @@ package com.hulist.logic;
 
 import com.hulist.util.MonthsPair;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  *
@@ -16,11 +17,46 @@ public class Results {
 
     int yearStart, yearEnd;
     String chronoTitle = null, climateTitle = null;
-    WindowParams params;
-    HashMap<MonthsPair, Double> map = new HashMap<>();
+    RunParams params;
+    HashMap<MonthsPair, MetaCorrelation> map = new HashMap<>();
 
-    public Results(WindowParams params) {
+    // significance testing
+    private boolean isTTest = false;
+    
+    // running correlation
+    /**
+     * Integer in the inner map is starting year in correlation window
+     */
+    HashMap<MonthsPair, TreeMap<Integer, Double>> runningCorrMap = new HashMap<>();
+    private boolean isRunningCorr = false;
+    private int windowSize;
+
+    public Results(RunParams params) {
         this.params = params;
+    }
+
+    public boolean isIsRunningCorr() {
+        return isRunningCorr;
+    }
+
+    public void setIsRunningCorr(boolean isRunningCorr) {
+        this.isRunningCorr = isRunningCorr;
+    }
+
+    public int getWindowSize() {
+        return windowSize;
+    }
+
+    public void setWindowSize(int windowSize) {
+        this.windowSize = windowSize;
+    }
+
+    public boolean isIsTTest() {
+        return isTTest;
+    }
+
+    public void setIsTTest(boolean isTTest) {
+        this.isTTest = isTTest;
     }
 
 }

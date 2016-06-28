@@ -5,6 +5,7 @@
  */
 package com.hulist.util;
 
+import com.hulist.gui.MainWindow;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -28,7 +29,7 @@ import java.util.logging.Logger;
 public class LogsSaver {
 
     private final static LogsSaver INSTANCE = new LogsSaver();
-    private final static String LOGS_DIR = ".\\logs";
+    private final static String LOGS_DIR = "."+File.separator+"logs";
     private final static int DAYS_LOGGED = 7;
     private final static String NAME_PREFIX = "log_";
     private final static String NAME_SUFFIX = ".txt";
@@ -36,6 +37,8 @@ public class LogsSaver {
     private final Logger log = Logger.getLogger(this.getClass().getCanonicalName());
     private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     private static boolean isFirstRun = true;
+    
+    private boolean isLoggingOn = true;
 
     private class DatesComparator implements Comparator<Date> {
 
@@ -64,11 +67,13 @@ public class LogsSaver {
     }
 
     public void log(String msg) {
-        try( PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(LOGS_DIR + "\\" + NAME_PREFIX + df.format(new Date()) + NAME_SUFFIX, true))) ) {
+        if (isLoggingOn) {
+            try( PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(LOGS_DIR + File.separator + NAME_PREFIX + df.format(new Date()) + NAME_SUFFIX, true))) ) {
             out.println(msg);
         } catch( IOException e ) {
-            log.log(Level.WARNING, java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("BŁĄD PODCZAS ZAPISU DANYCH DO LOGU."));
+            log.log(Level.WARNING, java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS ZAPISU DANYCH DO LOGU."));
             log.log(Level.FINEST, e.getLocalizedMessage());
+        }
         }
     }
 
@@ -98,7 +103,7 @@ public class LogsSaver {
             if( counter < filesToDelete ){
                 File file = entry.getValue();
                 if( !file.delete() ){
-                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("BŁĄD PODCZAS USUWANIA LOGU %S"), file.getName()));
+                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS USUWANIA LOGU %S"), file.getName()));
                 }
                 counter++;
             } else {
@@ -116,4 +121,11 @@ public class LogsSaver {
         return new File(LOGS_DIR).mkdir();
     }
 
+    public boolean isIsLoggingOn() {
+        return isLoggingOn;
+    }
+
+    public void setIsLoggingOn(boolean isLoggingOn) {
+        this.isLoggingOn = isLoggingOn;
+    }
 }

@@ -6,6 +6,8 @@
 
 package com.hulist.logic;
 
+import com.hulist.gui.MainWindow;
+import com.hulist.gui.PreferencesJFrame;
 import com.hulist.logic.chronology.ChronologyFileTypes;
 import com.hulist.logic.chronology.tabs.TabsColumnTypes;
 import com.hulist.logic.climate.ClimateFileTypes;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
  *
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
-public class WindowParams {
+public class RunParams {
     
     private boolean allYears;
     private int startYear;
@@ -28,10 +30,13 @@ public class WindowParams {
     private ClimateFileTypes climateFileType;
     private ArrayList<MonthsPair> monthsColumns;
 
-    public WindowParams() {
+    private MainWindow mainWindow;
+    private PreferencesJFrame preferencesFrame;
+
+    public RunParams() {
     }
     
-    public WindowParams(boolean allYears, int startYear, int endYear, File[] chronologyFile, File[] climateFile, ChronologyFileTypes chronologyFileType, TabsColumnTypes chronologyType, ClimateFileTypes climateFileType, ArrayList<MonthsPair> monthsColumns) {
+    public RunParams(boolean allYears, int startYear, int endYear, File[] chronologyFile, File[] climateFile, ChronologyFileTypes chronologyFileType, TabsColumnTypes chronologyType, ClimateFileTypes climateFileType, ArrayList<MonthsPair> monthsColumns) {
         this.allYears = allYears;
         this.startYear = startYear;
         this.endYear = endYear;
@@ -115,5 +120,20 @@ public class WindowParams {
         this.monthsColumns = monthsColumns;
     }
 
-    
+    public PreferencesJFrame getPreferencesFrame() {
+        return preferencesFrame;
+    }
+
+    public void setPreferencesFrame(PreferencesJFrame preferencesFrame) {
+        this.preferencesFrame = preferencesFrame;
+    }
+
+    public MainWindow getMainWindow() {
+        return mainWindow;
+    }
+
+    public void setMainWindow(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
+    }
+
 }

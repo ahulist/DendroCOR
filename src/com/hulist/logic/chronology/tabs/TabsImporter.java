@@ -5,6 +5,7 @@
  */
 package com.hulist.logic.chronology.tabs;
 
+import com.hulist.gui.MainWindow;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
 import java.io.BufferedReader;
@@ -40,17 +41,20 @@ public class TabsImporter extends BaseImporter implements DataImporter<TabsDataC
         fis = new FileInputStream(f);
         br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
         int counter = 2;
-        if( (line = br.readLine()) != null ){           // for omitting first line
-            while( (line = br.readLine()) != null ) {
+        if ((line = br.readLine()) != null) {           // for omitting first line
+            while ((line = br.readLine()) != null) {
                 String[] data = line.trim().split("[\\s\\t]+");
                 try {
-                    assert data.length == 8;
+//                    assert data.length == 8;
+                    if (!(data.length == 8)) {
+                        throw new IOException();
+                    }
                     int num = Integer.parseInt(data[1].replace(".", ""));
-                    if( (allYears
+                    if ((allYears
                             || (!allYears
                             && Integer.parseInt(data[0]) >= startYear
                             && Integer.parseInt(data[0]) <= endYear))
-                            && num >= NUM_MIN ){
+                            && num >= NUM_MIN) {
 
                         t.addLine(Integer.parseInt(data[0]),
                                 Integer.parseInt(data[1].replace(".", "")),
@@ -61,12 +65,12 @@ public class TabsImporter extends BaseImporter implements DataImporter<TabsDataC
                                 Double.parseDouble(data[6]),
                                 Double.parseDouble(data[7]));
                     }
-                } catch( NumberFormatException | AssertionError e ) {
-                    String msg = String.format(java.util.ResourceBundle.getBundle("com/hulist/bundle/Bundle").getString("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), counter);
+                } catch (IOException | NumberFormatException | AssertionError e) {
+                    String msg = String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), counter);
                     log.log(Level.WARNING, msg);
                     log.log(Level.FINEST, msg);
                     throw new IOException(msg);
-                } 
+                }
 
                 counter++;
             }
