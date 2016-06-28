@@ -81,7 +81,7 @@ import org.jdesktop.swingx.JXCollapsiblePane;
 public class MainWindow extends JFrame/*Background*/ implements LocaleChangeListener {
 
     public static final String APP_NAME = "DendroCORR";
-    public static final String APP_VERSION = "2.7.1";
+    public static final String APP_VERSION = "2.8";
     public static final String BUNDLE = "com/hulist/bundle/Bundle";
     private static final int YEAR = 2016;//Calendar.getInstance().get(Calendar.YEAR);
 

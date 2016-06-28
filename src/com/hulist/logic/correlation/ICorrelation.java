@@ -11,4 +11,5 @@ package com.hulist.logic.correlation;
  */
 public interface ICorrelation {
     public double correlation(double[] a, double[] b);
+    public double correlation(double[][] ab);
 }

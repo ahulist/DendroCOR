@@ -67,6 +67,10 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
         textFieldSignificance = new javax.swing.JTextField();
         labelTick = new javax.swing.JLabel();
         checkBoxTwoSidedTest = new javax.swing.JCheckBox();
+        jSeparator2 = new javax.swing.JSeparator();
+        checkBoxBootstrap = new javax.swing.JCheckBox();
+        labelBootstrap = new javax.swing.JLabel();
+        textFieldBootstrap = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         checkBoxLogging = new javax.swing.JCheckBox();
         labelLoggingCheckboxHelper = new javax.swing.JLabel();
@@ -146,6 +150,27 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
             }
         });
 
+        checkBoxBootstrap.setText("próbkowanie bootstrap");
+        checkBoxBootstrap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxBootstrapActionPerformed(evt);
+            }
+        });
+
+        labelBootstrap.setText("ilość prób");
+
+        textFieldBootstrap.setText("20000");
+        textFieldBootstrap.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textFieldBootstrapFocusLost(evt);
+            }
+        });
+        textFieldBootstrap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textFieldBootstrapActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -153,6 +178,15 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(checkBoxBootstrap)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(labelBootstrap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(textFieldBootstrap, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator1)
@@ -175,7 +209,8 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
                                     .addComponent(textFieldSignificance))
                                 .addGap(18, 18, 18)
                                 .addComponent(labelTick, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jSeparator2)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +231,15 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
                 .addComponent(checkBoxRunCorr)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelCorrWindow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkBoxBootstrap)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelBootstrap)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textFieldBootstrap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         tabbedPanePreferences.addTab("Korelacja", jPanel1);
@@ -229,7 +272,7 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(checkBoxLogging)
                     .addComponent(labelLoggingCheckboxHelper))
-                .addContainerGap(267, Short.MAX_VALUE))
+                .addContainerGap(287, Short.MAX_VALUE))
         );
 
         tabbedPanePreferences.addTab("Debugging", jPanel2);
@@ -284,11 +327,11 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
         try {
             Double.parseDouble(newVal);
             UserPreferences.getInstance().getPrefs().put("textFieldSignificance", newVal);
-            textFieldSignificance.setText(UserPreferences.getInstance().getPrefs().get("textFieldSignificance", "0.05"));
         } catch (NullPointerException | NumberFormatException e) {
             ex = e;
             // TODO: zapisywać wyjątki do loga
         }
+        textFieldSignificance.setText(UserPreferences.getInstance().getPrefs().get("textFieldSignificance", "0.05"));
         // TODO: zrobić tick.png żeby było widać zatwierdzenie wpisanej wartości
     }//GEN-LAST:event_textFieldSignificanceFocusLost
 
@@ -300,7 +343,34 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
         UserPreferences.getInstance().getPrefs().putBoolean("checkBoxTwoSidedTest", checkBoxTwoSidedTest.isSelected());
     }//GEN-LAST:event_checkBoxTwoSidedTestActionPerformed
 
+    private void checkBoxBootstrapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxBootstrapActionPerformed
+        UserPreferences.getInstance().getPrefs().putBoolean("checkBoxBootstrap", checkBoxBootstrap.isSelected());
+    }//GEN-LAST:event_checkBoxBootstrapActionPerformed
+
+    private void textFieldBootstrapFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textFieldBootstrapFocusLost
+        String newVal = textFieldBootstrap.getText();
+        newVal = newVal.replace(',', '.');
+        Exception ex = null;
+        try {
+            Integer.parseInt(newVal);
+            if (Integer.parseInt(newVal) <= 0) {
+                throw new NumberFormatException();
+            }
+            UserPreferences.getInstance().getPrefs().put("textFieldBootstrap", newVal);
+        } catch (NullPointerException | NumberFormatException e) {
+            ex = e;
+            // TODO: zapisywać wyjątki do loga
+        }
+        textFieldBootstrap.setText(UserPreferences.getInstance().getPrefs().get("textFieldBootstrap", "20000"));
+        // TODO: zrobić tick.png żeby było widać zatwierdzenie wpisanej wartości
+    }//GEN-LAST:event_textFieldBootstrapFocusLost
+
+    private void textFieldBootstrapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldBootstrapActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textFieldBootstrapActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox checkBoxBootstrap;
     private javax.swing.JCheckBox checkBoxLogging;
     private javax.swing.JCheckBox checkBoxRunCorr;
     private javax.swing.JCheckBox checkBoxSignificance;
@@ -308,6 +378,8 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel labelBootstrap;
     private javax.swing.JLabel labelCorrWindow;
     private javax.swing.JLabel labelCorrWindowVal;
     private javax.swing.JLabel labelLoggingCheckboxHelper;
@@ -316,6 +388,7 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
     private javax.swing.JPanel panelCorrWindow;
     private javax.swing.JSlider sliderCorrWindow;
     private javax.swing.JTabbedPane tabbedPanePreferences;
+    private javax.swing.JTextField textFieldBootstrap;
     private javax.swing.JTextField textFieldSignificance;
     // End of variables declaration//GEN-END:variables
 
@@ -356,7 +429,9 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
         sliderCorrWindow.setValue(UserPreferences.getInstance().getPrefs().getInt("sliderCorrWindowVal", 15));
         checkBoxSignificance.setSelected(UserPreferences.getInstance().getPrefs().getBoolean("checkBoxSignificance", true));
         textFieldSignificance.setText(UserPreferences.getInstance().getPrefs().get("textFieldSignificance", "0.05"));
+        textFieldBootstrap.setText(UserPreferences.getInstance().getPrefs().get("textFieldBootstrap", "20000"));
         checkBoxTwoSidedTest.setSelected(UserPreferences.getInstance().getPrefs().getBoolean("checkBoxTwoSidedTest", true));
+        checkBoxBootstrap.setSelected(UserPreferences.getInstance().getPrefs().getBoolean("checkBoxBootstrap", true));
     }
 
     private void initCompsLast() {
@@ -376,6 +451,10 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
         return checkBoxSignificance;
     }
     
+    public JCheckBox getCheckBoxBootstrap(){
+        return checkBoxBootstrap;
+    }
+    
     public JCheckBox getCheckBoxLogging(){
         return checkBoxLogging;
     }
@@ -386,6 +465,10 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
     
     public JTextField getSignificanceTextField(){
         return textFieldSignificance;
+    }
+    
+    public JTextField getBootstrapTextField(){
+        return textFieldBootstrap;
     }
 
     enum TabsOrder {

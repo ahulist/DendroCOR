@@ -4,13 +4,10 @@ import com.hulist.gui.MainWindow;
 import com.hulist.logic.correlation.Correlator;
 import com.hulist.logic.correlation.PearsonCorrelation;
 import com.hulist.util.MonthsPair;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.math3.distribution.TDistribution;
-import org.apache.commons.math3.util.FastMath;
 
 /**
  *
@@ -22,7 +19,6 @@ public class CorrelationProcessing {
     private final Logger log;
     private final RunParams wp;
     private final Correlator c;
-    private final static HashMap<Double, Double> T_TEST_CRIT_LOOKUP_CACHE = new HashMap<>();
 
     CorrelationProcessing(RunParams wp, DataToCorrelate dataToCorrelate) {
         this.data = dataToCorrelate;
@@ -35,9 +31,9 @@ public class CorrelationProcessing {
 
     public Results go(int yearMin, int yearMax) {
         Results results = new Results(wp);
+        SignificanceLevel sl = new SignificanceLevel();
 
         for (MonthsPair month : wp.getMonthsColumns()) {
-            double correlation;
             double[] readyChrono, readyClim;
 
             String date = " (" + yearMin + "-" + yearMax + " " + month + ")";
@@ -76,36 +72,37 @@ public class CorrelationProcessing {
                 readyChrono = data.primary.getData();
                 readyClim = data.columns.get(month).getData();
             }
-            correlation = c.correlate(readyChrono, readyClim);
-            results.map.put(month, new MetaCorrelation(correlation));
 
-            String logMsg = String.format("%s %-70.70s\n%- 10.10f", ResourceBundle.getBundle(MainWindow.BUNDLE).getString("KORELACJA"), " " + primaryName + " / " + climateName + date, correlation);
+            /*
+             *   CORRELATION / BOOTSTRAP
+             */
+            boolean isSignificance = wp.getPreferencesFrame().getCheckBoxSignificance().isSelected();
+            boolean isBootstrap = wp.getPreferencesFrame().getCheckBoxBootstrap().isSelected();
+            int bootstrapRepetitions = Integer.parseInt(wp.getPreferencesFrame().getBootstrapTextField().getText());
+            double alpha = Double.parseDouble(wp.getPreferencesFrame().getSignificanceTextField().getText());
+            if (wp.getPreferencesFrame().getCheckBoxTwoSidedTest().isSelected()) {
+                alpha /= 2;
+            }
+            
+            c.setIsBootstrapped(isBootstrap);
+            c.setIsSignificanceLevels(isSignificance);
+            c.setBootstrapValues(alpha, bootstrapRepetitions);
+
+            MetaCorrelation correlation = c.correlate(readyChrono, readyClim);
+            results.map.put(month, correlation);
+
+            String logMsg = String.format("%s %-70.70s\n%- 10.10f", ResourceBundle.getBundle(MainWindow.BUNDLE).getString("KORELACJA"), " " + primaryName + " / " + climateName + date, correlation.getCorrelation());            
 
             /*
              *   SIGNIFICANCE LEVEL
              */
-            if (wp.getPreferencesFrame().getCheckBoxSignificance().isSelected()) {
-                double tTestVal = correlation / (FastMath.sqrt((1 - correlation * correlation) / (readyChrono.length - 2)));
-                results.map.get(month).settTestValue(tTestVal);
-                logMsg += "\n"+ResourceBundle.getBundle(MainWindow.BUNDLE).getString("poziom istotności T-Studenta") + ": " + tTestVal;
+            if (isSignificance) {
+                results.map.get(month).settTestValue(correlation.gettTestValue());
+                logMsg += "\n" + ResourceBundle.getBundle(MainWindow.BUNDLE).getString("poziom istotności T-Studenta") + ": " + correlation.gettTestValue();
 
-                TDistribution tdist = new TDistribution(2 * readyChrono.length - 2);
-                double alpha = Double.parseDouble(wp.getPreferencesFrame().getSignificanceTextField().getText());
-                if (wp.getPreferencesFrame().getCheckBoxTwoSidedTest().isSelected()) {
-                    alpha /= 2;
-                }
-                
-                double tTestCritVal;
-                if (T_TEST_CRIT_LOOKUP_CACHE.get(1-alpha)==null) {
-                    tTestCritVal = tdist.inverseCumulativeProbability(1 - alpha);
-                    T_TEST_CRIT_LOOKUP_CACHE.put(1-alpha, tTestCritVal);
-                }else{
-                    tTestCritVal = T_TEST_CRIT_LOOKUP_CACHE.get(1-alpha);
-                }
-                
-                results.map.get(month).settTestCritVal(tTestCritVal);
-                logMsg += ", "+ResourceBundle.getBundle(MainWindow.BUNDLE).getString("poziom krytyczny") + ": " + tTestCritVal;
-                
+                results.map.get(month).settTestCritVal(correlation.gettTestCritVal());
+                logMsg += ", " + ResourceBundle.getBundle(MainWindow.BUNDLE).getString("poziom krytyczny") + ": " + correlation.gettTestCritVal();
+
                 results.setIsTTest(true);
             }
 
@@ -128,7 +125,7 @@ public class CorrelationProcessing {
                         // TODO równolegle!
                         System.arraycopy(readyChrono, i, chronoSmall, 0, windowSize);
                         System.arraycopy(readyClim, i, climSmall, 0, windowSize);
-                        double resRunn = c.correlate(chronoSmall, climSmall);
+                        double resRunn = c.correlate(chronoSmall, climSmall).getCorrelation();
                         if (!results.runningCorrMap.containsKey(month) || results.runningCorrMap.get(month) == null) {
                             results.runningCorrMap.put(month, new TreeMap<>());
                         }
