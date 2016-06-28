@@ -8,14 +8,7 @@ package com.hulist.logic.correlation;
 import com.hulist.logic.MetaCorrelation;
 import com.hulist.logic.RunParams;
 import com.hulist.logic.SignificanceLevel;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import jdk.nashorn.internal.runtime.arrays.ArrayLikeIterator;
 
 /**
  *
