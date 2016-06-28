@@ -493,5 +493,7 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
         checkBoxSignificance.setText(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("obliczanie istotności"));
         labelSignificance.setText(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("poziom istotności"));
         checkBoxTwoSidedTest.setText(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("test dwustronny"));
+        checkBoxBootstrap.setText(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("probkowanie bootstrap"));
+        labelBootstrap.setText(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ilosc prob"));
     }
 }

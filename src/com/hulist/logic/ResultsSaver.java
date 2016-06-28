@@ -201,7 +201,26 @@ public class ResultsSaver {
             sh = wb.createSheet(Sheets.RUNNING_CORR.name);
         }
         
-        int firstFreeRow = sh.getLastRowNum() + 1;
+        // getting year min-max
+        int yearMin = Integer.MAX_VALUE, yearMax = Integer.MIN_VALUE;
+        int windowSize = 0;
+        for (Results res : results) {
+            if (res.yearStart < yearMin) {
+                yearMin = res.yearStart;
+            }
+            if (res.yearEnd > yearMax) {
+                yearMax = res.yearEnd;
+            }
+            windowSize = res.getWindowSize();
+        }
+        
+        ExcelUtil.getCell(ExcelUtil.getRow(sh, 0), 3, Cell.CELL_TYPE_STRING).setCellValue("Range / Window mid-year");
+        for (int i = 0; i < yearMax-yearMin-windowSize+2; i++) {
+            Cell year = ExcelUtil.getCell(ExcelUtil.getRow(sh, 0), i+4, Cell.CELL_TYPE_NUMERIC);
+            year.setCellValue(i+yearMin+windowSize/2);
+        }
+        
+        int firstFreeRow = 1;
         for (Results res : results) {
             if (res.isIsRunningCorr()) {
                 Cell rowName = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 0, Cell.CELL_TYPE_STRING);
@@ -218,7 +237,7 @@ public class ResultsSaver {
 
                     for (double value : res.runningCorrMap.get(col).values()) {
                         colCounter++;
-                        c = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), colCounter, Cell.CELL_TYPE_NUMERIC);
+                        c = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), colCounter+res.yearStart-yearMin, Cell.CELL_TYPE_NUMERIC);
                         c.setCellValue(value);
                     }
                     firstFreeRow++;

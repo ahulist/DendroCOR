@@ -3,8 +3,6 @@ package com.hulist.gui;
 /*
     TODO
     - przesunać "korelacje" z PreferencesJFrame do menu
-    - w running_correlation sheet w excelu zrobić w pierwszym wierszu lata środkowe w nagłówkach kolumn
-        (wiersze poniżej odpowiednio przesuniete) + wyniki w ramce
     - kolorem zaznaczone komórki istotne dla zadanego alfa
     - 3 set/restore months ranges
     - logi: same ostrzeżenia/full logi
@@ -81,7 +79,7 @@ import org.jdesktop.swingx.JXCollapsiblePane;
 public class MainWindow extends JFrame/*Background*/ implements LocaleChangeListener {
 
     public static final String APP_NAME = "DendroCORR";
-    public static final String APP_VERSION = "2.8";
+    public static final String APP_VERSION = "2.8.1";
     public static final String BUNDLE = "com/hulist/bundle/Bundle";
     private static final int YEAR = 2016;//Calendar.getInstance().get(Calendar.YEAR);
 
