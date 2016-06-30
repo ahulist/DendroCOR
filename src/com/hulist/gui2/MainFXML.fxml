@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
@@ -8,32 +9,256 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="vbox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hulist.gui2.MainFXMLController">
+<VBox fx:id="vbox" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hulist.gui2.MainFXMLController">
    <children>
-      <Pane>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="%MainWindow.menuSettings.text">
+            <items>
+                  <Menu mnemonicParsing="false" text="%MainWindow.menuLanguage.text">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onActionMenuItemPL" text="Polski" />
+                      <MenuItem mnemonicParsing="false" onAction="#onActionMenuItemEN" text="English" />
+                    </items>
+                  </Menu>
+              <MenuItem mnemonicParsing="false" text="%MainWindow.menuItemPreferences.text" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="%MainWindow.menuHelp.text">
+            <items>
+              <MenuItem mnemonicParsing="false" text="%MainWindow.menuAbout.text" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <HBox>
          <children>
-            <Button mnemonicParsing="false" text="Button" />
-         </children>
-      </Pane>
-      <TitledPane fx:id="titledpane" text="untitled">
-         <content>
-            <GridPane>
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <VBox prefHeight="200.0">
                <children>
-                  <Button mnemonicParsing="false" text="Button" />
-                  <Label text="Label" GridPane.rowIndex="1" />
-                  <RadioButton mnemonicParsing="false" text="RadioButton" GridPane.columnIndex="1" />
-                  <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="%MainWindow.labelChronologyFile.text">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Label>
+                  <ListView minHeight="200.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                     </padding>
+                  </ListView>
+                  <FlowPane>
+                     <children>
+                        <Label minWidth="100.0" text="%MainWindow.labelFileTypeClima.text">
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin>
+                        </Label>
+                        <ChoiceBox prefWidth="150.0">
+                           <FlowPane.margin>
+                              <Insets right="10.0" top="5.0" />
+                           </FlowPane.margin>
+                        </ChoiceBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" top="10.0" />
+                     </padding>
+                  </FlowPane>
+                  <FlowPane>
+                     <children>
+                        <Label minWidth="100.0" text="%MainWindow.labelColumn.text">
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin>
+                        </Label>
+                        <ChoiceBox prefWidth="150.0">
+                           <FlowPane.margin>
+                              <Insets right="10.0" />
+                           </FlowPane.margin>
+                        </ChoiceBox>
+                     </children>
+                  </FlowPane>
                </children>
-            </GridPane>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="10.0" left="20.0" right="10.0" />
+               </padding>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0">
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+            </Separator>
+            <VBox prefHeight="200.0">
+               <children>
+                  <Label text="%MainWindow.labelClimateFile.text">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Label>
+                  <ListView minHeight="200.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                     </padding>
+                  </ListView>
+                  <FlowPane>
+                     <children>
+                        <Label minWidth="100.0" text="%MainWindow.labelFileTypeClima.text">
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin>
+                        </Label>
+                        <ChoiceBox prefWidth="150.0">
+                           <FlowPane.margin>
+                              <Insets right="10.0" top="5.0" />
+                           </FlowPane.margin>
+                        </ChoiceBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="25.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" top="10.0" />
+                     </padding>
+                  </FlowPane>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </padding>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0">
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+            </Separator>
+            <VBox prefHeight="300.0" prefWidth="150.0">
+               <children>
+                  <Label text="%DropdownContentsPanel.labelMonthsRange.text">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Label>
+                  <TextArea minWidth="150.0" prefHeight="200.0" prefWidth="200.0" text="6 6 1&#10;7 7 1&#10;8 8 1&#10;9 9 1&#10;10 10 1&#10;11 11 1&#10;12 12 1&#10;&#10;1 1&#10;2 2&#10;3 3&#10;4 4&#10;5 5&#10;6 6&#10;7 7&#10;8 8&#10;9 9&#10;10 10&#10;&#10;1 3&#10;4 5&#10;6 7&#10;6 8&#10;9 10&#10;11 12&#10;4 9&#10;5 10&#10;4 10&#10;&#10;1 12">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </TextArea>
+                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="130.0" text="%DropdownContentsPanel.buttonResetTextAreaMonths.text">
+                     <VBox.margin>
+                        <Insets right="10.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="20.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+      <Separator prefWidth="200.0">
+         <VBox.margin>
+            <Insets left="10.0" right="10.0" />
+         </VBox.margin>
+      </Separator>
+      <BorderPane>
+         <right>
+            <Button alignment="CENTER" contentDisplay="CENTER" minWidth="100.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="%MainWindow.buttonStart.text" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="40.0" top="10.0" />
+               </BorderPane.margin>
+            </Button>
+         </right>
+         <left>
+            <VBox BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="20.0" top="10.0" />
+               </BorderPane.margin>
+               <children>
+                  <FlowPane>
+                     <children>
+                        <Label minWidth="100.0" text="%MainWindow.labelYearStart.text">
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin>
+                        </Label>
+                        <TextField />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="10.0" />
+                     </VBox.margin>
+                  </FlowPane>
+                  <FlowPane>
+                     <children>
+                        <Label minWidth="100.0" text="%MainWindow.labelYearEnd.text">
+                           <FlowPane.margin>
+                              <Insets left="10.0" />
+                           </FlowPane.margin>
+                        </Label>
+                        <TextField />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </FlowPane>
+                  <CheckBox mnemonicParsing="false" text="%MainWindow.checkBoxAllYears.text">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="110.0" top="5.0" />
+                     </VBox.margin>
+                  </CheckBox>
+               </children>
+            </VBox>
+         </left>
+      </BorderPane>
+      <TitledPane fx:id="titledpane" expanded="false" text="%DropdownContentsPanel.labelResults.text">
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+         </VBox.margin>
+         <content>
+            <BorderPane prefWidth="200.0">
+               <top>
+                  <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <TextArea editable="false" prefHeight="200.0">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
+                           </padding>
+                        </TextArea>
+                        <Button minWidth="100.0" mnemonicParsing="false" text="%DropdownContentsPanel.buttonClearTextArea.text">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </top>
+            </BorderPane>
          </content>
       </TitledPane>
    </children>

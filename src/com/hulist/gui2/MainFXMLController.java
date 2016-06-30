@@ -6,20 +6,14 @@
 package com.hulist.gui2;
 
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 /**
  * FXML Controller class
@@ -30,32 +24,40 @@ public class MainFXMLController implements Initializable {
 
     @FXML
     private ResourceBundle resources;
-
     @FXML
     private URL location;
-
     @FXML
     private VBox vbox;
-
     @FXML
     private TitledPane titledpane;
 
+    private GUIMain guiMain;
     private Stage stage;
-    
-    /**
-     * Initializes the controller class.
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
     }
 
     void setStage(Stage stage) {
         this.stage = stage;
     }
 
-    void _init() {
-        titledpane.heightProperty().addListener((obs, oldHeight, newHeight) -> stage.sizeToScene());
+    @FXML
+    private void onActionMenuItemPL(ActionEvent evt) {
+        this.guiMain.switchLocale(new Locale("pl"));
+    }
+
+    @FXML
+    private void onActionMenuItemEN(ActionEvent evt) {
+        this.guiMain.switchLocale(Locale.ENGLISH);
+    }
+
+    public GUIMain getGuiMain() {
+        return guiMain;
+    }
+
+    public void setGuiMain(GUIMain guiMain) {
+        this.guiMain = guiMain;
     }
 
 }
