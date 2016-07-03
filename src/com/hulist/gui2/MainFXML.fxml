@@ -21,7 +21,7 @@
                       <MenuItem mnemonicParsing="false" onAction="#onActionMenuItemEN" text="English" />
                     </items>
                   </Menu>
-              <MenuItem mnemonicParsing="false" text="%MainWindow.menuItemPreferences.text" />
+              <MenuItem mnemonicParsing="false" onAction="#onActionMenuItemPreferences" text="%MainWindow.menuItemPreferences.text" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="%MainWindow.menuHelp.text">
@@ -58,7 +58,7 @@
                               <Insets left="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <ChoiceBox prefWidth="150.0">
+                        <ChoiceBox fx:id="comboBoxChronoFileType" prefWidth="150.0">
                            <FlowPane.margin>
                               <Insets right="10.0" top="5.0" />
                            </FlowPane.margin>
@@ -78,7 +78,7 @@
                               <Insets left="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <ChoiceBox prefWidth="150.0">
+                        <ChoiceBox fx:id="comboBoxColSelect" prefWidth="150.0">
                            <FlowPane.margin>
                               <Insets right="10.0" />
                            </FlowPane.margin>
@@ -123,7 +123,7 @@
                               <Insets left="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <ChoiceBox prefWidth="150.0">
+                        <ChoiceBox fx:id="comboBoxClimateFileType" prefWidth="150.0">
                            <FlowPane.margin>
                               <Insets right="10.0" top="5.0" />
                            </FlowPane.margin>

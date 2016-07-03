@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hulist.gui2.PreferencesFXMLController">
+  <tabs>
+    <Tab text="%KORELACJA">
+         <content>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <CheckBox mnemonicParsing="false" text="%obliczanie istotności">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+                     </VBox.margin>
+                  </CheckBox>
+                  <Label text="%poziom istotności">
+                     <VBox.margin>
+                        <Insets left="40.0" right="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField maxWidth="200.0" prefWidth="200.0" promptText="recommended: 0.05" text="0.05">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="40.0" right="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <CheckBox mnemonicParsing="false" text="%test dwustronny">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="40.0" right="20.0" />
+                     </VBox.margin>
+                  </CheckBox>
+                  <Separator prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </Separator>
+                  <CheckBox mnemonicParsing="false" text="%Korelacja kroczaca">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </VBox.margin>
+                  </CheckBox>
+                  <HBox>
+                     <children>
+                        <Label text="%Rozmiar okna korelacji">
+                           <HBox.margin>
+                              <Insets left="40.0" right="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="labelCorrWindowVal" text="...">
+                           <HBox.margin>
+                              <Insets left="50.0" right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Slider fx:id="sliderCorrWindow" blockIncrement="2.0" majorTickUnit="6.0" max="49.0" maxWidth="200.0" min="5.0" minorTickCount="2" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="41.0">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="40.0" right="20.0" />
+                     </VBox.margin>
+                  </Slider>
+                  <Separator prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </Separator>
+                  <CheckBox mnemonicParsing="false" text="%probkowanie bootstrap">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </VBox.margin>
+                  </CheckBox>
+                  <Label text="%ilosc prob">
+                     <VBox.margin>
+                        <Insets left="40.0" right="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField maxWidth="200.0" promptText="recommended: 20000" text="20000">
+                     <VBox.margin>
+                        <Insets left="40.0" right="20.0" />
+                     </VBox.margin>
+                  </TextField>
+               </children>
+            </VBox>
+         </content>
+    </Tab>
+    <Tab text="%Debugging">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="%Logowanie" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

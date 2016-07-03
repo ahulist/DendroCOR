@@ -7,18 +7,23 @@ package com.hulist.gui2;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
-import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -26,57 +31,50 @@ import javafx.stage.Stage;
  */
 public class GUIMain extends Application {
 
-    private Stage stage;
-    private final String bundlePath = "com.hulist.bundles.Bundle";
-    private final String mainFxmlName = "MainFXML.fxml";
+    public static final String APP_NAME = "DendroCORR";
+    public static final String APP_VERSION = "2.8.1";
+    private static final int YEAR = 2016;//Calendar.getInstance().get(Calendar.YEAR);
+
+    private final String bundle = "com.hulist.bundles.Bundle";
+    private Stage mainStage;
+    private Locale currLocale = null;
+
     private MainFXMLController mainController;
+    private PreferencesFXMLController prefsController;
 
     @Override
     public void start(Stage stage) throws Exception {
         Locale.setDefault(Locale.ENGLISH);
-        this.stage = stage;
+        this.currLocale = Locale.getDefault();
+        this.mainStage = stage;
 
-        URL location = getClass().getResource(mainFxmlName);
-        ResourceBundle resources = ResourceBundle.getBundle(bundlePath, Locale.getDefault());
+        URL location = getClass().getResource(MainFXMLController.MAIN_FXML_NAME);
+        ResourceBundle resources = ResourceBundle.getBundle(bundle, Locale.getDefault());
         FXMLLoader loader = new FXMLLoader(location, resources);
         Parent root = loader.load();
-        Scene scene = new Scene(root);
 
-        setMainController(loader.getController(), stage);
+        setMainController(loader.getController());
+        setMainScene(root);
 
-        initNodes(root);
-
-        stage.setScene(scene);
+        initMainStage();
         stage.show();
     }
 
-    private void setMainController(MainFXMLController newController, Stage stage) {
-        this.mainController = newController;
-        this.mainController.setStage(stage);
-        this.mainController.setGuiMain(this);
+    public void setMainController(MainFXMLController newController) {
+        mainController = newController;
+        mainController.setGuiMain(this);
+    }
+
+    public void setMainScene(Parent root) {
+        this.mainStage.setScene(new Scene(root));
     }
 
     void switchLocale(Locale newLocale) {
-        try {
-            // get new
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(mainFxmlName), ResourceBundle.getBundle(bundlePath, newLocale));
-            VBox newRoot = (VBox) fxmlLoader.load();
-            ObservableList newContent = newRoot.getChildren();
-            // init new
-            setMainController(fxmlLoader.getController(), this.stage);
-            initNodes(newRoot);
-            // replace the old content
-            VBox currentRoot = (VBox) this.stage.getScene().getRoot();
-            currentRoot.getChildren().clear();
-            currentRoot.getChildren().addAll(newContent);
-        } catch (IOException ex) {
+        currLocale = newLocale;
+        mainController.switchLocale(newLocale);
+        if (prefsController != null) {
+            prefsController.switchLocale(newLocale);
         }
-    }
-
-    private void initNodes(Parent root) {
-        TitledPane tp = (TitledPane) root.lookup("#titledpane");
-        ReadOnlyDoubleProperty dp = tp.heightProperty();
-        dp.addListener((obs, oldHeight, newHeight) -> this.stage.sizeToScene());
     }
 
     /**
@@ -84,6 +82,34 @@ public class GUIMain extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public Locale getCurrLocale() {
+        return currLocale;
+    }
+
+    public String getBundle() {
+        return bundle;
+    }
+
+    public Stage getMainStage() {
+        return mainStage;
+    }
+
+    public void setPrefsController(PreferencesFXMLController prefsController) {
+        this.prefsController = prefsController;
+    }
+
+    private void initMainStage() {
+        mainStage.setTitle(APP_NAME);
+        final List<Image> icons1 = new ArrayList<>();
+        icons1.add(new Image(getClass().getClassLoader().getResourceAsStream("resources/32.png")));
+        icons1.add(new Image(getClass().getClassLoader().getResourceAsStream("resources/48.png")));
+        icons1.add(new Image(getClass().getClassLoader().getResourceAsStream("resources/64.png")));
+        icons1.add(new Image(getClass().getClassLoader().getResourceAsStream("resources/96.png")));
+        icons1.add(new Image(getClass().getClassLoader().getResourceAsStream("resources/128.png")));
+        icons1.add(new Image(getClass().getClassLoader().getResourceAsStream("resources/450.png")));
+        mainStage.getIcons().addAll(icons1);
     }
 
 }
