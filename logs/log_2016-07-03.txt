@@ -1,0 +1,20 @@
+19:42:11 ===================================================
+
+FINE: Logging level changed to FINER.
+21:03:10 ===================================================
+
+FINE: Logging level changed to FINER.
+21:03:46 ===================================================
+
+FINE: Logging level changed to FINER.
+21:08:26 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: File type chosen: Tucson (*.rwl)
+21:45:22 ===================================================
+
+FINE: Logging level changed to FINER.
+21:45:53 ===================================================
+
+FINE: Logging level changed to FINER.

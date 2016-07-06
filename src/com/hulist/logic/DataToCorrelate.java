@@ -7,7 +7,9 @@
 package com.hulist.logic;
 
 import com.hulist.util.MonthsPair;
+import com.hulist.util.Pair;
 import java.util.HashMap;
+import org.joda.time.MonthDay;
 
 /**
  *
@@ -16,6 +18,7 @@ import java.util.HashMap;
 public class DataToCorrelate {
     
     Column primary;
-    HashMap<MonthsPair, Column> columns = new HashMap<>();
+    HashMap<MonthsPair, Column> climateColumns = new HashMap<>();
+    HashMap<Pair<MonthDay, MonthDay>, Column> dailyColumns = new HashMap<>();
 
 }

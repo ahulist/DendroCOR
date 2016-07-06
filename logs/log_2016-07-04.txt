@@ -1,0 +1,215 @@
+11:51:20 ===================================================
+
+FINE: Logging level changed to FINER.
+11:51:52 ===================================================
+
+FINE: Logging level changed to FINER.
+11:52:14 ===================================================
+
+FINE: Logging level changed to FINER.
+11:55:17 ===================================================
+
+FINE: Logging level changed to FINER.
+11:59:26 ===================================================
+
+FINE: Logging level changed to FINER.
+12:00:06 ===================================================
+
+FINE: Logging level changed to FINER.
+12:02:04 ===================================================
+
+FINE: Logging level changed to FINER.
+12:02:35 ===================================================
+
+FINE: Logging level changed to FINER.
+12:03:08 ===================================================
+
+FINE: Logging level changed to FINER.
+12:05:05 ===================================================
+
+FINE: Logging level changed to FINER.
+12:05:37 ===================================================
+
+FINE: Logging level changed to FINER.
+12:07:50 ===================================================
+
+FINE: Logging level changed to FINER.
+12:14:08 ===================================================
+
+FINE: Logging level changed to FINER.
+12:15:17 ===================================================
+
+FINE: Logging level changed to FINER.
+12:15:29 ===================================================
+
+FINE: Logging level changed to FINER.
+12:15:40 ===================================================
+
+FINE: Logging level changed to FINER.
+12:16:05 ===================================================
+
+FINE: Logging level changed to FINER.
+12:23:12 ===================================================
+
+FINE: Logging level changed to FINER.
+12:25:08 ===================================================
+
+FINE: Logging level changed to FINER.
+12:25:44 ===================================================
+
+FINE: Logging level changed to FINER.
+12:26:37 ===================================================
+
+FINE: Logging level changed to FINER.
+12:29:06 ===================================================
+
+FINE: Logging level changed to FINER.
+12:29:32 ===================================================
+
+FINE: Logging level changed to FINER.
+12:30:01 ===================================================
+
+FINE: Logging level changed to FINER.
+12:30:21 ===================================================
+
+FINE: Logging level changed to FINER.
+12:32:18 ===================================================
+
+FINE: Logging level changed to FINER.
+12:32:43 ===================================================
+
+FINE: Logging level changed to FINER.
+12:33:02 ===================================================
+
+FINE: Logging level changed to FINER.
+12:33:14 ===================================================
+
+FINE: Logging level changed to FINER.
+12:33:30 ===================================================
+
+FINE: Logging level changed to FINER.
+12:38:21 ===================================================
+
+FINE: Logging level changed to FINER.
+12:38:53 ===================================================
+
+FINE: Logging level changed to FINER.
+12:39:15 ===================================================
+
+FINE: Logging level changed to FINER.
+12:49:21 ===================================================
+
+FINE: Logging level changed to FINER.
+12:53:05 ===================================================
+
+FINE: Logging level changed to FINER.
+12:53:17 ===================================================
+
+FINE: Logging level changed to FINER.
+13:21:27 ===================================================
+
+FINE: Logging level changed to FINER.
+13:21:36 ===================================================
+
+FINE: Logging level changed to FINER.
+13:24:29 ===================================================
+
+FINE: Logging level changed to FINER.
+13:56:06 ===================================================
+
+FINE: Logging level changed to FINER.
+13:56:26 ===================================================
+
+FINE: Logging level changed to FINER.
+19:46:05 ===================================================
+
+FINE: Logging level changed to FINER.
+19:46:34 ===================================================
+
+FINE: Logging level changed to FINER.
+19:48:30 ===================================================
+
+FINE: Logging level changed to FINER.
+19:50:23 ===================================================
+
+FINE: Logging level changed to FINER.
+19:51:28 ===================================================
+
+FINE: Logging level changed to FINER.
+19:51:50 ===================================================
+
+FINE: Logging level changed to FINER.
+WARNING: Choose dendro file.
+WARNING: Choose climate file.
+19:51:57 ===================================================
+
+FINE: Logging level changed to FINER.
+WARNING: Choose climate file.
+19:55:08 ===================================================
+
+FINE: Logging level changed to FINER.
+19:57:11 ===================================================
+
+FINE: Logging level changed to FINER.
+FINEST: WindowParams: [true, -1, -1, [09TRW-CW.rwl_tabs.txt, 10TRW-CW.rwl_tabs.txt], [zakopane.txt, typ_klimatologiczny.txt], DEKADOWY, RAW, TYPE1, PREC, 8,9]
+FINE: Data processing started.
+WARNING: Incorrect file format of 09TRW-CW.rwl_tabs.txt in line 1
+FINEST: java.lang.NumberFormatException: For input string: "num"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+	at java.lang.Integer.parseInt(Integer.java:580)
+	at java.lang.Integer.parseInt(Integer.java:615)
+	at com.hulist.logic.chronology.deka.DekaImporter.getData(DekaImporter.java:59)
+	at com.hulist.logic.ProcessData.getDeka(ProcessData.java:121)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:263)
+	at java.lang.Thread.run(Thread.java:745)
+
+SEVERE: File read error occured.
+FINEST: java.io.IOException: Incorrect file format of 09TRW-CW.rwl_tabs.txt in line 1
+	at com.hulist.logic.chronology.deka.DekaImporter.getData(DekaImporter.java:86)
+	at com.hulist.logic.ProcessData.getDeka(ProcessData.java:121)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:263)
+	at java.lang.Thread.run(Thread.java:745)
+
+19:59:16 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt, 09TRW-CW.rwl_tabs.txt], [zakopane.txt, typ_klimatologiczny.txt], TABS, RES, TYPE1, PREC, 8,9]
+FINE: Data processing started.
+20:01:12 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [09TRW-CW.rwl_tabs.txt, 8TRW-nCW.rwl_tabs.txt], [zakopane.txt, typ_klimatologiczny.txt], TABS, RES, TYPE1, PREC, 8,9]
+FINE: Data processing started.
+20:07:55 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [09TRW-CW.rwl_tabs.txt, 10TRW-CW.rwl_tabs.txt], [fakefile1.txt], TABS, RES, TYPE1, PREC, 8,9]
+FINE: Data processing started.
+20:09:50 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt, 09TRW-CW.rwl_tabs.txt], [fakefile1.txt], TABS, RES, TYPE1, PREC, 8,9]
+FINE: Data processing started.
+20:11:33 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Tucson (*.rwl)
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt, 09TRW-CW.rwl_tabs.txt], [fakefile1.txt], TABS, RES, TYPE1, PREC, 8,9]
+FINE: Data processing started.
+20:18:09 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt, 09TRW-CW.rwl_tabs.txt], [fakefile1.txt], TABS, RES, TYPE1, PREC, 8,9]
+FINE: Data processing started.

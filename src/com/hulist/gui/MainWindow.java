@@ -1,24 +1,26 @@
 package com.hulist.gui;
 
 /*
-    TODO
-    - przesunać "korelacje" z PreferencesJFrame do menu
-    - kolorem zaznaczone komórki istotne dla zadanego alfa
-    - 3 set/restore months ranges
-    - logi: same ostrzeżenia/full logi
-    - korelacja: linie poziome na wykresach -> istotność statystyczna
-        (jeśli dane są dodatnie i ujemne, to linie po obu stronach)
-    - wartość istotności stat. w logach szczegółowych
-    - wielowątkowość
-    - zapamiętać ustawienia użytkownika w WindowParams przed uruchomieniem
-        (tak żeby można było mieszać w ustawieniach po uruchomieniu obliczeń)
-*/
-
+ TODO
+ - przesunać "korelacje" z PreferencesJFrame do menu
+ - kolorem zaznaczone komórki istotne dla zadanego alfa
+ - 3 set/restore months ranges
+ - logi: same ostrzeżenia/full logi
+ - korelacja: linie poziome na wykresach -> istotność statystyczna
+ (jeśli dane są dodatnie i ujemne, to linie po obu stronach)
+ - wartość istotności stat. w logach szczegółowych
+ - wielowątkowość
+ - zapamiętać ustawienia użytkownika w WindowParams przed uruchomieniem
+ (tak żeby można było mieszać w ustawieniach po uruchomieniu obliczeń)
+ */
 import com.hulist.logic.ProcessData;
 import com.hulist.logic.RunParams;
+import com.hulist.logic.RunType;
 import com.hulist.logic.chronology.ChronologyFileTypes;
 import com.hulist.logic.chronology.tabs.TabsColumnTypes;
 import com.hulist.logic.climate.ClimateFileTypes;
+import com.hulist.logic.daily.DailyColumnTypes;
+import com.hulist.logic.daily.DailyFileTypes;
 import com.hulist.util.FileWrap;
 import com.hulist.util.LocaleChangeListener;
 import com.hulist.util.LocaleManager;
@@ -79,7 +81,7 @@ import org.jdesktop.swingx.JXCollapsiblePane;
 public class MainWindow extends JFrame/*Background*/ implements LocaleChangeListener {
 
     public static final String APP_NAME = "DendroCORR";
-    public static final String APP_VERSION = "2.8.1";
+    public static final String APP_VERSION = "2.9";
     public static final String BUNDLE = "com/hulist/bundle/Bundle";
     private static final int YEAR = 2016;//Calendar.getInstance().get(Calendar.YEAR);
 
@@ -126,6 +128,8 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
         comboBoxClimateFileType.setModel(new DefaultComboBoxModel<>(ClimateFileTypes.getDisplayNames()));
         comboBoxChronoFileType.setModel(new DefaultComboBoxModel<>(ChronologyFileTypes.getDisplayNames()));
         comboBoxColSelect.setModel(new DefaultComboBoxModel<>(TabsColumnTypes.values()));
+        comboBoxDailyFileType.setModel(new DefaultComboBoxModel<>(DailyFileTypes.values()));
+        comboBoxColDailySelect.setModel(new DefaultComboBoxModel<>(DailyColumnTypes.getDisplayNames()));
 
         // output text pane
         dropdownPanel.getTextPane().setEnabled(true);
@@ -172,6 +176,9 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
             }
         });
 
+        // daily excluded list
+        textFieldDailyExcluded.setText(UserPreferences.getInstance().getPrefs().get("textFieldDailyExcluded", ""));
+
         // collapsible pane
         jXCollapsiblePane.setCollapsed(true);
         jXCollapsiblePane.setAnimated(false);
@@ -199,6 +206,7 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         collapsibleParent = new javax.swing.JPanel();
         panelDendro = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -224,6 +232,18 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
         labelListClimateHelper = new javax.swing.JLabel();
         buttonStart = new javax.swing.JButton();
         buttonMore = new javax.swing.JButton();
+        panelDaily = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listDailyFiles = new javax.swing.JList();
+        labelDailyFile = new javax.swing.JLabel();
+        labelFileTypeDaily = new javax.swing.JLabel();
+        comboBoxDailyFileType = new javax.swing.JComboBox();
+        labelColumnDaily = new javax.swing.JLabel();
+        comboBoxColDailySelect = new javax.swing.JComboBox();
+        labelDailyExcluded = new javax.swing.JLabel();
+        textFieldDailyExcluded = new javax.swing.JTextField();
+        radioMonthly = new javax.swing.JRadioButton();
+        radioDaily = new javax.swing.JRadioButton();
         menuBar = new javax.swing.JMenuBar();
         menuLogs = new javax.swing.JMenu();
         menuLogsDetails = new javax.swing.JMenu();
@@ -430,7 +450,7 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
                 .addGroup(panelClimateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFileTypeClima)
                     .addComponent(comboBoxClimateFileType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         buttonStart.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -447,6 +467,97 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
                 buttonMoreActionPerformed(evt);
             }
         });
+
+        panelDaily.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panelDaily.setPreferredSize(new java.awt.Dimension(290, 244));
+
+        listDailyFiles.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listFilesKeyPressedHandler(evt);
+            }
+        });
+        jScrollPane3.setViewportView(listDailyFiles);
+
+        labelDailyFile.setText(bundle.getString("MainWindow.labelDailyFile.text")); // NOI18N
+
+        labelFileTypeDaily.setText(bundle.getString("MainWindow.labelFileTypeDaily.text")); // NOI18N
+
+        comboBoxDailyFileType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxDailyFileTypeActionPerformed(evt);
+            }
+        });
+
+        labelColumnDaily.setText(bundle.getString("MainWindow.labelColumnDaily.text")); // NOI18N
+
+        comboBoxColDailySelect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxColDailySelectActionPerformed(evt);
+            }
+        });
+
+        labelDailyExcluded.setText(bundle.getString("MainWindow.labelDailyExcluded.text")); // NOI18N
+        labelDailyExcluded.setToolTipText(bundle.getString("MainWindow.labelDailyExcluded.toolTipText")); // NOI18N
+
+        textFieldDailyExcluded.setText(bundle.getString("MainWindow.textFieldDailyExcluded.text")); // NOI18N
+        textFieldDailyExcluded.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textFieldDailyExcludedFocusLost(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelDailyLayout = new javax.swing.GroupLayout(panelDaily);
+        panelDaily.setLayout(panelDailyLayout);
+        panelDailyLayout.setHorizontalGroup(
+            panelDailyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDailyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelDailyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                    .addGroup(panelDailyLayout.createSequentialGroup()
+                        .addGroup(panelDailyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelDailyFile)
+                            .addGroup(panelDailyLayout.createSequentialGroup()
+                                .addGroup(panelDailyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelFileTypeDaily)
+                                    .addComponent(labelColumnDaily)
+                                    .addComponent(labelDailyExcluded))
+                                .addGap(28, 28, 28)
+                                .addGroup(panelDailyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(textFieldDailyExcluded)
+                                    .addComponent(comboBoxColDailySelect, 0, 120, Short.MAX_VALUE)
+                                    .addComponent(comboBoxDailyFileType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        panelDailyLayout.setVerticalGroup(
+            panelDailyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDailyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelDailyFile)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addGroup(panelDailyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelFileTypeDaily)
+                    .addComponent(comboBoxDailyFileType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelDailyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelColumnDaily)
+                    .addComponent(comboBoxColDailySelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelDailyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelDailyExcluded)
+                    .addComponent(textFieldDailyExcluded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        buttonGroup1.add(radioMonthly);
+        radioMonthly.setSelected(true);
+        radioMonthly.setText(bundle.getString("MainWindow.radioMonthly.text")); // NOI18N
+
+        buttonGroup1.add(radioDaily);
+        radioDaily.setText(bundle.getString("MainWindow.radioDaily.text")); // NOI18N
 
         menuLogs.setText(bundle.getString("MainWindow.menuLogs.text")); // NOI18N
 
@@ -543,34 +654,51 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(panelYears, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(buttonMore, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(buttonStart, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)))
+                        .addComponent(collapsibleParent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(panelYears, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(buttonStart, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(buttonMore, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(radioMonthly)
+                                    .addComponent(radioDaily))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelDendro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelClimate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(collapsibleParent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(panelClimate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelDaily, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelYears, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonStart)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonMore))
+                        .addComponent(radioMonthly)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(radioDaily)
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(buttonMore)
+                            .addComponent(buttonStart))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(panelDendro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelClimate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelClimate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelDaily, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(collapsibleParent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         collapsibleParent.setPreferredSize(collapsibleParent.getPreferredSize());
@@ -621,16 +749,83 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
          log.log(Level.FINE, "fine");
          log.log(Level.FINER, "finer");*/
 
-        selectedChronoFile = new File[listDendroFiles.getModel().getSize()];
-        for (int i = 0; i < listDendroFiles.getModel().getSize(); i++) {
-            selectedChronoFile[i] = (File) listDendroFiles.getModel().getElementAt(i);
-        }
-        selectedClimateFile = new File[listClimateFiles.getModel().getSize()];
-        for (int i = 0; i < listClimateFiles.getModel().getSize(); i++) {
-            selectedClimateFile[i] = (File) listClimateFiles.getModel().getElementAt(i);
-        }
+        if (radioMonthly.isSelected()) {
+            selectedChronoFile = new File[listDendroFiles.getModel().getSize()];
+            for (int i = 0; i < listDendroFiles.getModel().getSize(); i++) {
+                selectedChronoFile[i] = (File) listDendroFiles.getModel().getElementAt(i);
+            }
+            selectedClimateFile = new File[listClimateFiles.getModel().getSize()];
+            for (int i = 0; i < listClimateFiles.getModel().getSize(); i++) {
+                selectedClimateFile[i] = (File) listClimateFiles.getModel().getElementAt(i);
+            }
 
-        if (isDataValid()) {
+            if (isDataValid()) {
+                boolean allYears = checkBoxAllYears.isSelected();
+                int startYear = -1, endYear = -1;
+                if (!allYears) {
+                    try {
+                        startYear = Integer.parseInt(textFieldYearStart.getText());
+                        endYear = Integer.parseInt(textFieldYearEnd.getText());
+                    } catch (NumberFormatException e) {
+                    }
+                }
+
+                String chronologyFileTypeName = (String) comboBoxChronoFileType.getSelectedItem();
+                ChronologyFileTypes chronologyFileType = null;
+                for (ChronologyFileTypes type : ChronologyFileTypes.values()) {
+                    if (type.getDisplayName().equals(chronologyFileTypeName)) {
+                        chronologyFileType = type;
+                        break;
+                    }
+                }
+
+                TabsColumnTypes tabsColumnType = (TabsColumnTypes) comboBoxColSelect.getSelectedItem();
+
+                String climateFileTypeName = (String) comboBoxClimateFileType.getSelectedItem();
+                ClimateFileTypes climateFileType = null;
+                for (ClimateFileTypes type : ClimateFileTypes.values()) {
+                    if (type.getDisplayName().equals(climateFileTypeName)) {
+                        climateFileType = type;
+                        break;
+                    }
+                }
+
+                RunParams wp = new RunParams(RunType.MONTHLY,
+                        allYears,
+                        startYear,
+                        endYear,
+                        selectedChronoFile,
+                        selectedClimateFile,
+                        chronologyFileType,
+                        tabsColumnType,
+                        climateFileType,
+                        new TextAreaToMonths(dropdownPanel.getTextAreaMonths()).getList());
+                wp.setPreferencesFrame(PREFERENCES_JFRAME);
+                wp.setMainWindow(this);
+                StringBuilder sb = new StringBuilder();
+                sb.append("WindowParams: [")
+                        .append(allYears).append(", ")
+                        .append(startYear).append(", ")
+                        .append(endYear).append(", ")
+                        .append(Arrays.toString(selectedChronoFile)).append(", ")
+                        .append(Arrays.toString(selectedClimateFile)).append(", ")
+                        .append(chronologyFileType).append(", ")
+                        .append(tabsColumnType).append(", ")
+                        .append(climateFileType).append("]");
+                log.log(Level.FINEST, sb.toString());
+
+                new ProcessData(wp).go();
+            }
+        } else if (radioDaily.isSelected()) {
+            selectedChronoFile = new File[listDendroFiles.getModel().getSize()];
+            for (int i = 0; i < listDendroFiles.getModel().getSize(); i++) {
+                selectedChronoFile[i] = (File) listDendroFiles.getModel().getElementAt(i);
+            }
+            selectedDailyFile = new File[listDailyFiles.getModel().getSize()];
+            for (int i = 0; i < listDailyFiles.getModel().getSize(); i++) {
+                selectedDailyFile[i] = (File) listDailyFiles.getModel().getElementAt(i);
+            }
+            
             boolean allYears = checkBoxAllYears.isSelected();
             int startYear = -1, endYear = -1;
             if (!allYears) {
@@ -651,25 +846,21 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
             }
 
             TabsColumnTypes tabsColumnType = (TabsColumnTypes) comboBoxColSelect.getSelectedItem();
-
-            String climateFileTypeName = (String) comboBoxClimateFileType.getSelectedItem();
-            ClimateFileTypes climateFileType = null;
-            for (ClimateFileTypes type : ClimateFileTypes.values()) {
-                if (type.getDisplayName().equals(climateFileTypeName)) {
-                    climateFileType = type;
+            DailyFileTypes dft = (DailyFileTypes) comboBoxDailyFileType.getSelectedItem();
+            
+            String dailyColumnTypeName = (String) comboBoxColDailySelect.getSelectedItem();
+            DailyColumnTypes dct = null;
+            for (DailyColumnTypes type : DailyColumnTypes.values()) {
+                if (type.getDisplayName().equals(dailyColumnTypeName)) {
+                    dct = type;
                     break;
                 }
             }
-
-            RunParams wp = new RunParams(allYears,
-                    startYear,
-                    endYear,
-                    selectedChronoFile,
-                    selectedClimateFile,
-                    chronologyFileType,
-                    tabsColumnType,
-                    climateFileType,
-                    new TextAreaToMonths(dropdownPanel.getTextAreaMonths()).getList());
+            
+            RunParams wp = new RunParams(RunType.DAILY, allYears, startYear, endYear, selectedChronoFile, 
+                    selectedDailyFile, chronologyFileType, tabsColumnType,
+                    dft, dct, textFieldDailyExcluded.getText().split("\\s*,\\s*"));
+            
             wp.setPreferencesFrame(PREFERENCES_JFRAME);
             wp.setMainWindow(this);
             StringBuilder sb = new StringBuilder();
@@ -678,10 +869,12 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
                     .append(startYear).append(", ")
                     .append(endYear).append(", ")
                     .append(Arrays.toString(selectedChronoFile)).append(", ")
-                    .append(Arrays.toString(selectedClimateFile)).append(", ")
+                    .append(Arrays.toString(selectedDailyFile)).append(", ")
                     .append(chronologyFileType).append(", ")
                     .append(tabsColumnType).append(", ")
-                    .append(climateFileType).append("]");
+                    .append(dft).append(", ")
+                    .append(dct).append(", ")
+                    .append(textFieldDailyExcluded.getText()).append("]");
             log.log(Level.FINEST, sb.toString());
 
             new ProcessData(wp).go();
@@ -776,21 +969,21 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
             dialog.setAlwaysOnTop(false);
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
-            
+
             SwingUtilities.invokeLater(() -> {
-            try {
-                final List<Image> icons1 = new ArrayList<>();
-                icons1.add(ImageIO.read(getClass().getClassLoader().getResource("resources/32.png")));
-                icons1.add(ImageIO.read(getClass().getClassLoader().getResource("resources/48.png")));
-                icons1.add(ImageIO.read(getClass().getClassLoader().getResource("resources/64.png")));
-                icons1.add(ImageIO.read(getClass().getClassLoader().getResource("resources/96.png")));
-                icons1.add(ImageIO.read(getClass().getClassLoader().getResource("resources/128.png")));
-                icons1.add(ImageIO.read(getClass().getClassLoader().getResource("resources/450.png")));
-                dialog.setIconImages(icons1);
-            } catch (IOException ex) {
-                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
+                try {
+                    final List<Image> icons1 = new ArrayList<>();
+                    icons1.add(ImageIO.read(getClass().getClassLoader().getResource("resources/32.png")));
+                    icons1.add(ImageIO.read(getClass().getClassLoader().getResource("resources/48.png")));
+                    icons1.add(ImageIO.read(getClass().getClassLoader().getResource("resources/64.png")));
+                    icons1.add(ImageIO.read(getClass().getClassLoader().getResource("resources/96.png")));
+                    icons1.add(ImageIO.read(getClass().getClassLoader().getResource("resources/128.png")));
+                    icons1.add(ImageIO.read(getClass().getClassLoader().getResource("resources/450.png")));
+                    dialog.setIconImages(icons1);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
 
             textLabel.addMouseListener(new MouseAdapter() {
                 @Override
@@ -845,6 +1038,18 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
         frame.setVisible(true);
     }//GEN-LAST:event_menuItemPreferencesActionPerformed
 
+    private void comboBoxDailyFileTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxDailyFileTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxDailyFileTypeActionPerformed
+
+    private void comboBoxColDailySelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxColDailySelectActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxColDailySelectActionPerformed
+
+    private void textFieldDailyExcludedFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textFieldDailyExcludedFocusLost
+        UserPreferences.getInstance().getPrefs().put("textFieldDailyExcluded", textFieldDailyExcluded.getText());
+    }//GEN-LAST:event_textFieldDailyExcludedFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -874,26 +1079,35 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton buttonMore;
     private javax.swing.JButton buttonStart;
     private javax.swing.JCheckBox checkBoxAllYears;
     private javax.swing.JPanel collapsibleParent;
     private javax.swing.JComboBox comboBoxChronoFileType;
     private javax.swing.JComboBox comboBoxClimateFileType;
+    private javax.swing.JComboBox comboBoxColDailySelect;
     private javax.swing.JComboBox comboBoxColSelect;
+    private javax.swing.JComboBox comboBoxDailyFileType;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel labelChronologyFile;
     private javax.swing.JLabel labelClimateFile;
     private javax.swing.JLabel labelColumn;
+    private javax.swing.JLabel labelColumnDaily;
+    private javax.swing.JLabel labelDailyExcluded;
+    private javax.swing.JLabel labelDailyFile;
     private javax.swing.JLabel labelFileTypeChrono;
     private javax.swing.JLabel labelFileTypeClima;
+    private javax.swing.JLabel labelFileTypeDaily;
     private javax.swing.JLabel labelListClimateHelper;
     private javax.swing.JLabel labelListDendroHelper;
     private javax.swing.JLabel labelYearEnd;
     private javax.swing.JLabel labelYearStart;
     private javax.swing.JList listClimateFiles;
+    private javax.swing.JList listDailyFiles;
     private javax.swing.JList listDendroFiles;
     private javax.swing.JMenuItem menuAbout;
     private javax.swing.JMenuBar menuBar;
@@ -909,13 +1123,18 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
     private javax.swing.JMenu menuLogsDetails;
     private javax.swing.JMenu menuSettings;
     private javax.swing.JPanel panelClimate;
+    private javax.swing.JPanel panelDaily;
     private javax.swing.JPanel panelDendro;
     private javax.swing.JPanel panelYears;
+    private javax.swing.JRadioButton radioDaily;
+    private javax.swing.JRadioButton radioMonthly;
+    private javax.swing.JTextField textFieldDailyExcluded;
     private javax.swing.JTextField textFieldYearEnd;
     private javax.swing.JTextField textFieldYearStart;
     // End of variables declaration//GEN-END:variables
     private File[] selectedChronoFile = null;
     private File[] selectedClimateFile = null;
+    private File[] selectedDailyFile = null;
     private Logger log, globalLog;
 
     private void setUINames() {
@@ -1070,12 +1289,22 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
         //buttonSelectChronoFile.setText(ResourceBundle.getBundle(BUNDLE).getString("MainWindow.buttonSelectChronoFile.text"));
         //buttonSelectClimateFile.setText(ResourceBundle.getBundle(BUNDLE).getString("MainWindow.buttonSelectClimateFile.text"));
 
+        labelDailyFile.setText(ResourceBundle.getBundle(BUNDLE).getString("MainWindow.labelDailyFile.text"));
+        labelFileTypeDaily.setText(ResourceBundle.getBundle(BUNDLE).getString("MainWindow.labelFileTypeDaily.text"));
+        labelColumnDaily.setText(ResourceBundle.getBundle(BUNDLE).getString("MainWindow.labelColumnDaily.text"));
+
+        radioDaily.setText(ResourceBundle.getBundle(BUNDLE).getString("MainWindow.labelDailyFile.text"));
+        radioMonthly.setText(ResourceBundle.getBundle(BUNDLE).getString("MainWindow.radioMonthly.text"));
+        labelDailyExcluded.setText(ResourceBundle.getBundle(BUNDLE).getString("MainWindow.labelDailyExcluded.text"));
+        labelDailyExcluded.setToolTipText(ResourceBundle.getBundle(BUNDLE).getString("MainWindow.labelDailyExcluded.toolTipText"));
+
         dropdownPanel.getLabelTextAreaMonthsHelper().setToolTipText(ResourceBundle.getBundle(BUNDLE).getString("WPROWADŹ ZAKRESY MIESIĘCY W FORMACIE"));
         labelListDendroHelper.setToolTipText(ResourceBundle.getBundle(BUNDLE).getString("jListHelper"));
         labelListClimateHelper.setToolTipText(ResourceBundle.getBundle(BUNDLE).getString("jListHelper"));
 
         comboBoxChronoFileType.setModel(new DefaultComboBoxModel<>(ChronologyFileTypes.getDisplayNames()));
-        
+        comboBoxColDailySelect.setModel(new DefaultComboBoxModel<>(DailyColumnTypes.getDisplayNames()));
+
         PREFERENCES_JFRAME.onLocaleChange(oldLocale);
 
         pack();
@@ -1214,6 +1443,28 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
             }
         });
         listClimateFiles.addMouseMotionListener(mouseAdapter);
+
+        // daily list
+        listDailyFiles.setModel(new DefaultListModel<>());
+        new FileDrop(listDailyFiles, new FileDrop.Listener() {
+            @Override
+            public void filesDropped(File[] files) {
+                DefaultListModel list = ((DefaultListModel) listDailyFiles.getModel());
+                for (File file : files) {
+                    boolean duplicate = false;
+                    for (int i = 0; i < list.size(); i++) {
+                        if (file.equals(list.get(i))) {
+                            duplicate = true;
+                            break;
+                        }
+                    }
+                    if (!duplicate) {
+                        list.addElement(new FileWrap(file));
+                    }
+                }
+            }
+        });
+        listDailyFiles.addMouseMotionListener(mouseAdapter);
     }
 
     /**

@@ -16,32 +16,32 @@ import java.util.Objects;
  */
 public class Pair<T, K> {
 
-    private final T t;
-    private final K k;
+    private final T first;
+    private final K second;
 
     public Pair(T t, K k) {
-        this.t = t;
-        this.k = k;
+        this.first = t;
+        this.second = k;
     }
 
-    public T getT() {
-        return t;
+    public T getFirst() {
+        return first;
     }
 
-    public K getK() {
-        return k;
+    public K getSecond() {
+        return second;
     }
 
     @Override
     public String toString() {
-        return "Pair{" + "t=" + t + ", k=" + k + '}';
+        return "Pair{" + "First=" + first + ", Second=" + second + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 13 * hash + Objects.hashCode(this.t);
-        hash = 13 * hash + Objects.hashCode(this.k);
+        hash = 13 * hash + Objects.hashCode(this.first);
+        hash = 13 * hash + Objects.hashCode(this.second);
         return hash;
     }
 
@@ -54,10 +54,10 @@ public class Pair<T, K> {
             return false;
         }
         final Pair<?, ?> other = (Pair<?, ?>) obj;
-        if( !Objects.equals(this.t, other.t) ){
+        if( !Objects.equals(this.first, other.first) ){
             return false;
         }
-        if( !Objects.equals(this.k, other.k) ){
+        if( !Objects.equals(this.second, other.second) ){
             return false;
         }
         return true;

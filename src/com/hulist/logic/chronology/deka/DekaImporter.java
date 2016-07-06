@@ -8,6 +8,7 @@ package com.hulist.logic.chronology.deka;
 import com.hulist.gui.MainWindow;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
+import com.hulist.logic.RunParams;
 import com.hulist.util.Misc;
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,8 +27,8 @@ import java.util.logging.Level;
  */
 public class DekaImporter extends BaseImporter implements DataImporter<DekaSerie> {
 
-    public DekaImporter(boolean isAllYears, int startYear, int endYear) {
-        super(isAllYears, startYear, endYear);
+    public DekaImporter(RunParams rp) {
+        super(rp);
     }
 
     @Override

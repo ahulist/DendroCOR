@@ -135,11 +135,6 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
                 textFieldSignificanceFocusLost(evt);
             }
         });
-        textFieldSignificance.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldSignificanceActionPerformed(evt);
-            }
-        });
 
         labelTick.setEnabled(false);
 
@@ -334,10 +329,6 @@ public class PreferencesJFrame extends javax.swing.JFrame implements LocaleChang
         textFieldSignificance.setText(UserPreferences.getInstance().getPrefs().get("textFieldSignificance", "0.05"));
         // TODO: zrobić tick.png żeby było widać zatwierdzenie wpisanej wartości
     }//GEN-LAST:event_textFieldSignificanceFocusLost
-
-    private void textFieldSignificanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldSignificanceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldSignificanceActionPerformed
 
     private void checkBoxTwoSidedTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxTwoSidedTestActionPerformed
         UserPreferences.getInstance().getPrefs().putBoolean("checkBoxTwoSidedTest", checkBoxTwoSidedTest.isSelected());

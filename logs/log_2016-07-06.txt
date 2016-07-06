@@ -1,0 +1,1209 @@
+FINEST: runtime: 833964ms
+01:23:47 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 26524ms
+INFO: Saving...
+SEVERE: File read error occured.
+FINEST: java.lang.NullPointerException
+	at com.hulist.logic.ResultsSaver.createFirstRow(ResultsSaver.java:307)
+	at com.hulist.logic.ResultsSaver.populateCorrelation(ResultsSaver.java:173)
+	at com.hulist.logic.ResultsSaver.saver(ResultsSaver.java:130)
+	at com.hulist.logic.ResultsSaver.save(ResultsSaver.java:80)
+	at com.hulist.logic.ProcessData.save(ProcessData.java:318)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:369)
+	at java.lang.Thread.run(Thread.java:745)
+
+01:26:56 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 25995ms
+INFO: Saving...
+SEVERE: File read error occured.
+FINEST: java.lang.NullPointerException
+	at com.hulist.logic.ResultsSaver.autosizeColumns(ResultsSaver.java:363)
+	at com.hulist.logic.ResultsSaver.populateDaily(ResultsSaver.java:303)
+	at com.hulist.logic.ResultsSaver.saver(ResultsSaver.java:143)
+	at com.hulist.logic.ResultsSaver.save(ResultsSaver.java:80)
+	at com.hulist.logic.ProcessData.save(ProcessData.java:318)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:369)
+	at java.lang.Thread.run(Thread.java:745)
+
+01:29:29 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 25875ms
+INFO: Saving...
+INFO: 
+Data saved to file aaaa.xlsm
+-------------------------------------
+01:33:11 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+01:33:27 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 25671ms
+INFO: Saving...
+01:39:18 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [typ_klimatologiczny.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+01:41:50 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [typ_klimatologiczny.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+01:44:17 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [typ_klimatologiczny.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 24398ms
+INFO: Saving...
+INFO: 
+Data saved to file aaaa.xlsm
+-------------------------------------
+01:52:41 ===================================================
+
+FINE: Logging level changed to FINER.
+01:52:47 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [09TRW-CW.rwl_tabs.txt, 10TRW-CW.rwl_tabs.txt, 8TRW-nCW.rwl_tabs.txt], [icru_tmn_78.0-78.5E_42-43N_n.dat.txt, icru_tmp_20-20.5E_49-49.5N_n.dat.txt], TABS, RES, ICRU]
+FINE: Data processing started.
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-DEC)
+FINEST: runtime: 743ms
+INFO: Saving...
+SEVERE: File read error occured.
+FINEST: java.lang.NullPointerException
+	at com.hulist.logic.ResultsSaver.populateRunningCorrelation(ResultsSaver.java:255)
+	at com.hulist.logic.ResultsSaver.saver(ResultsSaver.java:137)
+	at com.hulist.logic.ResultsSaver.save(ResultsSaver.java:80)
+	at com.hulist.logic.ProcessData.save(ProcessData.java:318)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:369)
+	at java.lang.Thread.run(Thread.java:745)
+
+01:54:03 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt, 8TRW-nCW.rwl_tabs.txt, 09TRW-CW.rwl_tabs.txt], [icru_tmp_20-20.5E_49-49.5N_n.dat.txt, icru_tmn_78.0-78.5E_42-43N_n.dat.txt], TABS, RES, ICRU]
+FINE: Data processing started.
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-DEC)
+FINEST: runtime: 446ms
+INFO: Saving...
+SEVERE: File read error occured.
+FINEST: java.lang.NullPointerException
+	at com.hulist.logic.ResultsSaver.populateRunningCorrelation(ResultsSaver.java:255)
+	at com.hulist.logic.ResultsSaver.saver(ResultsSaver.java:137)
+	at com.hulist.logic.ResultsSaver.save(ResultsSaver.java:80)
+	at com.hulist.logic.ProcessData.save(ProcessData.java:318)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:369)
+	at java.lang.Thread.run(Thread.java:745)
+
+01:55:37 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt, 8TRW-nCW.rwl_tabs.txt, 09TRW-CW.rwl_tabs.txt], [icru_tmp_20-20.5E_49-49.5N_n.dat.txt, icru_tmn_78.0-78.5E_42-43N_n.dat.txt], TABS, RES, ICRU]
+FINE: Data processing started.
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-DEC)
+FINEST: runtime: 469ms
+INFO: Saving...
+01:57:49 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt, 8TRW-nCW.rwl_tabs.txt, 09TRW-CW.rwl_tabs.txt], [icru_tmp_20-20.5E_49-49.5N_n.dat.txt, icru_tmn_78.0-78.5E_42-43N_n.dat.txt], TABS, RES, ICRU]
+FINE: Data processing started.
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-DEC)
+FINEST: runtime: 416ms
+INFO: Saving...
+INFO: 
+Data saved to file bbb.xlsm
+-------------------------------------
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt, 8TRW-nCW.rwl_tabs.txt, 09TRW-CW.rwl_tabs.txt], [typ_klimatologiczny.txt, zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 250367ms
+INFO: Saving...
+SEVERE: Unknown error occured.
+FINEST: java.lang.IllegalArgumentException: The workbook already contains a sheet of this name
+	at org.apache.poi.xssf.usermodel.XSSFWorkbook.createSheet(XSSFWorkbook.java:650)
+	at com.hulist.logic.ResultsSaver.populateDaily(ResultsSaver.java:278)
+	at com.hulist.logic.ResultsSaver.saver(ResultsSaver.java:143)
+	at com.hulist.logic.ResultsSaver.save(ResultsSaver.java:80)
+	at com.hulist.logic.ProcessData.save(ProcessData.java:318)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:369)
+	at java.lang.Thread.run(Thread.java:745)
+
+02:05:59 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [09TRW-CW.rwl_tabs.txt, 10TRW-CW.rwl_tabs.txt, 8TRW-nCW.rwl_tabs.txt], [zakopane.txt, typ_klimatologiczny.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 246720ms
+INFO: Saving...
+02:27:49 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Tucson (*.rwl)
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [09TRW-CW.rwl_tabs.txt], [typ_klimatologiczny.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 24551ms
+INFO: Saving...
+INFO: 
+Data saved to file bbb.xlsm
+-------------------------------------
+16:19:24 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RAW, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 44798ms
+INFO: Saving...
+SEVERE: File read error occured.
+FINEST: java.lang.NullPointerException: in is null
+	at java.util.zip.ZipInputStream.<init>(ZipInputStream.java:101)
+	at java.util.zip.ZipInputStream.<init>(ZipInputStream.java:80)
+	at org.apache.poi.openxml4j.opc.ZipPackage.<init>(ZipPackage.java:84)
+	at org.apache.poi.openxml4j.opc.OPCPackage.open(OPCPackage.java:272)
+	at com.hulist.logic.ResultsSaver.saver(ResultsSaver.java:121)
+	at com.hulist.logic.ResultsSaver.save(ResultsSaver.java:80)
+	at com.hulist.logic.ProcessData.save(ProcessData.java:318)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:369)
+	at java.lang.Thread.run(Thread.java:745)
+
+16:24:58 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RAW, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 36379ms
+INFO: Saving...
+INFO: 
+Data saved to file a.xlsm
+-------------------------------------
+16:27:19 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RAW, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 33717ms
+INFO: Saving...
+INFO: 
+Data saved to file a.xlsm
+-------------------------------------
+18:17:52 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [09TRW-CW.rwl_tabs.txt], [icru_cld_0-360E_-90-90N_n.dat.txt], TABS, RES, ICRU]
+FINE: Data processing started.
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-DEC)
+FINEST: runtime: 250ms
+18:31:49 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [09TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 40727ms
+INFO: Saving...
+INFO: 
+Data saved to file a
+-------------------------------------
+19:06:08 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 39085ms
+INFO: Saving...
+INFO: 
+Data saved to file a.xlsm
+-------------------------------------
+19:20:39 ===================================================
+
+FINE: Logging level changed to FINER.
+19:27:26 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 39622ms
+INFO: Saving...
+INFO: 
+Data saved to file a.xlsm
+-------------------------------------
+SEVERE: Unknown error occured.
+FINEST: java.lang.IllegalArgumentException: The file: C:\Users\Aleksander\Desktop\a.xlsm doesn't exist.
+	at java.awt.Desktop.checkFileValidation(Desktop.java:210)
+	at java.awt.Desktop.open(Desktop.java:270)
+	at com.hulist.logic.ResultsSaver.save(ResultsSaver.java:93)
+	at com.hulist.logic.ProcessData.save(ProcessData.java:320)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:371)
+	at java.lang.Thread.run(Thread.java:745)
+
+19:34:36 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINE: Column chosen: ARS
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, ARS, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 39291ms
+INFO: Saving...
+INFO: 
+Data saved to file a.xlsm
+-------------------------------------
+22:10:49 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [typ_klimatologiczny.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 31180ms
+INFO: Saving...
+INFO: 
+Data saved to file a.xlsm
+-------------------------------------
+22:20:52 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RAW, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 60208ms
+INFO: Saving...
+22:27:00 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [typ_klimatologiczny.txt], TABS, RAW, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 32420ms
+INFO: Saving...
+INFO: 
+Data saved to file a.xlsm
+-------------------------------------
+22:39:19 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+WARNING: Choose climate file.
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [typ_klimatologiczny.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+INFO: 10TRW-CW.rwl_tabs.txt (RES) : typ_klimatologiczny.txt: 349190625ZAKOPANE in years 1951-1965
+INFO: 10TRW-CW.rwl_tabs.txt (RES) (RES) : typ_klimatologiczny.txt: 350190566KRAK�W-BALICE in years 1951-1965
+INFO: 10TRW-CW.rwl_tabs.txt (RES) (RES) (RES) : typ_klimatologiczny.txt: 351160424WROC�AW in years 1951-1965
+INFO: 10TRW-CW.rwl_tabs.txt (RES) (RES) (RES) (RES) : typ_klimatologiczny.txt: 352200375WARSZAWA-OK�CIE in years 1951-1965
+FINEST: runtime: 33022ms
+INFO: Saving...
+INFO: 
+Data saved to file a.xlsm
+-------------------------------------
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINEST: WindowParams: [true, -1, -1, [09TRW-CW.rwl_tabs.txt, 10TRW-CW.rwl_tabs.txt, 8TRW-nCW.rwl_tabs.txt], [icru_tmn_78.0-78.5E_42-43N_n.dat.txt, icru_cld_0-360E_-90-90N_n.dat.txt], TABS, RES, ICRU]
+FINE: Data processing started.
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1921-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1920-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-NOV (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: DEC-DEC (1))
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-JAN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: FEB-FEB)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAR-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-APR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUN)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUL-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: AUG-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: OCT-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-MAR)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-MAY)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-JUL)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JUN-AUG)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: SEP-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: NOV-DEC)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-SEP)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: MAY-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: APR-OCT)
+INFO: Running correlation computed for years 1922-2012 (window: 49, term: JAN-DEC)
+FINEST: runtime: 487ms
+INFO: Saving...
+INFO: 
+Data saved to file b.xlsm
+-------------------------------------
+22:47:05 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [typ_klimatologiczny.txt, zakopane.txt], TABS, RES, TYPE1, TEMP, ]
+FINE: Data processing started.
+INFO: 10TRW-CW.rwl_tabs.txt (RES) : typ_klimatologiczny.txt: 349190625ZAKOPANE in years 1951-1965
+INFO: 10TRW-CW.rwl_tabs.txt (RES) : typ_klimatologiczny.txt: 350190566KRAK�W-BALICE in years 1951-1965
+INFO: 10TRW-CW.rwl_tabs.txt (RES) : typ_klimatologiczny.txt: 351160424WROC�AW in years 1951-1965
+INFO: 10TRW-CW.rwl_tabs.txt (RES) : typ_klimatologiczny.txt: 352200375WARSZAWA-OK�CIE in years 1951-1965
+INFO: 10TRW-CW.rwl_tabs.txt (RES) : zakopane.txt: 349190625ZAKOPANE in years 1966-2012
+FINEST: runtime: 109518ms
+INFO: Saving...
+INFO: 
+Data saved to file a.xlsm
+-------------------------------------

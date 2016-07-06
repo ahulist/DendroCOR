@@ -1,0 +1,171 @@
+13:27:57 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+13:32:01 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+13:34:08 ===================================================
+
+FINE: Logging level changed to FINER.
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], DEKADOWY, RAW, TYPE1, PREC, ]
+FINE: Data processing started.
+WARNING: Incorrect file format of 10TRW-CW.rwl_tabs.txt in line 1
+FINEST: java.lang.NumberFormatException: For input string: "num"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+	at java.lang.Integer.parseInt(Integer.java:580)
+	at java.lang.Integer.parseInt(Integer.java:615)
+	at com.hulist.logic.chronology.deka.DekaImporter.getData(DekaImporter.java:59)
+	at com.hulist.logic.ProcessData.getDeka(ProcessData.java:121)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:283)
+	at java.lang.Thread.run(Thread.java:745)
+
+SEVERE: File read error occured.
+FINEST: java.io.IOException: Incorrect file format of 10TRW-CW.rwl_tabs.txt in line 1
+	at com.hulist.logic.chronology.deka.DekaImporter.getData(DekaImporter.java:86)
+	at com.hulist.logic.ProcessData.getDeka(ProcessData.java:121)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:283)
+	at java.lang.Thread.run(Thread.java:745)
+
+FINE: File type chosen: Arstan (individual series)
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+13:37:56 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (individual series)
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: ARS
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+13:40:06 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RAW, TYPE1, PREC, ]
+FINE: Data processing started.
+13:47:15 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+14:42:35 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [test2_icru.txt], TABS, RES, ICRU]
+FINE: Data processing started.
+20:18:11 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+20:20:41 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+20:22:14 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+20:36:18 ===================================================
+
+FINE: Logging level changed to FINER.
+20:36:37 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+FINEST: runtime: 26120ms
+23:12:30 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+23:19:41 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+23:21:04 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+SEVERE: File read error occured.
+FINEST: java.lang.NullPointerException
+	at com.hulist.logic.CorrelationProcessing.go(CorrelationProcessing.java:39)
+	at com.hulist.logic.ProcessData.process(ProcessData.java:296)
+	at com.hulist.logic.ProcessData.run(ProcessData.java:364)
+	at java.lang.Thread.run(Thread.java:745)
+
+23:25:10 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RAW, TYPE1, PREC, ]
+FINE: Data processing started.
+23:27:58 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+23:34:20 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+23:38:00 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+23:40:26 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.
+23:46:59 ===================================================
+
+FINE: Logging level changed to FINER.
+FINE: File type chosen: Arstan (*_tabs.txt)
+FINE: Column chosen: RES
+FINEST: WindowParams: [true, -1, -1, [10TRW-CW.rwl_tabs.txt], [zakopane.txt], TABS, RES, TYPE1, PREC, ]
+FINE: Data processing started.

@@ -42,5 +42,9 @@ public abstract class FileDataContainer{
         return sourceFile;
     }
     
+    /**
+     * 
+     * @return whether contaier is populated with data or not
+     */
     public abstract boolean isEmpty();
 }

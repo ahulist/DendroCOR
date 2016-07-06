@@ -8,6 +8,7 @@ package com.hulist.logic.chronology.tabs;
 import com.hulist.gui.MainWindow;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
+import com.hulist.logic.RunParams;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,8 +28,8 @@ public class TabsImporter extends BaseImporter implements DataImporter<TabsDataC
 
     public static final int NUM_MIN = 5;
 
-    public TabsImporter(boolean isAllYears, int startYear, int endYear) {
-        super(isAllYears, startYear, endYear);
+    public TabsImporter(RunParams rp) {
+        super(rp);
     }
 
     @Override

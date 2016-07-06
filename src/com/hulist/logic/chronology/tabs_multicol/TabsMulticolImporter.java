@@ -8,6 +8,7 @@ package com.hulist.logic.chronology.tabs_multicol;
 import com.hulist.gui.MainWindow;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
+import com.hulist.logic.RunParams;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,8 +26,8 @@ import java.util.logging.Level;
  */
 public class TabsMulticolImporter extends BaseImporter implements DataImporter<TabsMulticolDataContainer> {
 
-    public TabsMulticolImporter(boolean isAllYears, int startYear, int endYear) {
-        super(isAllYears, startYear, endYear);
+    public TabsMulticolImporter(RunParams rp) {
+        super(rp);
     }
 
     @Override
