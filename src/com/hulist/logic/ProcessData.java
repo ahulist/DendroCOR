@@ -269,11 +269,18 @@ public class ProcessData implements Runnable {
                         dataToCorrelate.primary = new Column(primaryColumnName, primaryColumnData);
 
                         Type1DataContainer d = ((Type1DataContainer) daily);
+                        // bottleneck 1:
                         d.populateYearlyCombinations();
                         String secondaryName = d.getSourceFile().getName() + ": "
                                     + d.getStation() + " in years " + commonYearStartLimit
                                     + "-" + commonYearEndLimit;
+                        int max = d.getYearlyCombinations().size();
+                        float curr = 1;
+                        System.out.println(max);
+                        // bottleneck 2:
                         for (Pair<MonthDay, MonthDay> p : d.getYearlyCombinations()) {
+                            System.out.println(curr/max*100+"%");
+                            
                             DailyResult res;
                             double[] vals = d.getAvaragedValuesForYears(p.getFirst(), p.getSecond(), commonYearStartLimit, commonYearEndLimit);
                             String colName = d.getSourceFile().getName() + ": "
