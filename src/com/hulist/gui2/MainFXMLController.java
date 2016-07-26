@@ -8,13 +8,13 @@ package com.hulist.gui2;
 import com.hulist.logic.chronology.ChronologyFileTypes;
 import com.hulist.logic.chronology.tabs.TabsColumnTypes;
 import com.hulist.logic.climate.ClimateFileTypes;
+import com.hulist.util.StaticSettings;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,10 +23,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.DragEvent;
@@ -38,6 +40,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 
 /**
  * FXML Controller class
@@ -64,8 +69,13 @@ public class MainFXMLController implements Initializable {
     private ListView<File> listViewDendroFiles;
     @FXML
     private ListView<File> listViewClimateFiles;
+    @FXML
+    private TextArea textAreaMonthsRanges;
+    @FXML
+    private Button buttonResetMonths;
 
     public static final String MAIN_FXML_NAME = "MainFXML.fxml";
+    Logger log = LoggerFactory.getLogger(MainFXMLController.class);
 
     private GUIMain guiMain;
     private PreferencesFXMLController prefsController;
@@ -141,6 +151,11 @@ public class MainFXMLController implements Initializable {
         listViewDendroFiles.setOnKeyPressed(kpeh);
         listViewClimateFiles.setOnKeyPressed(kpeh);
         
+        // Buttons
+        buttonResetMonths.setOnMouseClicked((MouseEvent event) -> {
+            textAreaMonthsRanges.setText(StaticSettings.getDefaultMonths());
+        });
+        
     }
 
     @FXML
@@ -178,7 +193,7 @@ public class MainFXMLController implements Initializable {
 
                 setPrefsController(loader.getController());
             } catch (IOException ex) {
-                Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                log.error(ex.toString());
             }
         }
         this.prefsStage.show();
