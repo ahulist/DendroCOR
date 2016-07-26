@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/gui2/MainFXMLController.java</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/logic/chronology/deka/DekaSerie.java</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/logic/CorrelationProcessing.java</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/logic/correlation/Correlator.java</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/logic/MetaCorrelation.java</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/bundles/Bundle_pl.properties</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/logic/climate/icru/IcruImporter.java</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/logic/FileDataContainer.java</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/logic/ResultsSaver.java</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/gui/MainWindow.java</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/logback-test.xml</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/logic/ProcessData.java</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/util/FileChooser.java</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/logic/Column.java</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/logic/Results.java</file>
+            <file>file:/E:/Nauka/Programy/NetBeans/DendroCOR/src/com/hulist/util/Misc.java</file>
+        </group>
+    </open-files>
+</project-private>
