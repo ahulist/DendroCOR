@@ -266,30 +266,47 @@ public class ProcessData implements Runnable {
                                 primaryColumnData = ((TabsMulticolDataContainer) chronology).getArray(commonYearStartLimit, commonYearEndLimit);
                                 primaryColumnName = primaryColumnNameStart + " (" + ((TabsMulticolDataContainer) chronology).getColumnNumber() + ". column)";
                         }
-                        dataToCorrelate.primary = new Column(primaryColumnName, primaryColumnData);
 
                         Type1DataContainer d = ((Type1DataContainer) daily);
                         // bottleneck 1:
                         d.populateYearlyCombinations();
                         String secondaryName = d.getSourceFile().getName() + ": "
-                                    + d.getStation() + " in years " + commonYearStartLimit
-                                    + "-" + commonYearEndLimit;
+                                + d.getStation() + " in years " + commonYearStartLimit
+                                + "-" + commonYearEndLimit;
                         int max = d.getYearlyCombinations().size();
                         float curr = 1;
                         System.out.println(max);
                         // bottleneck 2:
                         for (Pair<MonthDay, MonthDay> p : d.getYearlyCombinations()) {
-                            System.out.println(curr/max*100+"%");
-                            
+                            System.out.println(curr / max * 100 + "%");
+
+                            ArrayList<Double> priCol = new ArrayList<>();
+                            ArrayList<Double> daiCol = new ArrayList<>();
+                            for (int i = commonYearStartLimit; i <= commonYearEndLimit; i++) {
+                                double theValue = d.getValues().get(p.getFirst().toLocalDate(i), p.getSecond().toLocalDate(i));
+                                if (theValue != FileDataContainer.MISSING_VALUE) {
+                                    priCol.add(primaryColumnData[i - commonYearStartLimit]);
+                                    daiCol.add(theValue);
+                                }
+                            }
+
+                            double[] priVals = new double[priCol.size()];
+                            double[] vals = new double[priCol.size()];
+                            for (int i = 0; i < priCol.size(); i++) {
+                                priVals[i] = priCol.get(i);
+                                vals[i] = daiCol.get(i);
+                            }
+
                             DailyResult res;
-                            double[] vals = d.getAvaragedValuesForYears(p.getFirst(), p.getSecond(), commonYearStartLimit, commonYearEndLimit);
+//                            double[] vals = d.getAvaragedValuesForYears(p.getFirst(), p.getSecond(), commonYearStartLimit, commonYearEndLimit);
                             String colName = d.getSourceFile().getName() + ": "
                                     + d.getStation() + " (Range: "
                                     + p.getFirst().toString()
                                     + p.getSecond().toString()
                                     + " in years " + commonYearStartLimit
                                     + "-" + commonYearEndLimit + ")";
-                            dataToCorrelate.dailyColumns.put(p, new Column(colName, vals));
+                            dataToCorrelate.daily.put(p, new Pair<>(new Column(primaryColumnName, priVals), new Column(colName, vals)));
+                            curr++;
                         }
 
                         if (chronology.isEmpty() || daily.isEmpty()) {
@@ -302,8 +319,8 @@ public class ProcessData implements Runnable {
                             }
                             break;
                         }
-                        
-                        log.log(Level.INFO, primaryColumnName + " : " +secondaryName);
+
+                        log.log(Level.INFO, primaryColumnName + " : " + secondaryName);
 
                         CorrelationProcessing pearsons = new CorrelationProcessing(runParams, dataToCorrelate);
                         Results result = pearsons.go(commonYearStartLimit, commonYearEndLimit);

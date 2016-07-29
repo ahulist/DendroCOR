@@ -46,7 +46,7 @@ public class IcruImporter extends BaseImporter implements DataImporter<IcruDataC
         br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
         int lineCounter = 1;
         while( (line = br.readLine()) != null ) {
-            if( !line.startsWith("#") ){
+            if( !line.startsWith("#") && !line.trim().equals("") ){
                 String[] data = line.trim().split("[\\s\\t]+");
                 try {
                     if( allYears

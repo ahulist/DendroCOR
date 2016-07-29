@@ -8,8 +8,13 @@ package com.hulist.logic.daily.type1;
 import com.hulist.logic.FileDataContainer;
 import com.hulist.util.Pair;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.collections4.map.MultiKeyMap;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -60,33 +65,46 @@ public class Type1DataContainer extends FileDataContainer {
      * elementów
      */
     public void populateYearlyCombinations() {
-        for (int i = getYearMin(); i <= getYearMax(); i++) {
-            LocalDate start = new LocalDate(i, 1, 1);
-            LocalDate end = new LocalDate(i, 12, 31);
+        for (int currYear = getYearMin(); currYear <= getYearMax(); currYear++) {
+            LocalDate start = new LocalDate(currYear, 1, 1);
+            LocalDate end = new LocalDate(currYear, 12, 31);
             LocalDate currStart, currEnd;
 
             currStart = start;
             currEnd = currStart;
             while (currStart.isBefore(end.plusDays(1))) {
+                boolean isValueMissing = false;
                 while (currEnd.isBefore(end.plusDays(1))) {
-                    Double prevVal = values.get(currStart, currEnd.minusDays(1));
-                    if (prevVal == null) {
-                        prevVal = new Double(0);
-                    }
-                    Double thisVal = container.get(currEnd).getValue();
-                    double daysBetween = Days.daysBetween(currStart, currEnd).getDays() + 1;
-                    double newVal = ((daysBetween - 1) * prevVal + thisVal) / daysBetween;
-                    values.put(currStart, currEnd, newVal);
                     if (!isYearlyCombinationsPopulated) {
                         yearlyCombinations.add(new Pair<>(new MonthDay(currStart), new MonthDay(currEnd)));
                     }
+                    if (!isValueMissing) {
+                        Double prevVal = values.get(currStart, currEnd.minusDays(1));
+                        if (prevVal == null) {
+                            prevVal = new Double(0);
+                        }
+                        Type1LineContainer tdc = container.get(currEnd);
+                        if (tdc == null) {    // missing value!
+                            values.put(currStart, currEnd, FileDataContainer.MISSING_VALUE);
+                            isValueMissing = true;
+                        }
+                        if (!isValueMissing) {
+                            Double thisVal = tdc.getValue();
+                            double daysBetween = Days.daysBetween(currStart, currEnd).getDays() + 1;
+                            double newVal = ((daysBetween - 1) * prevVal + thisVal) / daysBetween;
+                            values.put(currStart, currEnd, newVal);
+                        }
+                    }else{
+                        values.put(currStart, currEnd, FileDataContainer.MISSING_VALUE);
+                    }
+
                     currEnd = currEnd.plusDays(1);
                 }
                 currStart = currStart.plusDays(1);
                 currEnd = currStart;
             }
             isYearlyCombinationsPopulated = true;
-            System.out.println("Done: "+((i-getYearMin())/(1.0*getYearMax()-getYearMin())*100.0));
+            System.out.println("Done: " + ((currYear - getYearMin()) / (1.0 * getYearMax() - getYearMin()) * 100.0));
         }
 
         isValuesReady = true;
@@ -105,6 +123,13 @@ public class Type1DataContainer extends FileDataContainer {
             populateYearlyCombinations();
         }
         return values.get(start, end);
+    }
+
+    public MultiKeyMap<LocalDate, Double> getValues() {
+        if (!isValuesReady) {
+            populateYearlyCombinations();
+        }
+        return this.values;
     }
 
     public double getAvaragedValue(MonthDay start, MonthDay end, int year) {

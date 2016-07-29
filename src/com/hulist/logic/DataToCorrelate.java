@@ -17,8 +17,15 @@ import org.joda.time.MonthDay;
  */
 public class DataToCorrelate {
     
+    // MONTHLY
     Column primary;
     HashMap<MonthsPair, Column> climateColumns = new HashMap<>();
-    HashMap<Pair<MonthDay, MonthDay>, Column> dailyColumns = new HashMap<>();
+    
+    // DAILY
+    /**
+     * Dla danego przedziału -> 2 kolumny do skorelowania:
+     * w 1. dane chrono (primary), w 2. dane dzienne
+     */
+    HashMap<Pair<MonthDay, MonthDay>, Pair<Column, Column>> daily = new HashMap<>();
 
 }
