@@ -5,7 +5,6 @@
  */
 package com.hulist.gui2;
 
-import static com.hulist.gui2.MainFXMLController.MAIN_FXML_NAME;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
@@ -43,7 +42,11 @@ public class PreferencesFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.labelCorrWindowVal.setText(String.format("%d", (int) this.sliderCorrWindow.getValue()));
         this.sliderCorrWindow.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-            labelCorrWindowVal.setText(String.format("%d", newValue.intValue()));
+            if (newValue.intValue()%2==1) {
+                labelCorrWindowVal.setText(String.format("%d", newValue.intValue()));
+            }else{
+                labelCorrWindowVal.setText(String.format("%d", newValue.intValue()+1));
+            }
         });
     }
 
