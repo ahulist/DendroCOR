@@ -8,9 +8,9 @@ package com.hulist.util;
 import com.hulist.gui.MainWindow;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JTextArea;
+import javafx.scene.control.TextArea;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -18,13 +18,13 @@ import javax.swing.JTextArea;
  */
 public class TextAreaToMonths {
 
-    private final JTextArea area;
+    private final TextArea area;
     private Logger log;
     private boolean isLoggingOn = true;
 
-    public TextAreaToMonths(JTextArea a) {
+    public TextAreaToMonths(TextArea a) {
         this.area = a;
-        this.log = Logger.getLogger(this.getClass().getCanonicalName());
+        this.log = LoggerFactory.getLogger(TextAreaToMonths.class);
     }
 
     public ArrayList<MonthsPair> getList() {
@@ -33,7 +33,7 @@ public class TextAreaToMonths {
          if( line.matches("^([1-9]|1[0-2])-([1-9]|1[0-2])p*$")){
                 
          }else{
-         log.log(Level.WARNING, "Linia ");
+         log.warn("Linia ");
          }
          }*/
 
@@ -69,8 +69,8 @@ public class TextAreaToMonths {
                 list.add(pair);
             } catch( IOException | NumberFormatException | AssertionError e ) {
                 if( !line.equals("") && !isLoggingOn ){
-                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ZAKRES MIESIĘCY %S NIE JEST POPRAWNY."), line));
-                    log.log(Level.FINEST, Misc.stackTraceToString(e));
+                    log.warn(String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ZAKRES MIESIĘCY %S NIE JEST POPRAWNY."), line));
+                    log.debug(Misc.stackTraceToString(e));
                 }
             }
         }

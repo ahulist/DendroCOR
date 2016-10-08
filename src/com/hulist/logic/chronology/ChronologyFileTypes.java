@@ -6,6 +6,7 @@
 package com.hulist.logic.chronology;
 
 import static com.hulist.gui.MainWindow.BUNDLE;
+import com.hulist.gui2.GUIMain;
 import java.util.ResourceBundle;
 
 /**
@@ -25,7 +26,7 @@ public enum ChronologyFileTypes {
     }
 
     public String getDisplayName() {
-        return ResourceBundle.getBundle(BUNDLE).getString(this.displayNameId);
+        return ResourceBundle.getBundle(BUNDLE, GUIMain.getCurrLocale()).getString(this.displayNameId);
     }
     
     /**

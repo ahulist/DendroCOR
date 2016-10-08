@@ -26,8 +26,8 @@ import com.hulist.util.MonthsPair;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -38,7 +38,7 @@ public class ProcessData implements Runnable {
     RunParams wp = null;
     Thread.UncaughtExceptionHandler handler = null;
 
-    private final Logger log;
+    private final Logger log = LoggerFactory.getLogger(ProcessData.class);
     private Thread computationThread;
 
     private final ArrayList<FileDataContainer> chronologyDataContainer = new ArrayList<>();
@@ -50,8 +50,6 @@ public class ProcessData implements Runnable {
 
     public ProcessData(RunParams wp) {
         this.wp = wp;
-        this.log = Logger.getLogger(this.getClass().getCanonicalName());
-        log.setLevel(Level.ALL);
 
         this.computationThread = new Thread(this);
 
@@ -73,12 +71,12 @@ public class ProcessData implements Runnable {
      Results res = processTabs();
                     
      } catch( NullPointerException | IOException ex ) {
-     log.log(Level.SEVERE, "Błąd odczytu z pliku.");
-     log.log(Level.FINEST, ex.getMessage());
+     log.error("Błąd odczytu z pliku.");
+     log.trace(ex.getMessage());
      throw new RuntimeException(ex);
      } catch( Exception ex ){
-     log.log(Level.SEVERE, "Wystąpił nieznany błąd.");
-     log.log(Level.FINEST, ex.getMessage());
+     log.error("Wystąpił nieznany błąd.");
+     log.trace(ex.getMessage());
      throw new RuntimeException(ex);
      }
      break;
@@ -201,10 +199,10 @@ public class ProcessData implements Runnable {
 
                 if (chronology.isEmpty() || climate.isEmpty()) {
                     if (chronology.isEmpty()) {
-                        log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
+                        log.error(String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
                     }
                     if (climate.isEmpty()) {
-                        log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), climateColumnsName));
+                        log.error(String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), climateColumnsName));
                     }
                     break;
                 }
@@ -225,7 +223,7 @@ public class ProcessData implements Runnable {
     private void save() {
         File[] saveDest = fc.call();
         if (saveDest != null && saveDest.length > 0 && saveDest[0] != null) {
-            log.log(Level.INFO, java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ZAPISYWANIE..."));
+            log.info(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ZAPISYWANIE..."));
             ResultsSaver saver = new ResultsSaver(wp, saveDest[0], results);
             saver.save();
         }
@@ -233,10 +231,9 @@ public class ProcessData implements Runnable {
 
     @Override
     public void run() {
-        LogsSaver.getInstance().setIsLoggingOn(wp.getPreferencesFrame().getCheckBoxLogging().isSelected());
-        enablePreferences(false);
+        LogsSaver.getInstance().setIsLoggingOn(true/*wp.getPreferencesFrame().getCheckBoxLogging().isSelected()*/);
         long start = System.currentTimeMillis();
-        log.log(Level.FINE, java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("URUCHOMIONO PRZETWARZANIE DANYCH."));
+        log.debug(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("URUCHOMIONO PRZETWARZANIE DANYCH."));
         /*
          load all data to respective data containers
          */
@@ -268,33 +265,25 @@ public class ProcessData implements Runnable {
             process();
             long end = System.currentTimeMillis();
             LogsSaver.getInstance().setIsLoggingOn(true);
-            log.log(Level.FINEST, "runtime: " + (end - start) + "ms");
-            enablePreferences(true);
+            log.trace("runtime: " + (end - start) + "ms");
             save();
         } catch (DataException ex) {
-            log.log(Level.SEVERE, ex.getMessage());
-            log.log(Level.FINEST, Misc.stackTraceToString(ex));
+            log.error(ex.getMessage());
+            log.trace(Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
         } catch (NullPointerException | IOException ex) {
-            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD ODCZYTU Z PLIKU."));
-            log.log(Level.FINEST, Misc.stackTraceToString(ex));
+            log.error(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD ODCZYTU Z PLIKU."));
+            log.trace(Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
         } catch (Exception ex) {
-            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("WYSTĄPIŁ NIEZNANY BŁĄD."));
-            log.log(Level.FINEST, Misc.stackTraceToString(ex));
+            log.error(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("WYSTĄPIŁ NIEZNANY BŁĄD."));
+            log.trace(Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
         }
     }
 
     public void go() {
         computationThread.start();
-    }
-
-    private void enablePreferences(boolean b) {
-        if (!b) { // disable
-            wp.getPreferencesFrame().dispose();
-        }
-        wp.getMainWindow().menuItemPreferences.setEnabled(b);
     }
 
     class DataException extends IOException {

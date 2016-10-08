@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.logging.Level;
+
 
 /**
  *
@@ -67,8 +67,8 @@ public class TabsImporter extends BaseImporter implements DataImporter<TabsDataC
                     }
                 } catch (IOException | NumberFormatException | AssertionError e) {
                     String msg = String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), counter);
-                    log.log(Level.WARNING, msg);
-                    log.log(Level.FINEST, msg);
+                    log.warn(msg);
+                    log.trace(msg);
                     throw new IOException(msg);
                 }
 

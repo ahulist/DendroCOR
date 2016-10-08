@@ -9,9 +9,7 @@ import com.hulist.gui.MainWindow;
 import java.awt.Color;
 import java.awt.Window;
 import java.util.logging.Handler;
-import java.util.logging.Level;
 import java.util.logging.LogRecord;
-import java.util.logging.Logger;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
@@ -19,6 +17,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import org.jdesktop.swingx.JXCollapsiblePane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -27,9 +27,8 @@ import org.jdesktop.swingx.JXCollapsiblePane;
 public class TextAreaLogHandler extends Handler {
 
     private static TextAreaLogHandler INSTANCE;
-    private Level level = Level.WARNING;
     private final LogsSaver saver = LogsSaver.getInstance();
-    private static Logger log;
+    private static Logger log = LoggerFactory.getLogger(TextAreaLogHandler.class);
     private JTextPane dest;
     private JXCollapsiblePane jXCollapsiblePane;
     private StyledDocument doc;
@@ -40,9 +39,6 @@ public class TextAreaLogHandler extends Handler {
     public static TextAreaLogHandler getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new TextAreaLogHandler();
-        }
-        if (log == null) {
-            log = Logger.getLogger(INSTANCE.getClass().getCanonicalName());
         }
         return INSTANCE;
     }
@@ -59,11 +55,11 @@ public class TextAreaLogHandler extends Handler {
     @Override
     public void publish(LogRecord record) {
         if (LogsSaver.getInstance().isIsLoggingOn()) {
-            try {
+//            try {
                 SimpleAttributeSet as = new SimpleAttributeSet();
 
                 // SEVERE
-                if (record.getLevel().equals(Level.SEVERE)) {
+                /*if (record.getLevel().equals(Level.SEVERE)) {
                     if (jXCollapsiblePane != null) {
                         jXCollapsiblePane.setCollapsed(false);
                         ((Window) SwingUtilities.getRoot(jXCollapsiblePane)).pack();
@@ -99,15 +95,15 @@ public class TextAreaLogHandler extends Handler {
                     // FINEST
                 } else if (record.getLevel().equals(Level.FINEST)) {
                     StyleConstants.setForeground(as, Color.getHSBColor(0.99f, 1, 0.44f));
-                }
+                }*/
 
                 saver.log(record.getLevel() + ": " + record.getMessage());
 
-            } catch (BadLocationException ex) {
+            /*} catch (BadLocationException ex) {
                 System.out.println("Fatal logging error");
                 ex.printStackTrace();
                 //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-            }
+            }*/
         }
     }
 
@@ -121,13 +117,13 @@ public class TextAreaLogHandler extends Handler {
 
     }
 
-    public void setLoggingLevel(Level l) {
+    /*public void setLoggingLevel(Level l) {
         log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ZMIENIONO POZIOM LOGOWANINA NA %S"), l));
         this.level = l;
     }
 
     public Level getLoggingLevel() {
         return this.level;
-    }
+    }*/
 
 }

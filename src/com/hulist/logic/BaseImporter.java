@@ -6,8 +6,8 @@
 
 package com.hulist.logic;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -17,7 +17,7 @@ public abstract class BaseImporter{
     
     protected int startYear = Integer.MIN_VALUE, endYear = Integer.MAX_VALUE;     // both inclusive
     protected boolean allYears = true;
-    protected final Logger log;
+    protected final Logger log = LoggerFactory.getLogger(BaseImporter.class);
     
     /**
      * if isAllYears == true, then startYear and endYear values do not matter
@@ -32,8 +32,6 @@ public abstract class BaseImporter{
             selectRange(startYear, endYear);
         }
         
-        this.log = Logger.getLogger(this.getClass().getCanonicalName());
-        log.setLevel(Level.ALL);
     }
     
     public final void setAllYearsTrue() {

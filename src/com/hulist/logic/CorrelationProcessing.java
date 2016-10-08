@@ -6,8 +6,8 @@ import com.hulist.logic.correlation.PearsonCorrelation;
 import com.hulist.util.MonthsPair;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class CorrelationProcessing {
 
     private final DataToCorrelate data;  // column being correlated to all other columns
-    private final Logger log;
+    private final Logger log = LoggerFactory.getLogger(CorrelationProcessing.class);
     private final RunParams wp;
     private final Correlator c;
 
@@ -24,9 +24,6 @@ public class CorrelationProcessing {
         this.data = dataToCorrelate;
         this.wp = wp;
         this.c = new Correlator(new PearsonCorrelation(), wp);
-
-        this.log = Logger.getLogger(this.getClass().getCanonicalName());
-        log.setLevel(Level.ALL);
     }
 
     public Results go(int yearMin, int yearMax) {
@@ -52,7 +49,7 @@ public class CorrelationProcessing {
              */
             if (month.yearsShift > 0) {
                 if (data.primary.getData().length - month.yearsShift < 2) {
-                    log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ZBYT DUŻE PRZESUNIĘCIE LAT: %S"), month.toString()));
+                    log.error(String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ZBYT DUŻE PRZESUNIĘCIE LAT: %S"), month.toString()));
                     return null;
                 }
 
@@ -76,11 +73,11 @@ public class CorrelationProcessing {
             /*
              *   CORRELATION / BOOTSTRAP
              */
-            boolean isSignificance = wp.getPreferencesFrame().getCheckBoxSignificance().isSelected();
-            boolean isBootstrap = wp.getPreferencesFrame().getCheckBoxBootstrap().isSelected();
-            int bootstrapRepetitions = Integer.parseInt(wp.getPreferencesFrame().getBootstrapTextField().getText());
-            double alpha = Double.parseDouble(wp.getPreferencesFrame().getSignificanceTextField().getText());
-            if (wp.getPreferencesFrame().getCheckBoxTwoSidedTest().isSelected()) {
+            boolean isSignificance = wp.getPrefs().isIsStatisticalSignificance();
+            boolean isBootstrap = wp.getPrefs().isIsBootstrapSampling();
+            int bootstrapRepetitions = wp.getPrefs().getBootstrapSamples();
+            double alpha = wp.getPrefs().getSignificanceLevelAlpha();
+            if (wp.getPrefs().isIsTwoTailedTest()) {
                 alpha /= 2;
             }
             
@@ -106,16 +103,16 @@ public class CorrelationProcessing {
                 results.setIsTTest(true);
             }
 
-            log.log(Level.INFO, logMsg);
+            log.info(logMsg);
 
             /*
              *   RUNNING CORRELATION
              */
-            if (wp.getPreferencesFrame().getCheckBoxRunCorr().isSelected()) {
-                int windowSize = wp.getPreferencesFrame().getSliderCorrVal();
+            if (wp.getPrefs().isIsRunningCorrelation()) {
+                int windowSize = wp.getPrefs().getRunningCorrWindowSize();
 
                 if (windowSize >= readyChrono.length) {
-                    log.log(Level.WARNING, String.format(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("zbyt duże okno korelacji kroczącej")));
+                    log.warn(String.format(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("zbyt duże okno korelacji kroczącej")));
                 } else {
                     results.setIsRunningCorr(true);
                     results.setWindowSize(windowSize);
@@ -131,7 +128,7 @@ public class CorrelationProcessing {
                         }
                         results.runningCorrMap.get(month).put(yearMin + i, resRunn);
                     }
-                    log.log(Level.INFO, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("korel kroczaca obliczona dla"), yearMin, yearMax, windowSize, month));
+                    log.info(String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("korel kroczaca obliczona dla"), yearMin, yearMax, windowSize, month));
                 }
             }
         }

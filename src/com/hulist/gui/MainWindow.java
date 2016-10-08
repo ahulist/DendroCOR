@@ -669,9 +669,9 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
                     chronologyFileType,
                     tabsColumnType,
                     climateFileType,
-                    new TextAreaToMonths(dropdownPanel.getTextAreaMonths()).getList());
-            wp.setPreferencesFrame(PREFERENCES_JFRAME);
-            wp.setMainWindow(this);
+                    new TextAreaToMonths(null/*dropdownPanel.getTextAreaMonths()*/).getList());
+//            wp.setPreferencesFrame(PREFERENCES_JFRAME);
+//            wp.setMainWindow(this);
             StringBuilder sb = new StringBuilder();
             sb.append("WindowParams: [")
                     .append(allYears).append(", ")
@@ -701,21 +701,21 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
     }//GEN-LAST:event_menuItemPLActionPerformed
 
     private void menuItemLowDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLowDetailsActionPerformed
-        TextAreaLogHandler.getInstance().setLoggingLevel(Level.WARNING);
+//        TextAreaLogHandler.getInstance().setLoggingLevel(Level.WARNING);
         menuItemLowDetails.setSelected(true);
         menuItemMidDetails.setSelected(false);
         menuItemHighDetails.setSelected(false);
     }//GEN-LAST:event_menuItemLowDetailsActionPerformed
 
     private void menuItemMidDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemMidDetailsActionPerformed
-        TextAreaLogHandler.getInstance().setLoggingLevel(Level.INFO);
+//        TextAreaLogHandler.getInstance().setLoggingLevel(Level.INFO);
         menuItemLowDetails.setSelected(false);
         menuItemMidDetails.setSelected(true);
         menuItemHighDetails.setSelected(false);
     }//GEN-LAST:event_menuItemMidDetailsActionPerformed
 
     private void menuItemHighDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemHighDetailsActionPerformed
-        TextAreaLogHandler.getInstance().setLoggingLevel(Level.FINER);
+//        TextAreaLogHandler.getInstance().setLoggingLevel(Level.FINER);
         menuItemLowDetails.setSelected(false);
         menuItemMidDetails.setSelected(false);
         menuItemHighDetails.setSelected(true);
@@ -946,7 +946,7 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
     }
 
     private boolean isDataValid() {
-        TextAreaToMonths ta = new TextAreaToMonths(dropdownPanel.getTextAreaMonths());
+        TextAreaToMonths ta = new TextAreaToMonths(null/*dropdownPanel.getTextAreaMonths()*/);
         ta.setIsLoggingOn(false);
 
         boolean valid = true;

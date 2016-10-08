@@ -5,6 +5,7 @@
  */
 package com.hulist.gui2;
 
+import com.hulist.logic.RunParamsPrefs;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
@@ -14,8 +15,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -26,9 +29,21 @@ public class PreferencesFXMLController implements Initializable {
 
     @FXML
     private Label labelCorrWindowVal;
-
     @FXML
     private Slider sliderCorrWindow;
+    @FXML
+    private CheckBox checkBoxStatSignificance;
+    @FXML
+    private CheckBox checkBoxBootstrapSampling;
+    @FXML
+    private TextField textFieldSignifLevelAlpha;
+    @FXML
+    private CheckBox checkBoxTwoTailed;
+    @FXML
+    private CheckBox checkBoxRunCorrelation;
+    @FXML
+    private TextField textFieldBootstrapSamples;
+
 
     public static final String PREFS_FXML_NAME = "PreferencesFXML.fxml";
 
@@ -66,5 +81,15 @@ public class PreferencesFXMLController implements Initializable {
 
     void setMainController(MainFXMLController controller) {
         this.mainController = controller;
+    }
+    
+    public RunParamsPrefs getRunParams(){
+        return new RunParamsPrefs(checkBoxStatSignificance.isSelected(), 
+                checkBoxTwoTailed.isSelected(), 
+                Double.parseDouble(textFieldSignifLevelAlpha.getText()), 
+                checkBoxRunCorrelation.isSelected(), 
+                (int)sliderCorrWindow.getValue(), 
+                checkBoxBootstrapSampling.isSelected(), 
+                Integer.parseInt(textFieldBootstrapSamples.getText()));
     }
 }

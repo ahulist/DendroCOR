@@ -34,10 +34,10 @@ public class GUIMain extends Application {
     public static final String APP_NAME = "DendroCORR";
     public static final String APP_VERSION = "2.8.1";
     private static final int YEAR = 2016;//Calendar.getInstance().get(Calendar.YEAR);
+    public static final String BUNDLE = "com.hulist.bundles.Bundle";
 
-    private final String bundle = "com.hulist.bundles.Bundle";
     private Stage mainStage;
-    private Locale currLocale = null;
+    private static Locale currLocale = null;
 
     private MainFXMLController mainController;
     private PreferencesFXMLController prefsController;
@@ -45,16 +45,18 @@ public class GUIMain extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Locale.setDefault(Locale.ENGLISH);
-        this.currLocale = Locale.getDefault();
+        currLocale = Locale.getDefault();
         this.mainStage = stage;
 
         URL location = getClass().getResource(MainFXMLController.MAIN_FXML_NAME);
-        ResourceBundle resources = ResourceBundle.getBundle(bundle, Locale.getDefault());
+        ResourceBundle resources = ResourceBundle.getBundle(BUNDLE, Locale.getDefault());
         FXMLLoader loader = new FXMLLoader(location, resources);
         Parent root = loader.load();
 
-        setMainController(loader.getController());
         setMainScene(root);
+  
+        setMainController(loader.getController());
+        mainController.initController();
 
         initMainStage();
         stage.show();
@@ -84,12 +86,12 @@ public class GUIMain extends Application {
         launch(args);
     }
 
-    public Locale getCurrLocale() {
+    public static Locale getCurrLocale() {
         return currLocale;
     }
 
     public String getBundle() {
-        return bundle;
+        return BUNDLE;
     }
 
     public Stage getMainStage() {

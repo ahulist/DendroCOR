@@ -1,14 +1,27 @@
 <configuration debug="true"> 
 
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender"> 
-    <!-- encoders are  by default assigned the type
-         ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
-    <encoder>
-      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-    </encoder>
-  </appender>
+    <!--
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" /> 
+    -->
+    
+    <appender name="all" class="ch.qos.logback.core.FileAppender">
+        <file>logs/testFile.log</file>
+        <filter class="com.hulist.util.log.AllFilter" />
+        <encoder>
+            <pattern>%d %-5level %logger{35} - %msg%n %ex</pattern>
+        </encoder>
+    </appender>
 
-  <root level="debug">
-    <appender-ref ref="STDOUT" />
-  </root>
+    <appender name="user" class="com.hulist.util.log.DelegatingAppender">
+        <filter class="com.hulist.util.log.UserFilter" />
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="TRACE">
+        <appender-ref ref="all" />
+        <appender-ref ref="user" />
+    </root>
+        
 </configuration>

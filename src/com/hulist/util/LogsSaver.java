@@ -19,8 +19,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -34,7 +34,7 @@ public class LogsSaver {
     private final static String NAME_PREFIX = "log_";
     private final static String NAME_SUFFIX = ".txt";
 
-    private final Logger log = Logger.getLogger(this.getClass().getCanonicalName());
+    private final Logger log = LoggerFactory.getLogger(LogsSaver.class);
     private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     private static boolean isFirstRun = true;
     
@@ -71,8 +71,8 @@ public class LogsSaver {
             try( PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(LOGS_DIR + File.separator + NAME_PREFIX + df.format(new Date()) + NAME_SUFFIX, true))) ) {
             out.println(msg);
         } catch( IOException e ) {
-            log.log(Level.WARNING, java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS ZAPISU DANYCH DO LOGU."));
-            log.log(Level.FINEST, e.getLocalizedMessage());
+            log.warn(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS ZAPISU DANYCH DO LOGU."));
+            log.trace(e.getLocalizedMessage());
         }
         }
     }
@@ -103,7 +103,7 @@ public class LogsSaver {
             if( counter < filesToDelete ){
                 File file = entry.getValue();
                 if( !file.delete() ){
-                    log.log(Level.WARNING, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS USUWANIA LOGU %S"), file.getName()));
+                    log.warn(String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS USUWANIA LOGU %S"), file.getName()));
                 }
                 counter++;
             } else {

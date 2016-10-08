@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.logging.Level;
+
 
 /**
  *
@@ -80,12 +80,12 @@ public class PrnImporter extends BaseImporter implements DataImporter<PrnDataCon
                     }
                 } catch( AssertionError | IOException | NumberFormatException e ) {
                     String msg = String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĘDNY FORMAT PLIKU %S."), f.getName());
-                    log.log(Level.WARNING, msg);
-                    log.log(Level.FINEST, msg);
+                    log.warn(msg);
+                    log.trace(msg);
                     throw new IOException(msg);
                 } catch( IllegalArgumentException e ) {
-                    log.log(Level.WARNING, e.getMessage());
-                    log.log(Level.FINEST, Misc.stackTraceToString(e));
+                    log.warn(e.getMessage());
+                    log.trace(Misc.stackTraceToString(e));
                     throw new IOException();
                 }
             }

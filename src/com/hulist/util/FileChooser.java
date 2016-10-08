@@ -10,10 +10,10 @@ import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 public class FileChooser {
 
     private final Purpose purpose;
-    private Logger log;
+    private final Logger log = LoggerFactory.getLogger(FileChooser.class);
     private String prefsDir = null;
     private boolean openMultipleFilesAndFolders = false;
     private boolean addXlsmExt = false;
@@ -35,8 +35,6 @@ public class FileChooser {
 
     public FileChooser(Purpose purpose) {
         this.purpose = purpose;
-        this.log = Logger.getLogger(this.getClass().getCanonicalName());
-        log.setLevel(Level.ALL);
     }
 
     /**
@@ -45,7 +43,7 @@ public class FileChooser {
      */
     public File[] call() {
         ArrayList<File> files = new ArrayList<>();
-        if( prefsDir == null ){
+        if (prefsDir == null) {
             prefsDir = this.getClass().getCanonicalName() + ":" + purpose;
         }
 
@@ -55,11 +53,11 @@ public class FileChooser {
 
         int returnVal = JFileChooser.CANCEL_OPTION;
         try {
-            switch( purpose ) {
+            switch (purpose) {
                 case SAVE:
-                    if( yesNoDialogMessageOnSave != null && !yesNoDialogMessageOnSave.equals("") ){
+                    if (yesNoDialogMessageOnSave != null && !yesNoDialogMessageOnSave.equals("")) {
                         int choice = JOptionPane.showOptionDialog(null, yesNoDialogMessageOnSave, null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-                        if( choice == JOptionPane.OK_OPTION ){
+                        if (choice == JOptionPane.OK_OPTION) {
                             returnVal = fc.showSaveDialog(null);
                         }
                     } else {
@@ -68,31 +66,31 @@ public class FileChooser {
                     break;
                 case OPEN:
                     //fc.setMultiSelectionEnabled(openMultipleFilesAndFolders);
-                    if( openMultipleFilesAndFolders ){
+                    if (openMultipleFilesAndFolders) {
                         fc.setMultiSelectionEnabled(openMultipleFilesAndFolders);
                         fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
                     }
                     returnVal = fc.showOpenDialog(null);
                     break;
             }
-        } catch( HeadlessException e ) {
-            log.log(Level.SEVERE, java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("WYSTĄPIŁ BŁĄD PODCZAS OTWIERANIA OKNA DIALOGOWEGO"));
-            log.log(Level.FINEST, Misc.stackTraceToString(e));
+        } catch (HeadlessException e) {
+            log.error(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("WYSTĄPIŁ BŁĄD PODCZAS OTWIERANIA OKNA DIALOGOWEGO"));
+            log.trace(Misc.stackTraceToString(e));
         }
 
         File[] filesArray = null;
-        if( returnVal == JFileChooser.APPROVE_OPTION ){
-            if( fc.getSelectedFiles().length > 0 ){
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            if (fc.getSelectedFiles().length > 0) {
                 File[] filesArr = fc.getSelectedFiles();
-                for( File file : filesArr ) {
-                    if( file.isDirectory() ){
+                for (File file : filesArr) {
+                    if (file.isDirectory()) {
                         files.addAll(getFilesFromDir(file));
                     } else {
                         files.add(file);
                     }
                 }
-            } else if( fc.getSelectedFile() != null ){
-                if( fc.getSelectedFile().isDirectory() ){
+            } else if (fc.getSelectedFile() != null) {
+                if (fc.getSelectedFile().isDirectory()) {
                     files.addAll(getFilesFromDir(fc.getSelectedFile()));
                 } else {
                     files.add(fc.getSelectedFile());
@@ -100,18 +98,18 @@ public class FileChooser {
             }
 
             filesArray = (File[]) files.toArray(new File[files.size()]);
-            if( !openMultipleFilesAndFolders && addXlsmExt && filesArray.length > 0 ){
+            if (!openMultipleFilesAndFolders && addXlsmExt && filesArray.length > 0) {
                 try {
                     String n = filesArray[0].getCanonicalPath();
                     /*if( n.endsWith(".xls") ){
-                        log.log(Level.WARNING, java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("WYBRANO PLIK Z ROZSZERZENIEM .XLS - ZMIANA NA .XLSX"));
-                    }*/
-                    if( !n.endsWith(".xlsm") ){
+                     log.warn(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("WYBRANO PLIK Z ROZSZERZENIEM .XLS - ZMIANA NA .XLSX"));
+                     }*/
+                    if (!n.endsWith(".xlsm")) {
                         String n2 = filesArray[0].getCanonicalPath() + ".xlsm";
                         filesArray[0] = new File(n2);
                     }
-                } catch( IOException ex ) {
-                    log.log(Level.FINEST, Misc.stackTraceToString(ex));
+                } catch (IOException ex) {
+                    log.trace(Misc.stackTraceToString(ex));
                 }
             }
 
@@ -127,18 +125,18 @@ public class FileChooser {
              try {
              String n = files[0].getCanonicalPath();
              if( n.endsWith(".xls") ){
-             log.log(Level.WARNING, "Wybrano plik z rozszerzeniem .xls - zmiana na .xlsx");
+             log.warn("Wybrano plik z rozszerzeniem .xls - zmiana na .xlsx");
              }
              if( !n.endsWith(".xlsx") ){
              String n2 = files[0].getCanonicalPath() + ".xlsx";
              files = new File[]{new File(n2)};
              }
              } catch( IOException ex ) {
-             log.log(Level.FINEST, ex.getMessage());
+             log.trace(ex.getMessage());
              }
              }
              }*/
-            if( !files.isEmpty() ){
+            if (!files.isEmpty()) {
                 UserPreferences.getInstance().getPrefs().put(prefsDir, files.get(0).getParent());
             }
         }
@@ -149,9 +147,9 @@ public class FileChooser {
     private ArrayList<File> getFilesFromDir(File dir) {
         ArrayList<File> files = new ArrayList<>();
 
-        if( dir.isDirectory() ){
-            for( File file : dir.listFiles() ) {
-                if( file.isDirectory() ){
+        if (dir.isDirectory()) {
+            for (File file : dir.listFiles()) {
+                if (file.isDirectory()) {
                     files.addAll(getFilesFromDir(file));
                 } else {
                     files.add(file);

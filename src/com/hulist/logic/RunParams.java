@@ -6,8 +6,6 @@
 
 package com.hulist.logic;
 
-import com.hulist.gui.MainWindow;
-import com.hulist.gui.PreferencesJFrame;
 import com.hulist.logic.chronology.ChronologyFileTypes;
 import com.hulist.logic.chronology.tabs.TabsColumnTypes;
 import com.hulist.logic.climate.ClimateFileTypes;
@@ -29,10 +27,9 @@ public class RunParams {
     private TabsColumnTypes chronologyColumn;
     private ClimateFileTypes climateFileType;
     private ArrayList<MonthsPair> monthsColumns;
-
-    private MainWindow mainWindow;
-    private PreferencesJFrame preferencesFrame;
-
+    
+    private RunParamsPrefs prefs;
+    
     public RunParams() {
     }
     
@@ -120,20 +117,12 @@ public class RunParams {
         this.monthsColumns = monthsColumns;
     }
 
-    public PreferencesJFrame getPreferencesFrame() {
-        return preferencesFrame;
+    public RunParamsPrefs getPrefs() {
+        return prefs;
     }
 
-    public void setPreferencesFrame(PreferencesJFrame preferencesFrame) {
-        this.preferencesFrame = preferencesFrame;
-    }
-
-    public MainWindow getMainWindow() {
-        return mainWindow;
-    }
-
-    public void setMainWindow(MainWindow mainWindow) {
-        this.mainWindow = mainWindow;
+    public void setPrefs(RunParamsPrefs prefs) {
+        this.prefs = prefs;
     }
 
 }

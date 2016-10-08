@@ -12,8 +12,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -24,6 +22,8 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -51,7 +51,7 @@ public class ResultsSaver {
     private final File file;
     private final RunParams wp;
     private final ArrayList<Results> results;
-    private final Logger log;
+    private final Logger log = LoggerFactory.getLogger(ResultsSaver.class);
     private CellStyle style;
 
     private final URL template = getClass().getClassLoader().getResource("templates/template.xlsm");
@@ -60,9 +60,6 @@ public class ResultsSaver {
         this.wp = wp;
         this.file = file;
         this.results = results;
-
-        log = Logger.getLogger(this.getClass().getCanonicalName());
-        log.setLevel(Level.ALL);
     }
 
     /**
@@ -79,7 +76,7 @@ public class ResultsSaver {
                 try {
                     Desktop.getDesktop().open(file);
                 } catch (IOException ex) {
-                    log.log(Level.WARNING, ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName());
+                    log.warn(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName());
                 }
             }
         }
@@ -101,8 +98,8 @@ public class ResultsSaver {
                 fis = new FileInputStream(file);
                 wb = new XSSFWorkbook(OPCPackage.open(fis));
             } catch (InvalidFormatException | IOException ex) {
-                log.log(Level.SEVERE, String.format(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
-                log.log(Level.FINEST, Misc.stackTraceToString(ex));
+                log.error(String.format(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
+                log.trace(Misc.stackTraceToString(ex));
                 throw new RuntimeException();
             }
         } else {
@@ -111,8 +108,8 @@ public class ResultsSaver {
                 //fis = new FileInputStream(template.getPath());
                 wb = new XSSFWorkbook(OPCPackage.open(ClassLoader.class.getResourceAsStream("/templates/template.xlsm")));
             } catch (InvalidFormatException | IOException ex) {
-                log.log(Level.SEVERE, String.format(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
-                log.log(Level.FINEST, Misc.stackTraceToString(ex));
+                log.error(String.format(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
+                log.trace(Misc.stackTraceToString(ex));
                 throw new RuntimeException();
             }
         }
@@ -131,11 +128,11 @@ public class ResultsSaver {
 
         try {
             ExcelUtil.saveToFile(file, wb);
-            log.log(Level.INFO, String.format("\n" + ResourceBundle.getBundle(MainWindow.BUNDLE).getString("DANE ZAPISANO DO PLIKU %S")
+            log.info(String.format("\n" + ResourceBundle.getBundle(MainWindow.BUNDLE).getString("DANE ZAPISANO DO PLIKU %S")
                     + "\n-------------------------------------", file.getName()));
         } catch (IOException ex) {
-            log.log(Level.SEVERE, ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD ZAPISU PLIKU."));
-            log.log(Level.FINEST, Misc.stackTraceToString(ex));
+            log.error(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD ZAPISU PLIKU."));
+            log.trace(Misc.stackTraceToString(ex));
         }
 
         return true;
@@ -151,7 +148,7 @@ public class ResultsSaver {
         wb.setSheetName(0, Sheets.CORR.name);
 
         if (appendingToExistingFile && !isFirstRowCoherent(sh)) {
-            log.log(Level.SEVERE, ResourceBundle.getBundle(MainWindow.BUNDLE).getString("NIESPÓJNE KOLUMNY W ISTNIEJĄCYM PLIKU."));
+            log.error(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("NIESPÓJNE KOLUMNY W ISTNIEJĄCYM PLIKU."));
             return false;
         }
 
