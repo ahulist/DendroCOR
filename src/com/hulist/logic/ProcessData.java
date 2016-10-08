@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.joda.time.LocalDate;
 import org.joda.time.MonthDay;
 
 /**
@@ -283,7 +284,17 @@ public class ProcessData implements Runnable {
                             ArrayList<Double> priCol = new ArrayList<>();
                             ArrayList<Double> daiCol = new ArrayList<>();
                             for (int i = commonYearStartLimit; i <= commonYearEndLimit; i++) {
-                                double theValue = d.getValues().get(p.getFirst().toLocalDate(i), p.getSecond().toLocalDate(i));
+                                LocalDate ld1;
+                                LocalDate ld2;
+                                try {
+                                    ld1 = p.getFirst().toLocalDate(i);
+                                    ld2 = p.getSecond().toLocalDate(i);
+                                } catch (org.joda.time.IllegalFieldValueException e) {
+                                    // rok przestępny!
+                                    // tak jak np. 02.1937 - ma tylko 28 dni
+                                    continue;
+                                }
+                                double theValue = d.getValues().get(ld1, ld2);
                                 if (theValue != FileDataContainer.MISSING_VALUE) {
                                     priCol.add(primaryColumnData[i - commonYearStartLimit]);
                                     daiCol.add(theValue);
