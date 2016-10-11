@@ -31,7 +31,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TabPane tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="%monthlyData">
                <content>

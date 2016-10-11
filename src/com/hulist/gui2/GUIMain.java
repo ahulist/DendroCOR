@@ -112,6 +112,7 @@ public class GUIMain extends Application {
         icons1.add(new Image(getClass().getClassLoader().getResourceAsStream("resources/128.png")));
         icons1.add(new Image(getClass().getClassLoader().getResourceAsStream("resources/450.png")));
         mainStage.getIcons().addAll(icons1);
+        mainStage.setResizable(false);
     }
 
 }

@@ -13,6 +13,7 @@ import java.io.OutputStream;
 /**
  *
  * @author Aleksander
+ * @param <E>
  */
 public class DelegatingAppender<E> extends OutputStreamAppender<E> {
 

@@ -25,8 +25,7 @@ import com.hulist.util.LocaleManager;
 import com.hulist.util.TextAreaLogHandler;
 import com.hulist.util.TextAreaToMonths;
 import com.hulist.util.UserPreferences;
-import com.hulist.validators.YearValidator;
-import com.hulist.validators.YearsRangeValidator;
+import com.hulist.validators.YearsValidator;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -580,13 +579,13 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
     }// </editor-fold>//GEN-END:initComponents
 
     private void textFieldYearStartKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldYearStartKeyReleased
-        if (YearValidator.validate(textFieldYearStart.getText()) || textFieldYearStart.getText().equals("")) {
+        if (new YearsValidator().validateSingleYear(textFieldYearStart.getText(), false) || textFieldYearStart.getText().equals("")) {
             UserPreferences.getInstance().getPrefs().put(textFieldYearStart.getName(), textFieldYearStart.getText());
         }
     }//GEN-LAST:event_textFieldYearStartKeyReleased
 
     private void textFieldYearEndKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldYearEndKeyReleased
-        if (YearValidator.validate(textFieldYearEnd.getText()) || textFieldYearEnd.getText().equals("")) {
+        if (new YearsValidator().validateSingleYear(textFieldYearEnd.getText(),false) || textFieldYearEnd.getText().equals("")) {
             UserPreferences.getInstance().getPrefs().put(textFieldYearEnd.getName(), textFieldYearEnd.getText());
         }
     }//GEN-LAST:event_textFieldYearEndKeyReleased
@@ -947,11 +946,11 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
 
     private boolean isDataValid() {
         TextAreaToMonths ta = new TextAreaToMonths(null/*dropdownPanel.getTextAreaMonths()*/);
-        ta.setIsLoggingOn(false);
+//        ta.setIsLoggingOn(false);
 
         boolean valid = true;
 
-        if (!checkBoxAllYears.isSelected() && !YearsRangeValidator.validate(textFieldYearStart.getText(), textFieldYearEnd.getText())) {
+        if (!checkBoxAllYears.isSelected() && !new YearsValidator().validateRange(textFieldYearStart.getText(), textFieldYearEnd.getText(), false)) {
             log.log(Level.WARNING, ResourceBundle.getBundle(BUNDLE).getString("WPROWADŹ POPRAWNY ZAKRES LAT."));
             valid = false;
         }

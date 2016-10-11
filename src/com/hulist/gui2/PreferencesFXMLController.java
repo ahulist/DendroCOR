@@ -6,10 +6,14 @@
 package com.hulist.gui2;
 
 import com.hulist.logic.RunParamsPrefs;
+import com.hulist.util.Misc;
+import com.hulist.util.StaticSettings;
+import com.hulist.util.UserPreferences;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +23,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FXML Controller class
@@ -44,25 +50,80 @@ public class PreferencesFXMLController implements Initializable {
     @FXML
     private TextField textFieldBootstrapSamples;
 
-
     public static final String PREFS_FXML_NAME = "PreferencesFXML.fxml";
 
     private GUIMain guiMain;
     private MainFXMLController mainController;
 
+    Logger log = LoggerFactory.getLogger(PreferencesFXMLController.class);
+
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.labelCorrWindowVal.setText(String.format("%d", (int) this.sliderCorrWindow.getValue()));
-        this.sliderCorrWindow.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-            if (newValue.intValue()%2==1) {
-                labelCorrWindowVal.setText(String.format("%d", newValue.intValue()));
-            }else{
-                labelCorrWindowVal.setText(String.format("%d", newValue.intValue()+1));
+        checkBoxStatSignificance.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            UserPreferences.getInstance().getPrefs().putBoolean(checkBoxStatSignificance.getId(), newValue);
+            textFieldSignifLevelAlpha.setDisable(!checkBoxStatSignificance.isSelected());
+            checkBoxTwoTailed.setDisable(!checkBoxStatSignificance.isSelected());
+        });
+        textFieldSignifLevelAlpha.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if (!newValue) {
+                try {
+                    double newAlpha = Double.parseDouble(textFieldSignifLevelAlpha.getText());
+                    if (newAlpha < 0 || newAlpha > 1) {
+                        log.warn(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("Alfa nie jest w zakresie"));
+                    } else {
+                        UserPreferences.getInstance().getPrefs().put(textFieldSignifLevelAlpha.getId(), textFieldSignifLevelAlpha.getText());
+                    }
+                } catch (NumberFormatException | NullPointerException e) {
+                    log.warn(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("Alfa nie jest liczbą"));
+                    log.debug(Misc.stackTraceToString(e));
+                }
+                textFieldSignifLevelAlpha.setText(UserPreferences.getInstance().getPrefs().get(textFieldSignifLevelAlpha.getId(), "0.05"));
             }
         });
+        checkBoxTwoTailed.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            UserPreferences.getInstance().getPrefs().putBoolean(checkBoxTwoTailed.getId(), newValue);
+        });
+        checkBoxRunCorrelation.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            UserPreferences.getInstance().getPrefs().putBoolean(checkBoxRunCorrelation.getId(), newValue);
+            sliderCorrWindow.setDisable(!checkBoxRunCorrelation.isSelected());
+        });
+        this.labelCorrWindowVal.setText(String.format("%d", (int) this.sliderCorrWindow.getValue()));
+        this.sliderCorrWindow.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            if (newValue.intValue() % 2 == 1) {
+                labelCorrWindowVal.setText(String.format("%d", newValue.intValue()));
+            } else {
+                labelCorrWindowVal.setText(String.format("%d", newValue.intValue() + 1));
+            }
+            UserPreferences.getInstance().getPrefs().putInt(sliderCorrWindow.getId(), newValue.intValue());
+        });
+        checkBoxBootstrapSampling.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            UserPreferences.getInstance().getPrefs().putBoolean(checkBoxBootstrapSampling.getId(), newValue);
+            textFieldBootstrapSamples.setDisable(!checkBoxBootstrapSampling.isSelected());
+        });
+        textFieldBootstrapSamples.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if (!newValue) {
+                try {
+                    int newBootstrap = Integer.parseInt(textFieldBootstrapSamples.getText());
+                    if (newBootstrap < 0) {
+                        log.warn(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("Wartość bootstrap jest ujemna"));
+                    } else {
+                        UserPreferences.getInstance().getPrefs().put(textFieldBootstrapSamples.getId(), textFieldBootstrapSamples.getText());
+                    }
+                } catch (NumberFormatException | NullPointerException e) {
+                    log.warn(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("Wartość bootstrap nie jest liczbą całkowitą"));
+                    log.debug(Misc.stackTraceToString(e));
+                }
+                textFieldBootstrapSamples.setText(UserPreferences.getInstance().getPrefs().get(textFieldBootstrapSamples.getId(), "10000"));
+            }
+        });
+        
+        setValuesFromPrefs();
     }
 
     void switchLocale(Locale newLocale) {
@@ -82,14 +143,28 @@ public class PreferencesFXMLController implements Initializable {
     void setMainController(MainFXMLController controller) {
         this.mainController = controller;
     }
-    
-    public RunParamsPrefs getRunParams(){
-        return new RunParamsPrefs(checkBoxStatSignificance.isSelected(), 
-                checkBoxTwoTailed.isSelected(), 
-                Double.parseDouble(textFieldSignifLevelAlpha.getText()), 
-                checkBoxRunCorrelation.isSelected(), 
-                (int)sliderCorrWindow.getValue(), 
-                checkBoxBootstrapSampling.isSelected(), 
+
+    public RunParamsPrefs getRunParams() {
+        return new RunParamsPrefs(checkBoxStatSignificance.isSelected(),
+                checkBoxTwoTailed.isSelected(),
+                Double.parseDouble(textFieldSignifLevelAlpha.getText()),
+                checkBoxRunCorrelation.isSelected(),
+                (int) sliderCorrWindow.getValue(),
+                checkBoxBootstrapSampling.isSelected(),
                 Integer.parseInt(textFieldBootstrapSamples.getText()));
+    }
+
+    private void setValuesFromPrefs() {
+        checkBoxStatSignificance.setSelected(UserPreferences.getInstance().getPrefs().getBoolean(checkBoxStatSignificance.getId(), true));
+        textFieldSignifLevelAlpha.setText(UserPreferences.getInstance().getPrefs().get(textFieldSignifLevelAlpha.getId(), "0.05"));
+        textFieldSignifLevelAlpha.setDisable(!checkBoxStatSignificance.isSelected());
+        checkBoxTwoTailed.setSelected(UserPreferences.getInstance().getPrefs().getBoolean(checkBoxTwoTailed.getId(), true));
+        checkBoxTwoTailed.setDisable(!checkBoxStatSignificance.isSelected());
+        checkBoxRunCorrelation.setSelected(UserPreferences.getInstance().getPrefs().getBoolean(checkBoxRunCorrelation.getId(), false));
+        sliderCorrWindow.setValue(UserPreferences.getInstance().getPrefs().getInt(sliderCorrWindow.getId(), 5));
+        sliderCorrWindow.setDisable(!checkBoxRunCorrelation.isSelected());
+        checkBoxBootstrapSampling.setSelected(UserPreferences.getInstance().getPrefs().getBoolean(checkBoxBootstrapSampling.getId(), false));
+        textFieldBootstrapSamples.setText(UserPreferences.getInstance().getPrefs().get(textFieldBootstrapSamples.getId(), "10000"));
+        textFieldBootstrapSamples.setDisable(!checkBoxBootstrapSampling.isSelected());
     }
 }

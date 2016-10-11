@@ -15,8 +15,7 @@ import com.hulist.util.TextAreaToMonths;
 import com.hulist.util.UserPreferences;
 import com.hulist.util.log.DelegatingAppender;
 import com.hulist.util.log.TextAreaOutputStream;
-import com.hulist.validators.YearValidator;
-import com.hulist.validators.YearsRangeValidator;
+import com.hulist.validators.YearsValidator;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +25,7 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -41,8 +41,10 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.DragEvent;
@@ -54,6 +56,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,11 +102,11 @@ public class MainFXMLController implements Initializable {
     private TextArea textAreaOutput;
     @FXML
     private Button buttonClearOutput;
+    @FXML
+    private TabPane tabPane;
 
     public static final String MAIN_FXML_NAME = "MainFXML.fxml";
     Logger log = LoggerFactory.getLogger(MainFXMLController.class);
-
-    public static final String BUNDLE = "com/hulist/bundles/Bundle";
 
     private GUIMain guiMain;
     private PreferencesFXMLController prefsController;
@@ -111,8 +114,9 @@ public class MainFXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Logger
+        // Logger & TextArea
         DelegatingAppender.setStaticOutputStream(new TextAreaOutputStream(textAreaOutput));
+        textAreaOutput.setTextFormatter(getTextAreaOutputFormatter());
 
         titledpane.heightProperty().addListener((obs, oldHeight, newHeight) -> this.guiMain.getMainStage().sizeToScene());
 
@@ -204,6 +208,7 @@ public class MainFXMLController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(PreferencesFXMLController.PREFS_FXML_NAME), newResources);
             Parent root = loader.load();
             setPrefsScene(root);
+            prefsStage.setResizable(false);
             prefsStage.setTitle(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("MainWindow.menuSettings.text"));
             prefsStage.initModality(Modality.WINDOW_MODAL);
             prefsController = loader.getController();
@@ -227,14 +232,14 @@ public class MainFXMLController implements Initializable {
 
     @FXML
     void onKeyReleasedTextFieldYearStart(KeyEvent event) {
-        if (YearValidator.validate(textFieldYearStart.getText()) || textFieldYearStart.getText().equals("")) {
+        if (new YearsValidator().validateSingleYear(textFieldYearStart.getText(), true) || textFieldYearStart.getText().equals("")) {
             UserPreferences.getInstance().getPrefs().put(textFieldYearStart.getId(), textFieldYearStart.getText());
         }
     }
 
     @FXML
     void onKeyReleasedTextFieldYearEnd(KeyEvent event) {
-        if (YearValidator.validate(textFieldYearEnd.getText()) || textFieldYearEnd.getText().equals("")) {
+        if (new YearsValidator().validateSingleYear(textFieldYearEnd.getText(), true) || textFieldYearEnd.getText().equals("")) {
             UserPreferences.getInstance().getPrefs().put(textFieldYearEnd.getId(), textFieldYearEnd.getText());
         }
     }
@@ -307,51 +312,81 @@ public class MainFXMLController implements Initializable {
     }
 
     private boolean isDataValid() {
-        TextAreaToMonths ta = new TextAreaToMonths(textAreaMonthsRanges);
-        ta.setIsLoggingOn(false);
-
         boolean valid = true;
+        int selectedTabIndex = tabPane.getSelectionModel().getSelectedIndex();
+        ResourceBundle bundle = ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale());
 
-        if (!checkBoxAllYears.isSelected() && !YearsRangeValidator.validate(textFieldYearStart.getText(), textFieldYearEnd.getText())) {
+        // Plik chronologii
+        if (selectedTabIndex == 0) {
+            if (selectedChronoFile.length == 0) {
+                valid = false;
+                log.warn(bundle.getString("WYBIERZ PLIK CHRONOLOGII."));
+            } else {
+                for (File oneSelectedChronoFile : selectedChronoFile) {
+                    if (oneSelectedChronoFile == null) {
+                        valid = false;
+                        log.warn(bundle.getString("NIEPOPRAWNY PLIK CHRONOLOGII."));
+                    } else if (!oneSelectedChronoFile.isFile()) {
+                        valid = false;
+                        log.warn(String.format(bundle.getString("PLIK CHRONOLOGII %S NIE JEST PLIKIEM"), oneSelectedChronoFile.getName()));
+                    }
+                }
+            }
+        }
+
+        // Plik klimatyczny
+        if (selectedTabIndex == 0) {
+            if (selectedClimateFile.length == 0) {
+                valid = false;
+                log.warn(bundle.getString("WYBIERZ PLIK KLIMATYCZNY."));
+            } else {
+                for (File oneSelectedClimateFile : selectedClimateFile) {
+                    if (oneSelectedClimateFile == null) {
+                        valid = false;
+                        log.warn(bundle.getString("NIEPOPRAWNY PLIK KLIMATYCZNY."));
+                    } else if (!oneSelectedClimateFile.isFile()) {
+                        valid = false;
+                        log.warn(String.format(bundle.getString("PLIK KLIMATYCZNY %S NIE JEST PLIKIEM"), oneSelectedClimateFile.getName()));
+                    }
+                }
+            }
+        }
+
+        // Plik dzienny
+        if(true){
+            // TODO
+        }
+        
+        // Typy plików
+        // Chronologie
+        if (selectedTabIndex == 0 && comboBoxChronoFileType.getSelectionModel().isEmpty()) {
+            log.warn(bundle.getString("Wybierz typ pliku chronologii"));
+            valid = false;
+        }
+        if (selectedTabIndex==0 && 
+                !comboBoxChronoFileType.getSelectionModel().isEmpty() &&
+                comboBoxChronoFileType.getSelectionModel().getSelectedItem().equals(ChronologyFileTypes.TABS) && 
+                comboBoxColSelect.getSelectionModel().isEmpty()) {
+            log.warn(String.format(bundle.getString("Wybierz kolumnę"),ChronologyFileTypes.TABS.toString()));
+            valid = false;
+        }
+        // Klimatyczne
+        if (selectedTabIndex == 0 && comboBoxClimateFileType.getSelectionModel().isEmpty()) {
+            log.warn(bundle.getString("Wybierz typ pliku klimatycznego"));
+            valid = false;
+        }
+
+        // Zakresy miesięcy
+        TextAreaToMonths ta = new TextAreaToMonths(textAreaMonthsRanges);
+        if (selectedTabIndex == 0 && ta.getList().isEmpty()) {
+            valid = false;
+        }
+
+        // Zakres lat
+        if (!checkBoxAllYears.isSelected() && !new YearsValidator().validateRange(textFieldYearStart.getText(), textFieldYearEnd.getText(), false)) {
             ClassLoader hackLoader = new HackClassLoader(getClass().getClassLoader());
-            ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE, GUIMain.getCurrLocale()/*, hackLoader*/);
-            log.warn(bundle.getString("WPROWADŹ POPRAWNY ZAKRES LAT."));
-            valid = false;
-        }
-
-//        if (selectedChronoFile == null || selectedChronoFile.length == 0 || (selectedChronoFile.length == 1 && (selectedChronoFile[0] == null || !selectedChronoFile[0].isFile()))) {
-        if (selectedChronoFile.length == 0) {
-            valid = false;
-            log.warn(ResourceBundle.getBundle(BUNDLE, GUIMain.getCurrLocale()).getString("WYBIERZ PLIK CHRONOLOGII."));
-        } else {
-            for (File oneSelectedChronoFile : selectedChronoFile) {
-                if (oneSelectedChronoFile == null) {
-                    valid = false;
-                    log.warn(ResourceBundle.getBundle(BUNDLE, GUIMain.getCurrLocale()).getString("NIEPOPRAWNY PLIK CHRONOLOGII."));
-                } else if (!oneSelectedChronoFile.isFile()) {
-                    valid = false;
-                    log.warn(String.format(ResourceBundle.getBundle(BUNDLE, GUIMain.getCurrLocale()).getString("PLIK CHRONOLOGII %S NIE JEST PLIKIEM"), oneSelectedChronoFile.getName()));
-                }
-            }
-        }
-
-//        if (selectedClimateFile == null || selectedClimateFile.length == 0 || (selectedClimateFile.length == 1 && (selectedClimateFile[0] == null || !selectedClimateFile[0].isFile()))) {
-        if (selectedClimateFile.length == 0) {
-            valid = false;
-            log.warn(ResourceBundle.getBundle(BUNDLE, GUIMain.getCurrLocale()).getString("WYBIERZ PLIK KLIMATYCZNY."));
-        } else {
-            for (File oneSelectedClimateFile : selectedClimateFile) {
-                if (oneSelectedClimateFile == null) {
-                    valid = false;
-                    log.warn(ResourceBundle.getBundle(BUNDLE, GUIMain.getCurrLocale()).getString("NIEPOPRAWNY PLIK KLIMATYCZNY."));
-                } else if (!oneSelectedClimateFile.isFile()) {
-                    valid = false;
-                    log.warn(String.format(ResourceBundle.getBundle(BUNDLE, GUIMain.getCurrLocale()).getString("PLIK KLIMATYCZNY %S NIE JEST PLIKIEM"), oneSelectedClimateFile.getName()));
-                }
-            }
-        }
-
-        if (ta.getList().isEmpty()) {
+            // log.warn już jest w validatorze
+            // log.warn(bundle.getString("WPROWADŹ POPRAWNY ZAKRES LAT."));
             valid = false;
         }
 
@@ -402,6 +437,10 @@ public class MainFXMLController implements Initializable {
         textAreaMonthsRanges.setText(UserPreferences.getInstance().getPrefs().get(textAreaMonthsRanges.getId(), StaticSettings.getDefaultMonths()));
         textFieldYearStart.setDisable(checkBoxAllYears.isSelected());
         textFieldYearEnd.setDisable(checkBoxAllYears.isSelected());
+    }
+
+    private TextFormatter<String> getTextAreaOutputFormatter() {
+        return null;
     }
 
     public class HackClassLoader extends ClassLoader {

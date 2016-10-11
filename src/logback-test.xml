@@ -4,12 +4,19 @@
     <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" /> 
     -->
     
-    <appender name="all" class="ch.qos.logback.core.FileAppender">
-        <file>logs/testFile.log</file>
+    <appender name="all" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/log.current.log</file>
         <filter class="com.hulist.util.log.AllFilter" />
         <encoder>
             <pattern>%d %-5level %logger{35} - %msg%n %ex</pattern>
         </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>logs/log.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- keep 30 days' worth of history capped at 100MB total size -->
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>100MB</totalSizeCap>
+        </rollingPolicy>
     </appender>
 
     <appender name="user" class="com.hulist.util.log.DelegatingAppender">

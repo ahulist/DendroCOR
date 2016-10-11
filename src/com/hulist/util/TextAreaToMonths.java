@@ -5,9 +5,10 @@
  */
 package com.hulist.util;
 
-import com.hulist.gui.MainWindow;
+import com.hulist.gui2.GUIMain;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import javafx.scene.control.TextArea;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,24 +20,13 @@ import org.slf4j.LoggerFactory;
 public class TextAreaToMonths {
 
     private final TextArea area;
-    private Logger log;
-    private boolean isLoggingOn = true;
+    private final Logger log = LoggerFactory.getLogger(TextAreaToMonths.class);
 
     public TextAreaToMonths(TextArea a) {
         this.area = a;
-        this.log = LoggerFactory.getLogger(TextAreaToMonths.class);
     }
 
     public ArrayList<MonthsPair> getList() {
-        /*String[] lines = area.getText().split("\\n");
-         for( String line : lines) {
-         if( line.matches("^([1-9]|1[0-2])-([1-9]|1[0-2])p*$")){
-                
-         }else{
-         log.warn("Linia ");
-         }
-         }*/
-
         ArrayList<MonthsPair> list = new ArrayList<>();
         String[] lines = area.getText().split("\\n");
         for( String line : lines ) {
@@ -68,8 +58,9 @@ public class TextAreaToMonths {
                 MonthsPair pair = new MonthsPair(Months.getMonth(start), Months.getMonth(end), yearsShift);
                 list.add(pair);
             } catch( IOException | NumberFormatException | AssertionError e ) {
-                if( !line.equals("") && !isLoggingOn ){
-                    log.warn(String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ZAKRES MIESIĘCY %S NIE JEST POPRAWNY."), line));
+                if( !line.equals("")){
+                    ResourceBundle bundle = ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale());
+                    log.warn(String.format(bundle.getString("ZAKRES MIESIĘCY %S NIE JEST POPRAWNY."), line));
                     log.debug(Misc.stackTraceToString(e));
                 }
             }
@@ -78,7 +69,4 @@ public class TextAreaToMonths {
         return list;
     }
 
-    public void setIsLoggingOn(boolean isLoggingOn) {
-        this.isLoggingOn = isLoggingOn;
-    }
 }
