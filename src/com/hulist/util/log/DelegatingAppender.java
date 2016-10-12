@@ -6,6 +6,7 @@
 package com.hulist.util.log;
 
 import ch.qos.logback.core.OutputStreamAppender;
+import java.io.ByteArrayOutputStream;
 import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -18,7 +19,7 @@ import java.io.OutputStream;
 public class DelegatingAppender<E> extends OutputStreamAppender<E> {
 
     private static final DelegatingOutputStream DELEGATING_OUTPUT_STREAM = new DelegatingOutputStream(null);
-    
+
     @Override
     public void start() {
         setOutputStream(DELEGATING_OUTPUT_STREAM);
@@ -42,6 +43,6 @@ public class DelegatingAppender<E> extends OutputStreamAppender<E> {
         void setOutputStream(OutputStream outputStream) {
             this.out = outputStream;
         }
-
     }
+
 }

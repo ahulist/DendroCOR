@@ -7,7 +7,8 @@
     <appender name="all" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/log.current.log</file>
         <filter class="com.hulist.util.log.AllFilter" />
-        <encoder>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>UTF-8</charset>            
             <pattern>%d %-5level %logger{35} - %msg%n %ex</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -19,9 +20,10 @@
         </rollingPolicy>
     </appender>
 
-    <appender name="user" class="com.hulist.util.log.DelegatingAppender">
+    <appender name="user" class="com.hulist.util.log.DelegatingAppender2">
         <filter class="com.hulist.util.log.UserFilter" />
-        <encoder>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>UTF-8</charset>            
             <pattern>%msg%n</pattern>
         </encoder>
     </appender>

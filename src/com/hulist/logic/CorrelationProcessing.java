@@ -1,6 +1,7 @@
 package com.hulist.logic;
 
 import com.hulist.gui.MainWindow;
+import com.hulist.gui2.GUIMain;
 import com.hulist.logic.correlation.Correlator;
 import com.hulist.logic.correlation.PearsonCorrelation;
 import com.hulist.util.MonthsPair;
@@ -95,10 +96,10 @@ public class CorrelationProcessing {
              */
             if (isSignificance) {
                 results.map.get(month).settTestValue(correlation.gettTestValue());
-                logMsg += "\n" + ResourceBundle.getBundle(MainWindow.BUNDLE).getString("poziom istotności T-Studenta") + ": " + correlation.gettTestValue();
+                logMsg += "\n" + ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("poziom istotności T-Studenta") + ": " + correlation.gettTestValue();
 
                 results.map.get(month).settTestCritVal(correlation.gettTestCritVal());
-                logMsg += ", " + ResourceBundle.getBundle(MainWindow.BUNDLE).getString("poziom krytyczny") + ": " + correlation.gettTestCritVal();
+                logMsg += ", " + ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("poziom krytyczny") + ": " + correlation.gettTestCritVal();
 
                 results.setIsTTest(true);
             }
