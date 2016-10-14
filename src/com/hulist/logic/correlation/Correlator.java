@@ -35,14 +35,21 @@ public class Correlator {
 
     public MetaCorrelation correlate(double[] a, double[] b) {
         if (isBootstrapped) {
-            double newCorr = 0, corr = 0, tTestVal = 0;
+            double newCorr = 0, corr = 0, newTTestVal = 0 ,tTestVal = 0;
+            int ommited = 0;
             for (int i = 0; i < bootstrapSamples; i++) {
                 newCorr = c.correlation(getBootstrappedArrays(a, b));
                 if (isSignificanceLevels) {
-                    tTestVal += sl.getTTestSignifLevel(newCorr, a.length);
+                    newTTestVal = sl.getTTestSignifLevel(newCorr, a.length);
+                    if (Double.isNaN(newTTestVal)) {
+                        ommited++;
+                        continue;
+                    }
+                    tTestVal += newTTestVal;
                 }
                 corr += newCorr;
             }
+            this.bootstrapSamples -= ommited;
             correlation = new MetaCorrelation(corr / bootstrapSamples);
             correlation.settTestValue(tTestVal / bootstrapSamples);
         } else {

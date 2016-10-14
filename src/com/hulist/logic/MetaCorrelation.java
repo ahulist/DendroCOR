@@ -41,13 +41,7 @@ public class MetaCorrelation implements Comparable<MetaCorrelation>{
 
     @Override
     public int compareTo(MetaCorrelation o) {
-        if (this.correlation < o.getCorrelation()) {
-            return -1;
-        }else if (this.correlation > o.getCorrelation()) {
-            return 1;
-        }else{
-            return 0;
-        }
+        return Double.compare(this.correlation, o.correlation);
     }
 
 }

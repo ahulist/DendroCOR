@@ -53,6 +53,9 @@ public class CorrelationProcessing {
                 break;
             case DAILY:
                 for (Pair<MonthDay, MonthDay> p : data.daily.keySet()) {
+                    if (p.getFirst().getMonthOfYear()==1 && p.getSecond().getMonthOfYear()==12) {
+                        int a = 3;
+                    }
                     readyChrono = data.daily.get(p).getFirst().getData();
                     readyDaily = data.daily.get(p).getSecond().getData();
                     if (readyChrono.length > 1 && readyDaily.length > 1) {
