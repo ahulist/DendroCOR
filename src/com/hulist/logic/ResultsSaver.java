@@ -147,7 +147,7 @@ public class ResultsSaver {
             case DAILY:
                 intermediateSuccess = populateDaily(wb, appendingToExistingFile);
                 // TODO:
-                wb.removeSheetAt(0);
+//                wb.removeSheetAt(0);
                 if (!intermediateSuccess) {
                     return false;
                 }
@@ -324,15 +324,18 @@ public class ResultsSaver {
 
                 for (Pair<MonthDay, MonthDay> p : iter) {
                     if (!yearsSet) {
-                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow - 1), 0, Cell.CELL_TYPE_STRING).setCellValue(res.yearStart + "-" + res.yearEnd);
+                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow - 1), 0, Cell.CELL_TYPE_STRING).setCellValue(res.chronoTitle + " / " + res.dailyTitle + " ("+res.params.getDailyColumnType().getDisplayName()+")");
                         yearsSet = true;
                     }
 
-                    ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 0, Cell.CELL_TYPE_STRING).setCellValue(p.getFirst().getDayOfMonth() + "." + p.getFirst().getMonthOfYear() + " - " + p.getSecond().getDayOfMonth() + "." + p.getSecond().getMonthOfYear());
-                    ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 1, Cell.CELL_TYPE_NUMERIC).setCellValue(m.get(p).getCorrelation());
+                    ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 0, Cell.CELL_TYPE_STRING)
+                            .setCellValue(p.getFirst().getDayOfMonth() + " " + p.getFirst().toString("MMM"));
+                    ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 1, Cell.CELL_TYPE_STRING)
+                            .setCellValue(p.getSecond().getDayOfMonth() + " " + p.getSecond().toString("MMM"));
+                    ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 2, Cell.CELL_TYPE_NUMERIC).setCellValue(m.get(p).getCorrelation());
                     // significance
                     if (res.isIsTTest() && FastMath.abs(m.get(p).gettTestValue()) > FastMath.abs(m.get(p).gettTestCritVal())) {
-                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 1, Cell.CELL_TYPE_NUMERIC).setCellStyle(style);
+                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 2, Cell.CELL_TYPE_NUMERIC).setCellStyle(style);
                     }
 
                     firstFreeRow++;
