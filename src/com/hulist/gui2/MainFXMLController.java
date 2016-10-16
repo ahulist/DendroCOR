@@ -14,27 +14,17 @@ import com.hulist.util.Misc;
 import com.hulist.util.StaticSettings;
 import com.hulist.util.TextAreaToMonths;
 import com.hulist.util.UserPreferences;
-import com.hulist.util.log.DelegatingAppender;
-import com.hulist.util.log.DelegatingAppender2;
-import com.hulist.util.log.TextAreaOutputStream;
+import com.hulist.util.log.BlockingQueueOutput;
 import com.hulist.validators.YearsValidator;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
-import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -65,8 +55,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -122,13 +110,11 @@ public class MainFXMLController implements Initializable {
     private PreferencesFXMLController prefsController;
     private Stage prefsStage;
 
-    Timer timer = new Timer();
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Logger & TextArea
-        DelegatingAppender.setStaticOutputStream(new TextAreaOutputStream(textAreaOutput));
         textAreaOutput.setTextFormatter(getTextAreaOutputFormatter());
+        BlockingQueueOutput.setTextArea(textAreaOutput);
 
         titledpane.heightProperty().addListener((obs, oldHeight, newHeight) -> this.guiMain.getMainStage().sizeToScene());
 
@@ -227,23 +213,6 @@ public class MainFXMLController implements Initializable {
         } catch (IOException ex) {
             log.error(ex.toString());
         }
-
-        // Timer
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                LinkedBlockingQueue<String> q = new LinkedBlockingQueue<>();
-                DelegatingAppender2.getBlockingQ().getQ().drainTo(q);
-                for (int i = 0; i < q.size(); i++) {
-                    textAreaOutput.appendText(q.poll());
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException ex) {
-                        java.util.logging.Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        }, 0, 5000);
 
         // Set values from UserPreferences
         setValuesFromPrefs();
@@ -423,7 +392,6 @@ public class MainFXMLController implements Initializable {
     }
 
     public void switchLocale(Locale newLocale) {
-        timer.cancel();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(MAIN_FXML_NAME), ResourceBundle.getBundle(guiMain.getBundle(), newLocale));
             Parent newRoot = fxmlLoader.load();
@@ -441,12 +409,6 @@ public class MainFXMLController implements Initializable {
 
     public void setGuiMain(GUIMain guiMain) {
         this.guiMain = guiMain;
-
-        // Timer & close
-        guiMain.getMainStage().setOnCloseRequest((WindowEvent event) -> {
-            timer.cancel();
-            Platform.exit();
-        });
     }
 
     public void setPrefsController(PreferencesFXMLController prefsController) {

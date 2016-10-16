@@ -20,7 +20,7 @@
         </rollingPolicy>
     </appender>
 
-    <appender name="user" class="com.hulist.util.log.DelegatingAppender2">
+    <appender name="user" class="com.hulist.util.log.DelegatingAppender">
         <filter class="com.hulist.util.log.UserFilter" />
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <charset>UTF-8</charset>            
