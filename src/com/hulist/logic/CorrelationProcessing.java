@@ -5,6 +5,9 @@ import com.hulist.logic.correlation.Correlator;
 import com.hulist.logic.correlation.PearsonCorrelation;
 import com.hulist.util.MonthsPair;
 import com.hulist.util.Pair;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -52,20 +55,32 @@ public class CorrelationProcessing {
                 }
                 break;
             case DAILY:
+                /*PrintWriter writer = null;
+                try {
+                    writer = new PrintWriter("e:\\res.txt", "UTF-8");
+                } catch (FileNotFoundException | UnsupportedEncodingException ex) {
+                    Logger.getLogger(CorrelationProcessing.class.getName()).log(Level.SEVERE, null, ex);
+                }*/
                 for (Pair<MonthDay, MonthDay> p : data.daily.keySet()) {
-                    if (p.getFirst().getMonthOfYear()==1 && p.getSecond().getMonthOfYear()==12) {
-                        int a = 3;
-                    }
+                    // DEBUG!
+                    /*if (p.getFirst().getMonthOfYear() == 3
+                            && p.getFirst().getDayOfMonth() == 24
+                            && ((p.getSecond().getMonthOfYear() == 10 && p.getSecond().getDayOfMonth() == 9) || (p.getSecond().getMonthOfYear() == 6 && p.getSecond().getDayOfMonth() == 1))) {
+                        int debug = 3;
+                    }*/
                     readyChrono = data.daily.get(p).getFirst().getData();
                     readyDaily = data.daily.get(p).getSecond().getData();
+//                    writer.println(readyChrono.length);
                     if (readyChrono.length > 1 && readyDaily.length > 1) {
+                        Results r = doRest(readyChrono, readyDaily, 0, yearMin, yearMax, null, p);
                         if (results == null) {
-                            results = doRest(readyChrono, readyDaily, 0, yearMin, yearMax, null, p);
+                            results = r;
                         } else {
-                            results.dailyMap.putAll(doRest(readyChrono, readyDaily, 0, yearMin, yearMax, null, p).dailyMap);
+                            results.dailyMap.putAll(r.dailyMap);
                         }
                     }
                 }
+//                writer.close();
                 break;
         }
 

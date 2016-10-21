@@ -91,7 +91,8 @@ public class Type1DataContainer extends FileDataContainer {
                         if (!isValueMissing) {
                             Double thisVal = tdc.getValue();
                             double daysBetween = Days.daysBetween(currStart, currEnd).getDays() + 1;
-                            double newVal = ((daysBetween - 1) * prevVal + thisVal) / daysBetween;
+                            double newVal = prevVal+(thisVal-prevVal)/daysBetween;
+//                            double newVal = ((daysBetween - 1) * prevVal + thisVal) / daysBetween;
                             values.put(currStart, currEnd, newVal);
                         }
                     }else{

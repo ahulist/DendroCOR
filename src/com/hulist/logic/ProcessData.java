@@ -279,6 +279,14 @@ public class ProcessData implements Runnable {
                         System.out.println(max);
                         // bottleneck 2:
                         for (Pair<MonthDay, MonthDay> p : d.getYearlyCombinations()) {
+
+                            // DEBUG!
+                            /*if (p.getFirst().getMonthOfYear() == 3
+                                    && p.getFirst().getDayOfMonth() == 24
+                                    && ((p.getSecond().getMonthOfYear() == 10 && p.getSecond().getDayOfMonth() == 9) || (p.getSecond().getMonthOfYear() == 6 && p.getSecond().getDayOfMonth() == 1))) {
+                                int debug = 3;
+                            }*/
+
                             System.out.println(curr / max * 100 + "%");
 
                             ArrayList<Double> priCol = new ArrayList<>();
@@ -290,8 +298,7 @@ public class ProcessData implements Runnable {
                                     ld1 = p.getFirst().toLocalDate(i);
                                     ld2 = p.getSecond().toLocalDate(i);
                                 } catch (org.joda.time.IllegalFieldValueException e) {
-                                    // rok przestępny!
-                                    // tak jak np. 02.1937 - ma tylko 28 dni
+                                    // np. 02.1937 - ma tylko 28 dni
                                     continue;
                                 }
                                 double theValue = d.getValues().get(ld1, ld2);
