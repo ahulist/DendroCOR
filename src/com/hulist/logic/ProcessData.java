@@ -270,14 +270,18 @@ public class ProcessData implements Runnable {
 
                         Type1DataContainer d = ((Type1DataContainer) daily);
                         // bottleneck 1:
+                        long b1s = System.currentTimeMillis();
                         d.populateYearlyCombinations();
                         String secondaryName = d.getSourceFile().getName() + ": "
                                 + d.getStation() + " in years " + commonYearStartLimit
                                 + "-" + commonYearEndLimit;
                         int max = d.getYearlyCombinations().size();
                         float curr = 1;
+                        double b1e = (System.currentTimeMillis() - b1s)/1000.0;
                         System.out.println(max);
+                        
                         // bottleneck 2:
+                        long b2s = System.currentTimeMillis();
                         for (Pair<MonthDay, MonthDay> p : d.getYearlyCombinations()) {
 
                             // DEBUG!
@@ -326,6 +330,7 @@ public class ProcessData implements Runnable {
                             dataToCorrelate.daily.put(p, new Pair<>(new Column(primaryColumnName, priVals), new Column(colName, vals)));
                             curr++;
                         }
+                        double b2e = (System.currentTimeMillis() - b2s)/1000.0;
 
                         if (chronology.isEmpty() || daily.isEmpty()) {
                             if (chronology.isEmpty()) {
@@ -340,8 +345,11 @@ public class ProcessData implements Runnable {
 
                         log.log(Level.INFO, primaryColumnName + " : " + secondaryName);
 
+                        // bottleneck 3:
                         CorrelationProcessing pearsons = new CorrelationProcessing(runParams, dataToCorrelate);
+                        long b3s = System.currentTimeMillis();
                         Results result = pearsons.go(commonYearStartLimit, commonYearEndLimit);
+                        double b3e = (System.currentTimeMillis() - b3s)/1000.0;
                         if (result != null) {
                             result.yearStart = commonYearStartLimit;
                             result.yearEnd = commonYearEndLimit;

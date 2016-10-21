@@ -168,12 +168,10 @@ public class ResultsSaver {
 
     private boolean populateCorrelation(XSSFWorkbook wb, boolean appendingToExistingFile) {
         XSSFSheet sh;
-        try {
-            sh = wb.getSheetAt(0);
-        } catch (IllegalArgumentException e) {
-            sh = wb.createSheet();
+        sh = wb.getSheet(Sheets.CORR.name);
+        if (sh==null) {
+            sh = wb.createSheet(Sheets.CORR.name);
         }
-        wb.setSheetName(0, Sheets.CORR.name);
 
         if (appendingToExistingFile && !isFirstRowCoherent(sh)) {
             log.log(Level.SEVERE, ResourceBundle.getBundle(MainWindow.BUNDLE).getString("NIESPÓJNE KOLUMNY W ISTNIEJĄCYM PLIKU."));

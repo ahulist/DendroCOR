@@ -5,9 +5,6 @@ import com.hulist.logic.correlation.Correlator;
 import com.hulist.logic.correlation.PearsonCorrelation;
 import com.hulist.util.MonthsPair;
 import com.hulist.util.Pair;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -55,22 +52,9 @@ public class CorrelationProcessing {
                 }
                 break;
             case DAILY:
-                /*PrintWriter writer = null;
-                try {
-                    writer = new PrintWriter("e:\\res.txt", "UTF-8");
-                } catch (FileNotFoundException | UnsupportedEncodingException ex) {
-                    Logger.getLogger(CorrelationProcessing.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
                 for (Pair<MonthDay, MonthDay> p : data.daily.keySet()) {
-                    // DEBUG!
-                    /*if (p.getFirst().getMonthOfYear() == 3
-                            && p.getFirst().getDayOfMonth() == 24
-                            && ((p.getSecond().getMonthOfYear() == 10 && p.getSecond().getDayOfMonth() == 9) || (p.getSecond().getMonthOfYear() == 6 && p.getSecond().getDayOfMonth() == 1))) {
-                        int debug = 3;
-                    }*/
                     readyChrono = data.daily.get(p).getFirst().getData();
                     readyDaily = data.daily.get(p).getSecond().getData();
-//                    writer.println(readyChrono.length);
                     if (readyChrono.length > 1 && readyDaily.length > 1) {
                         Results r = doRest(readyChrono, readyDaily, 0, yearMin, yearMax, null, p);
                         if (results == null) {
@@ -80,110 +64,9 @@ public class CorrelationProcessing {
                         }
                     }
                 }
-//                writer.close();
                 break;
         }
 
-        // *******************************
-        /*for (MonthsPair month : wp.getMonthsColumns()) {
-         double[] readyChrono, readyClim;
-
-         String date = " (" + yearMin + "-" + yearMax + " " + month + ")";
-         String primaryName = data.primary.getName();
-         if (primaryName.length() > 21) {
-         primaryName = primaryName.substring(0, 19) + "...";
-         }
-         String climateName = data.climateColumns.get(month).getName();
-         if (climateName.length() > 21) {
-         climateName = climateName.substring(0, 19) + "...";
-         }
-
-         /*
-         dendro data:    oldest year(s) being removed
-         climatic data:  youngest year(s) being removed
-         */
-        /*if (month.yearsShift > 0) {
-         if (data.primary.getData().length - month.yearsShift < 2) {
-         log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ZBYT DUŻE PRZESUNIĘCIE LAT: %S"), month.toString()));
-         return null;
-         }
-
-         double[] primaryCol = data.primary.getData();
-         readyChrono = new double[primaryCol.length - month.yearsShift];
-         System.arraycopy(primaryCol, month.yearsShift, readyChrono, 0, readyChrono.length);
-
-         double[] climateCol = data.climateColumns.get(month).getData();
-         readyClim = new double[climateCol.length - month.yearsShift];
-         System.arraycopy(climateCol, 0, readyClim, 0, readyClim.length);
-
-         } else {
-         readyChrono = data.primary.getData();
-         readyClim = data.climateColumns.get(month).getData();
-         }
-
-         /*
-         *   CORRELATION / BOOTSTRAP
-         */
-        /*boolean isSignificance = wp.getPreferencesFrame().getCheckBoxSignificance().isSelected();
-         boolean isBootstrap = wp.getPreferencesFrame().getCheckBoxBootstrap().isSelected();
-         int bootstrapRepetitions = Integer.parseInt(wp.getPreferencesFrame().getBootstrapTextField().getText());
-         double alpha = Double.parseDouble(wp.getPreferencesFrame().getSignificanceTextField().getText());
-         if (wp.getPreferencesFrame().getCheckBoxTwoSidedTest().isSelected()) {
-         alpha /= 2;
-         }
-
-         c.setIsBootstrapped(isBootstrap);
-         c.setIsSignificanceLevels(isSignificance);
-         c.setBootstrapValues(alpha, bootstrapRepetitions);
-
-         MetaCorrelation correlation = c.correlate(readyChrono, readyClim);
-         results.climateMap.put(month, correlation);
-
-         String logMsg = String.format("%s %-70.70s\n%- 10.10f", ResourceBundle.getBundle(MainWindow.BUNDLE).getString("KORELACJA"), " " + primaryName + " / " + climateName + date, correlation.getCorrelation());
-
-         /*
-         *   SIGNIFICANCE LEVEL
-         */
-        /*if (isSignificance) {
-         results.climateMap.get(month).settTestValue(correlation.gettTestValue());
-         logMsg += "\n" + ResourceBundle.getBundle(MainWindow.BUNDLE).getString("poziom istotności T-Studenta") + ": " + correlation.gettTestValue();
-
-         results.climateMap.get(month).settTestCritVal(correlation.gettTestCritVal());
-         logMsg += ", " + ResourceBundle.getBundle(MainWindow.BUNDLE).getString("poziom krytyczny") + ": " + correlation.gettTestCritVal();
-
-         results.setIsTTest(true);
-         }
-
-         log.log(Level.INFO, logMsg);
-
-         /*
-         *   RUNNING CORRELATION
-         */
-        /*if (wp.getPreferencesFrame().getCheckBoxRunCorr().isSelected()) {
-         int windowSize = wp.getPreferencesFrame().getSliderCorrVal();
-
-         if (windowSize >= readyChrono.length) {
-         log.log(Level.WARNING, String.format(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("zbyt duże okno korelacji kroczącej")));
-         } else {
-         results.setIsRunningCorr(true);
-         results.setWindowSize(windowSize);
-         double[] chronoSmall = new double[windowSize];
-         double[] climSmall = new double[windowSize];
-         for (int i = 0; i <= readyChrono.length - windowSize; i++) {
-         // TODO równolegle!
-         System.arraycopy(readyChrono, i, chronoSmall, 0, windowSize);
-         System.arraycopy(readyClim, i, climSmall, 0, windowSize);
-         double resRunn = c.correlate(chronoSmall, climSmall).getCorrelation();
-         if (!results.runningCorrMap.containsKey(month) || results.runningCorrMap.get(month) == null) {
-         results.runningCorrMap.put(month, new TreeMap<>());
-         }
-         results.runningCorrMap.get(month).put(yearMin + i, resRunn);
-         }
-         log.log(Level.INFO, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("korel kroczaca obliczona dla"), yearMin, yearMax, windowSize, month));
-         }
-         }
-         }
-         */
         return results;
     }
 
@@ -206,11 +89,6 @@ public class CorrelationProcessing {
 
             readyChrono = newReadyChrono;
             readySecondary = newReadyClim;
-
-            /* nie wiem po co jest ten kod (błędy korelacji z macierzy?), raczej niepotrzebny
-             double[][] dataToCorrelate = {readyChrono, readyClim};
-             c = new PearsonsCorrelation(dataToCorrelate);
-             RealMatrix corr = c.getCorrelationMatrix();*/
         }
 
         /*
