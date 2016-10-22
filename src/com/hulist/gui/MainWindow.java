@@ -21,6 +21,7 @@ import com.hulist.logic.chronology.tabs.TabsColumnTypes;
 import com.hulist.logic.climate.ClimateFileTypes;
 import com.hulist.logic.daily.DailyColumnTypes;
 import com.hulist.logic.daily.DailyFileTypes;
+import com.hulist.logic.daily.YearlyCombinations;
 import com.hulist.util.FileWrap;
 import com.hulist.util.LocaleChangeListener;
 import com.hulist.util.LocaleManager;
@@ -49,6 +50,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -81,7 +83,7 @@ import org.jdesktop.swingx.JXCollapsiblePane;
 public class MainWindow extends JFrame/*Background*/ implements LocaleChangeListener {
 
     public static final String APP_NAME = "DendroCORR";
-    public static final String APP_VERSION = "2.9.4";
+    public static final String APP_VERSION = "2.9.5";
     public static final String BUNDLE = "com/hulist/bundle/Bundle";
     private static final int YEAR = 2016;//Calendar.getInstance().get(Calendar.YEAR);
 
@@ -105,6 +107,11 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
 
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
     private void secondaryInit() {
+        // YearlyCombinations
+        new Thread(() -> {
+            YearlyCombinations.initialize();
+        }).start();
+
         // title bar icon
         SwingUtilities.invokeLater(() -> {
             try {
@@ -825,7 +832,7 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
             for (int i = 0; i < listDailyFiles.getModel().getSize(); i++) {
                 selectedDailyFile[i] = (File) listDailyFiles.getModel().getElementAt(i);
             }
-            
+
             boolean allYears = checkBoxAllYears.isSelected();
             int startYear = -1, endYear = -1;
             if (!allYears) {
@@ -847,7 +854,7 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
 
             TabsColumnTypes tabsColumnType = (TabsColumnTypes) comboBoxColSelect.getSelectedItem();
             DailyFileTypes dft = (DailyFileTypes) comboBoxDailyFileType.getSelectedItem();
-            
+
             String dailyColumnTypeName = (String) comboBoxColDailySelect.getSelectedItem();
             DailyColumnTypes dct = null;
             for (DailyColumnTypes type : DailyColumnTypes.values()) {
@@ -856,11 +863,11 @@ public class MainWindow extends JFrame/*Background*/ implements LocaleChangeList
                     break;
                 }
             }
-            
-            RunParams wp = new RunParams(RunType.DAILY, allYears, startYear, endYear, selectedChronoFile, 
+
+            RunParams wp = new RunParams(RunType.DAILY, allYears, startYear, endYear, selectedChronoFile,
                     selectedDailyFile, chronologyFileType, tabsColumnType,
                     dft, dct, textFieldDailyExcluded.getText().split("\\s*,\\s*"));
-            
+
             wp.setPreferencesFrame(PREFERENCES_JFRAME);
             wp.setMainWindow(this);
             StringBuilder sb = new StringBuilder();

@@ -3,10 +3,19 @@ package com.hulist.logic;
 import com.hulist.gui.MainWindow;
 import com.hulist.logic.correlation.Correlator;
 import com.hulist.logic.correlation.PearsonCorrelation;
+import com.hulist.util.Concurrent;
 import com.hulist.util.MonthsPair;
 import com.hulist.util.Pair;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.joda.time.MonthDay;
@@ -31,7 +40,7 @@ public class CorrelationProcessing {
         log.setLevel(Level.ALL);
     }
 
-    public Results go(int yearMin, int yearMax) {
+    public Results go(int yearMin, int yearMax) throws InterruptedException, ExecutionException {
         Results results = null;
         SignificanceLevel sl = new SignificanceLevel();
 
@@ -52,7 +61,14 @@ public class CorrelationProcessing {
                 }
                 break;
             case DAILY:
+//                List<Pair<MonthDay, MonthDay>> pairs = new ArrayList<>(data.daily.keySet().size());
+
+                int size = data.daily.keySet().size();
+                float counter = 0;
                 for (Pair<MonthDay, MonthDay> p : data.daily.keySet()) {
+
+//                    pairs.add(p);
+
                     readyChrono = data.daily.get(p).getFirst().getData();
                     readyDaily = data.daily.get(p).getSecond().getData();
                     if (readyChrono.length > 1 && readyDaily.length > 1) {
@@ -63,7 +79,48 @@ public class CorrelationProcessing {
                             results.dailyMap.putAll(r.dailyMap);
                         }
                     }
+                    
+                    System.out.println("Correlation: "+(++counter/size)*100+" %");
                 }
+
+                /*//////////////////
+                int maxChunk = 5000;
+                List<Future<List<Results>>> list = new ArrayList<>();
+                List<Pair<Integer, Integer>> indices = new ArrayList<>();
+                int modulo = pairs.size() / maxChunk;
+                for (int i = 0; i < modulo; i++) {
+                    indices.add(new Pair<>(i, i + maxChunk));
+                }
+                indices.add(new Pair<>(modulo * maxChunk, pairs.size() - 1));
+                for (final Pair<Integer, Integer> index : indices) {
+                    Future<List<Results>> f = Concurrent.es.submit(() -> {
+
+                        List<Results> resCall = new ArrayList<>();
+                        for (int i = index.getFirst(); i <= index.getSecond(); i++) {
+                            double[] readyChronoCall = data.daily.get(pairs.get(i)).getFirst().getData();
+                            double[] readyDailyCall = data.daily.get(pairs.get(i)).getSecond().getData();
+                            Results r = new Results(wp);
+                            if (readyChronoCall.length > 1 && readyDailyCall.length > 1) {
+                                r = doRest(readyChronoCall, readyDailyCall, 0, yearMin, yearMax, null, pairs.get(i));
+                            }
+                            resCall.add(r);
+                        }
+                        return resCall;
+
+                    });
+                    list.add(f);
+                }
+                for (Future<List<Results>> r1 : list) {
+                    for (Results r2 : r1.get()) {
+                        if (results==null) {
+                            results=r2;
+                        }else{
+                            results.dailyMap.putAll(r2.dailyMap);
+                        }
+                    }
+                }
+
+                ///////////////*/
                 break;
         }
 

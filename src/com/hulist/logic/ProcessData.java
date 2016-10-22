@@ -20,6 +20,7 @@ import com.hulist.logic.climate.ao.AoImporter;
 import com.hulist.logic.climate.icru.IcruDataContainer;
 import com.hulist.logic.climate.icru.IcruImporter;
 import com.hulist.logic.daily.DailyResult;
+import com.hulist.logic.daily.YearlyCombinations;
 import com.hulist.logic.daily.type1.Type1DataContainer;
 import com.hulist.logic.daily.type1.Type1Importer;
 import com.hulist.logic.daily.type1.Type1SeriesDataContainer;
@@ -31,6 +32,7 @@ import com.hulist.util.Pair;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.joda.time.LocalDate;
@@ -52,7 +54,7 @@ public class ProcessData implements Runnable {
     private final ArrayList<FileDataContainer> climateDataContainer = new ArrayList<>();
     private final ArrayList<FileDataContainer> dailyDataContainer = new ArrayList<>();
     private final DataToCorrelate dataToCorrelate = new DataToCorrelate();
-    private final ArrayList<Results> results = new ArrayList<>();
+    private ArrayList<Results> results = new ArrayList<>();
 
     private final FileChooser fc = new FileChooser(FileChooser.Purpose.SAVE);
 
@@ -72,37 +74,6 @@ public class ProcessData implements Runnable {
         this.handler = handler;
     }
 
-    /*@Override
-     public void run() {
-     Logger.getLogger(this.getClass().getCanonicalName()).log(Level.FINE, "Uruchomiono przetwarzanie danych.");
-     switch( wp.getSecColFileType() ) {
-     case TABS:
-     try {
-     Results res = processTabs();
-                    
-     } catch( NullPointerException | IOException ex ) {
-     log.log(Level.SEVERE, "Błąd odczytu z pliku.");
-     log.log(Level.FINEST, ex.getMessage());
-     throw new RuntimeException(ex);
-     } catch( Exception ex ){
-     log.log(Level.SEVERE, "Wystąpił nieznany błąd.");
-     log.log(Level.FINEST, ex.getMessage());
-     throw new RuntimeException(ex);
-     }
-     break;
-     case DEKADOWY:
-     break;
-     }
-     }
-
-     public void go() {
-     Thread t = new Thread(this);
-     if( this.handler != null ){
-     // TODO dodać obsługę w klasie wywołującej
-     t.setUncaughtExceptionHandler(handler);
-     }
-     t.start();
-     }*/
     private void getTabsExt() throws IOException, NullPointerException {
         for (File file : runParams.getChronologyFiles()) {
             TabsMulticolImporter tabsImporter = new TabsMulticolImporter(runParams);
@@ -167,7 +138,7 @@ public class ProcessData implements Runnable {
         }
     }
 
-    private void process() throws IOException {
+    private void process() throws IOException, InterruptedException, ExecutionException {
         for (FileDataContainer chronology : chronologyDataContainer) {
             String primaryColumnNameStart = chronology.getSourceFile().getName();
             String primaryColumnName = "";
@@ -275,26 +246,18 @@ public class ProcessData implements Runnable {
                         String secondaryName = d.getSourceFile().getName() + ": "
                                 + d.getStation() + " in years " + commonYearStartLimit
                                 + "-" + commonYearEndLimit;
-                        int max = d.getYearlyCombinations().size();
+                        int max = YearlyCombinations.getCombinations().size();
                         float curr = 1;
                         double b1e = (System.currentTimeMillis() - b1s)/1000.0;
-                        System.out.println(max);
                         
                         // bottleneck 2:
                         long b2s = System.currentTimeMillis();
-                        for (Pair<MonthDay, MonthDay> p : d.getYearlyCombinations()) {
+                        for (Pair<MonthDay, MonthDay> p : YearlyCombinations.getCombinations()) {
 
-                            // DEBUG!
-                            /*if (p.getFirst().getMonthOfYear() == 3
-                                    && p.getFirst().getDayOfMonth() == 24
-                                    && ((p.getSecond().getMonthOfYear() == 10 && p.getSecond().getDayOfMonth() == 9) || (p.getSecond().getMonthOfYear() == 6 && p.getSecond().getDayOfMonth() == 1))) {
-                                int debug = 3;
-                            }*/
+                            System.out.println("Values prep.: "+curr / max * 100 + " %");
 
-                            System.out.println(curr / max * 100 + "%");
-
-                            ArrayList<Double> priCol = new ArrayList<>();
-                            ArrayList<Double> daiCol = new ArrayList<>();
+                            ArrayList<Double> priCol = new ArrayList<>(commonYearEndLimit-commonYearStartLimit);
+                            ArrayList<Double> daiCol = new ArrayList<>(commonYearEndLimit-commonYearStartLimit);
                             for (int i = commonYearStartLimit; i <= commonYearEndLimit; i++) {
                                 LocalDate ld1;
                                 LocalDate ld2;
@@ -305,7 +268,7 @@ public class ProcessData implements Runnable {
                                     // np. 02.1937 - ma tylko 28 dni
                                     continue;
                                 }
-                                double theValue = d.getValues().get(ld1, ld2);
+                                double theValue = d.getAvaragedValue(ld1, ld2);
                                 if (theValue != FileDataContainer.MISSING_VALUE) {
                                     priCol.add(primaryColumnData[i - commonYearStartLimit]);
                                     daiCol.add(theValue);
@@ -372,6 +335,8 @@ public class ProcessData implements Runnable {
             ResultsSaver saver = new ResultsSaver(runParams, saveDest[0], results);
             saver.save();
         }
+        results.clear();
+        System.gc();
     }
 
     @Override
