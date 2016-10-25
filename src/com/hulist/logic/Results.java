@@ -6,8 +6,10 @@
 package com.hulist.logic;
 
 import com.hulist.util.MonthsPair;
+import com.hulist.util.Pair;
 import java.util.HashMap;
 import java.util.TreeMap;
+import org.joda.time.MonthDay;
 
 /**
  *
@@ -16,9 +18,10 @@ import java.util.TreeMap;
 public class Results {
 
     int yearStart, yearEnd;
-    String chronoTitle = null, climateTitle = null;
+    String chronoTitle = null, climateTitle = null, dailyTitle = null;
     RunParams params;
-    HashMap<MonthsPair, MetaCorrelation> map = new HashMap<>();
+    HashMap<MonthsPair, MetaCorrelation> climateMap = new HashMap<>();
+    HashMap<Pair<MonthDay, MonthDay>, MetaCorrelation> dailyMap = new HashMap<>();
 
     // significance testing
     private boolean isTTest = false;

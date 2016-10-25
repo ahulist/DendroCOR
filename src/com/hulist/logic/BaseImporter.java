@@ -18,18 +18,18 @@ public abstract class BaseImporter{
     protected int startYear = Integer.MIN_VALUE, endYear = Integer.MAX_VALUE;     // both inclusive
     protected boolean allYears = true;
     protected final Logger log = LoggerFactory.getLogger(BaseImporter.class);
-    
+    protected RunParams rp;
     /**
      * if isAllYears == true, then startYear and endYear values do not matter
-     * @param isAllYears
-     * @param startYear
-     * @param endYear 
+     * @param rp
      */
-    public BaseImporter(boolean isAllYears, int startYear, int endYear) {
-        if( isAllYears ){
+    public BaseImporter(RunParams rp) {
+        this.rp = rp;
+        
+        if( rp.isAllYears() ){
             setAllYearsTrue();
         }else{
-            selectRange(startYear, endYear);
+            selectRange(rp.getStartYear(), rp.getEndYear());
         }
         
     }

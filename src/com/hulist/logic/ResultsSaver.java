@@ -4,14 +4,24 @@ import com.hulist.gui.MainWindow;
 import com.hulist.util.ExcelUtil;
 import com.hulist.util.Misc;
 import com.hulist.util.MonthsPair;
+import com.hulist.util.Pair;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -19,9 +29,11 @@ import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.joda.time.MonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +51,8 @@ public class ResultsSaver {
     enum Sheets {
 
         CORR(ResourceBundle.getBundle(MainWindow.BUNDLE, new Locale("en")).getString("Korelacja")),
-        RUNNING_CORR(ResourceBundle.getBundle(MainWindow.BUNDLE, new Locale("en")).getString("Korelacja kroczaca"));
+        RUNNING_CORR(ResourceBundle.getBundle(MainWindow.BUNDLE, new Locale("en")).getString("Korelacja kroczaca")),
+        DAILY(ResourceBundle.getBundle(MainWindow.BUNDLE, new Locale("en")).getString("Dane dzienne"));
 
         String name;
 
@@ -53,6 +66,8 @@ public class ResultsSaver {
     private final ArrayList<Results> results;
     private final Logger log = LoggerFactory.getLogger(ResultsSaver.class);
     private CellStyle style;
+
+    private int howManyDaily = 100;     // * 2 for two ends
 
     private final URL template = getClass().getClassLoader().getResource("templates/template.xlsm");
 
@@ -116,14 +131,26 @@ public class ResultsSaver {
 
         createSignificantCellStyle(wb);
 
-        intermediateSuccess = populateCorrelation(wb, appendingToExistingFile);
-        if (!intermediateSuccess) {
-            return false;
-        }
+        switch (wp.getRunType()) {
+            case MONTHLY:
+                intermediateSuccess = populateCorrelation(wb, appendingToExistingFile);
+                if (!intermediateSuccess) {
+                    return false;
+                }
 
-        intermediateSuccess = populateRunningCorrelation(wb);
-        if (!intermediateSuccess) {
-            return false;
+                intermediateSuccess = populateRunningCorrelation(wb);
+                if (!intermediateSuccess) {
+                    return false;
+                }
+                break;
+            case DAILY:
+                intermediateSuccess = populateDaily(wb, appendingToExistingFile);
+                // TODO:
+//                wb.removeSheetAt(0);
+                if (!intermediateSuccess) {
+                    return false;
+                }
+                break;
         }
 
         try {
@@ -140,12 +167,10 @@ public class ResultsSaver {
 
     private boolean populateCorrelation(XSSFWorkbook wb, boolean appendingToExistingFile) {
         XSSFSheet sh;
-        try {
-            sh = wb.getSheetAt(0);
-        } catch (IllegalArgumentException e) {
-            sh = wb.createSheet();
+        sh = wb.getSheet(Sheets.CORR.name);
+        if (sh==null) {
+            sh = wb.createSheet(Sheets.CORR.name);
         }
-        wb.setSheetName(0, Sheets.CORR.name);
 
         if (appendingToExistingFile && !isFirstRowCoherent(sh)) {
             log.error(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("NIESPÓJNE KOLUMNY W ISTNIEJĄCYM PLIKU."));
@@ -172,10 +197,10 @@ public class ResultsSaver {
             int colCounter = FIRST_COL_NUM;
             for (MonthsPair col : wp.getMonthsColumns()) {
                 Cell c = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), colCounter, Cell.CELL_TYPE_NUMERIC);
-                c.setCellValue(res.map.get(col).getCorrelation());
+                c.setCellValue(res.climateMap.get(col).getCorrelation());
 
                 // significance
-                if (res.isIsTTest() && FastMath.abs(res.map.get(col).gettTestValue()) > FastMath.abs(res.map.get(col).gettTestCritVal())) {
+                if (res.isIsTTest() && FastMath.abs(res.climateMap.get(col).gettTestValue()) > FastMath.abs(res.climateMap.get(col).gettTestCritVal())) {
                     c.setCellStyle(style);
                 }
 
@@ -196,7 +221,7 @@ public class ResultsSaver {
         if (sh == null) {
             sh = wb.createSheet(Sheets.RUNNING_CORR.name);
         }
-        
+
         // getting year min-max
         int yearMin = Integer.MAX_VALUE, yearMax = Integer.MIN_VALUE;
         int windowSize = 0;
@@ -209,13 +234,13 @@ public class ResultsSaver {
             }
             windowSize = res.getWindowSize();
         }
-        
+
         ExcelUtil.getCell(ExcelUtil.getRow(sh, 0), 3, Cell.CELL_TYPE_STRING).setCellValue("Range / Window mid-year");
-        for (int i = 0; i < yearMax-yearMin-windowSize+2; i++) {
-            Cell year = ExcelUtil.getCell(ExcelUtil.getRow(sh, 0), i+4, Cell.CELL_TYPE_NUMERIC);
-            year.setCellValue(i+yearMin+windowSize/2);
+        for (int i = 0; i < yearMax - yearMin - windowSize + 2; i++) {
+            Cell year = ExcelUtil.getCell(ExcelUtil.getRow(sh, 0), i + 4, Cell.CELL_TYPE_NUMERIC);
+            year.setCellValue(i + yearMin + windowSize / 2);
         }
-        
+
         int firstFreeRow = 1;
         for (Results res : results) {
             if (res.isIsRunningCorr()) {
@@ -233,7 +258,7 @@ public class ResultsSaver {
 
                     for (double value : res.runningCorrMap.get(col).values()) {
                         colCounter++;
-                        c = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), colCounter+res.yearStart-yearMin, Cell.CELL_TYPE_NUMERIC);
+                        c = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), colCounter + res.yearStart - yearMin, Cell.CELL_TYPE_NUMERIC);
                         c.setCellValue(value);
                     }
                     firstFreeRow++;
@@ -242,6 +267,81 @@ public class ResultsSaver {
         }
 
         autosizeColumns(wp, sh);
+
+        return true;
+    }
+
+    private boolean populateDaily(XSSFWorkbook wb, boolean appendingToExistingFile) {
+        for (Results res : results) {
+            if (!res.dailyMap.isEmpty()) {
+                Map<Pair<MonthDay, MonthDay>, MetaCorrelation> m = Misc.sortByValue(res.dailyMap);
+
+                XSSFSheet sh;
+                sh = wb.getSheet(Sheets.DAILY.name);
+                if (sh == null) {
+                    sh = wb.createSheet(Sheets.DAILY.name);
+                }
+
+                int firstFreeRow = sh.getLastRowNum() + 1;
+                if (firstFreeRow != 1) {
+                    firstFreeRow += 2;
+                }
+
+                boolean isMore = m.size() > howManyDaily * 2;
+                boolean yearsSet = false;
+                Iterable<Pair<MonthDay, MonthDay>> iter = m.keySet();
+
+                if (isMore) {
+                    ArrayList<Pair<MonthDay, MonthDay>> keys = new ArrayList<>();
+                    int counter = 0;
+                    for (Pair<MonthDay, MonthDay> p : m.keySet()) {
+                        if (counter < howManyDaily) {
+                            keys.add(p);
+                            counter++;
+                        } else {
+                            break;
+                        }
+                    }
+                    ArrayList<Pair<MonthDay, MonthDay>> keysReversed = new ArrayList<>(m.keySet());
+                    Collections.reverse(keysReversed);
+                    ArrayList<Pair<MonthDay, MonthDay>> endKeys = new ArrayList<>();
+                    counter = 0;
+                    for (Pair<MonthDay, MonthDay> p : keysReversed) {
+                        if (counter < howManyDaily) {
+                            endKeys.add(p);
+                            counter++;
+                        } else {
+                            Collections.reverse(endKeys);
+                            break;
+                        }
+                    }
+                    keys.addAll(endKeys);
+                    iter = keys;
+                }
+
+                for (Pair<MonthDay, MonthDay> p : iter) {
+                    if (!yearsSet) {
+                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow - 1), 0, Cell.CELL_TYPE_STRING).setCellValue(res.chronoTitle + " / " + res.dailyTitle + " ("+res.params.getDailyColumnType().getDisplayName()+")");
+                        yearsSet = true;
+                    }
+
+                    ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 0, Cell.CELL_TYPE_STRING)
+                            .setCellValue(p.getFirst().getDayOfMonth() + " " + p.getFirst().toString("MMM"));
+                    ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 1, Cell.CELL_TYPE_STRING)
+                            .setCellValue(p.getSecond().getDayOfMonth() + " " + p.getSecond().toString("MMM"));
+                    ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 2, Cell.CELL_TYPE_NUMERIC).setCellValue(m.get(p).getCorrelation());
+                    // significance
+                    if (res.isIsTTest() && FastMath.abs(m.get(p).gettTestValue()) > FastMath.abs(m.get(p).gettTestCritVal())) {
+                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 2, Cell.CELL_TYPE_NUMERIC).setCellStyle(style);
+                    }
+
+                    firstFreeRow++;
+                }
+
+                sh.autoSizeColumn(0);
+                sh.autoSizeColumn(1);
+            }
+        }
 
         return true;
     }
@@ -303,7 +403,7 @@ public class ResultsSaver {
             sh.autoSizeColumn(i);
         }
     }
-    
+
     private void createSignificantCellStyle(XSSFWorkbook wb) {
         style = wb.createCellStyle();
         style.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());

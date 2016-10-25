@@ -14,6 +14,8 @@ import java.io.File;
  */
 public abstract class FileDataContainer{
 
+    public static final double MISSING_VALUE = Double.MAX_VALUE;
+    
     private File sourceFile;
     private int yearMin = Integer.MAX_VALUE, yearMax = Integer.MIN_VALUE;
 
@@ -42,5 +44,9 @@ public abstract class FileDataContainer{
         return sourceFile;
     }
     
+    /**
+     * 
+     * @return whether container is populated with data or not
+     */
     public abstract boolean isEmpty();
 }

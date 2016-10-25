@@ -8,6 +8,7 @@ package com.hulist.logic.climate._prn;
 import com.hulist.gui.MainWindow;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
+import com.hulist.logic.RunParams;
 import com.hulist.util.Misc;
 import com.hulist.util.Months;
 import java.io.BufferedReader;
@@ -30,8 +31,8 @@ public class PrnImporter extends BaseImporter implements DataImporter<PrnDataCon
     public static final double PRN_VALUE_MAX = Double.MAX_VALUE;
     public static final double PRN_VALUE_MIN = Double.MIN_VALUE;
 
-    public PrnImporter(boolean isAllYears, int startYear, int endYear) {
-        super(isAllYears, startYear, endYear);
+    public PrnImporter(RunParams rp) {
+        super(rp);
     }
 
     @Override

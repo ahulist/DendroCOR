@@ -8,6 +8,7 @@ package com.hulist.logic.climate.icru;
 import com.hulist.gui.MainWindow;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
+import com.hulist.logic.RunParams;
 import com.hulist.util.Misc;
 import com.hulist.util.Months;
 import java.io.BufferedReader;
@@ -30,8 +31,8 @@ public class IcruImporter extends BaseImporter implements DataImporter<IcruDataC
     public static final double ICRU_VALUE_MAX = 998;//Double.MAX_VALUE;
     public static final double ICRU_VALUE_MIN = -998;//-Double.MAX_VALUE;
 
-    public IcruImporter(boolean isAllYears, int startYear, int endYear) {
-        super(isAllYears, startYear, endYear);
+    public IcruImporter(RunParams rp) {
+        super(rp);
     }
 
     @Override
@@ -45,7 +46,7 @@ public class IcruImporter extends BaseImporter implements DataImporter<IcruDataC
         br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
         int lineCounter = 1;
         while( (line = br.readLine()) != null ) {
-            if( !line.startsWith("#") ){
+            if( !line.startsWith("#") && !line.trim().equals("") ){
                 String[] data = line.trim().split("[\\s\\t]+");
                 try {
                     if( allYears

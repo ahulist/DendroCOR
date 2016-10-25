@@ -9,6 +9,8 @@ package com.hulist.logic;
 import com.hulist.logic.chronology.ChronologyFileTypes;
 import com.hulist.logic.chronology.tabs.TabsColumnTypes;
 import com.hulist.logic.climate.ClimateFileTypes;
+import com.hulist.logic.daily.DailyColumnTypes;
+import com.hulist.logic.daily.DailyFileTypes;
 import com.hulist.util.MonthsPair;
 import java.io.File;
 import java.util.ArrayList;
@@ -22,6 +24,8 @@ public class RunParams {
 
     private Stage root;
 
+    private RunType runType;
+    
     private boolean allYears;
     private int startYear;
     private int endYear;
@@ -30,13 +34,21 @@ public class RunParams {
     private TabsColumnTypes chronologyColumn;
     private ClimateFileTypes climateFileType;
     private ArrayList<MonthsPair> monthsColumns;
+    private File[] dailyFile;
+    private DailyFileTypes dailyFileType;
+    private DailyColumnTypes dailyColumnType;
+    private String[] excludedValues;
     
     private RunParamsPrefs prefs;
     
     public RunParams() {
     }
-    
-    public RunParams(boolean allYears, int startYear, int endYear, File[] chronologyFile, File[] climateFile, ChronologyFileTypes chronologyFileType, TabsColumnTypes chronologyType, ClimateFileTypes climateFileType, ArrayList<MonthsPair> monthsColumns) {
+
+    /**
+     Constructor for monthly data
+     */
+    public RunParams(RunType runType, boolean allYears, int startYear, int endYear, File[] chronologyFile, File[] climateFile, ChronologyFileTypes chronologyFileType, TabsColumnTypes chronologyType, ClimateFileTypes climateFileType, ArrayList<MonthsPair> monthsColumns) {
+        this.runType = runType;
         this.allYears = allYears;
         this.startYear = startYear;
         this.endYear = endYear;
@@ -46,6 +58,25 @@ public class RunParams {
         this.chronologyColumn = chronologyType;
         this.climateFileType = climateFileType;
         this.monthsColumns = monthsColumns;
+    }
+
+    /**
+     Constructor for daily data
+     */
+    public RunParams(RunType runType, boolean allYears, int startYear, int endYear, File[] chronologyFile,
+            File[] dailyFile, ChronologyFileTypes chronologyFileType, TabsColumnTypes chronologyType,
+            DailyFileTypes dailyFileType, DailyColumnTypes dailyColumnType, String[] excludedValues) {
+        this.runType = runType;
+        this.allYears = allYears;
+        this.startYear = startYear;
+        this.endYear = endYear;
+        this.chronologyFile = chronologyFile;
+        this.dailyFile = dailyFile;
+        this.chronologyFileType = chronologyFileType;
+        this.chronologyColumn = chronologyType;
+        this.dailyFileType = dailyFileType;
+        this.dailyColumnType = dailyColumnType;
+        this.excludedValues = excludedValues;
     }
 
     public boolean isAllYears() {
@@ -135,4 +166,26 @@ public class RunParams {
     public void setRoot(Stage root) {
         this.root = root;
     }
+
+    public RunType getRunType() {
+        return runType;
+    }
+
+    public DailyFileTypes getDailyFileType() {
+        return dailyFileType;
+    }
+
+    public DailyColumnTypes getDailyColumnType() {
+        return dailyColumnType;
+    }
+
+    public File[] getDailyFile() {
+        return dailyFile;
+    }
+
+    public String[] getExcludedValues() {
+        return excludedValues;
+    }
+
+    
 }

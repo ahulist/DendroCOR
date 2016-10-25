@@ -8,6 +8,7 @@ package com.hulist.logic.climate.ao;
 import com.hulist.gui.MainWindow;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
+import com.hulist.logic.RunParams;
 import com.hulist.util.Misc;
 import com.hulist.util.Months;
 import java.io.BufferedReader;
@@ -27,8 +28,8 @@ import java.util.ArrayList;
  */
 public class AoImporter extends BaseImporter implements DataImporter<AoDataContainer> {
 
-    public AoImporter(boolean isAllYears, int startYear, int endYear) {
-        super(isAllYears, startYear, endYear);
+    public AoImporter(RunParams rp) {
+        super(rp);
     }
 
     @Override

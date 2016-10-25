@@ -9,7 +9,7 @@ package com.hulist.logic;
  *
  * @author Aleksander
  */
-public class MetaCorrelation {
+public class MetaCorrelation implements Comparable<MetaCorrelation>{
 
     private double correlation;
     private double tTestValue;
@@ -37,6 +37,11 @@ public class MetaCorrelation {
 
     public void settTestCritVal(double tTestCritVal) {
         this.tTestCritVal = tTestCritVal;
+    }
+
+    @Override
+    public int compareTo(MetaCorrelation o) {
+        return Double.compare(this.correlation, o.correlation);
     }
 
 }
