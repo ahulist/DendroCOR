@@ -12,13 +12,16 @@ import com.hulist.logic.climate.ClimateFileTypes;
 import com.hulist.util.MonthsPair;
 import java.io.File;
 import java.util.ArrayList;
+import javafx.stage.Stage;
 
 /**
  *
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
 public class RunParams {
-    
+
+    private Stage root;
+
     private boolean allYears;
     private int startYear;
     private int endYear;
@@ -125,4 +128,11 @@ public class RunParams {
         this.prefs = prefs;
     }
 
+    public Stage getRoot() {
+        return root;
+    }
+
+    public void setRoot(Stage root) {
+        this.root = root;
+    }
 }

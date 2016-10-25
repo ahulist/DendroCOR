@@ -5,25 +5,17 @@
  */
 package com.hulist.gui2;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.application.Application;
-import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
-import javax.swing.SwingUtilities;
 
 /**
  *

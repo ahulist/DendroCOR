@@ -6,6 +6,7 @@
 package com.hulist.logic;
 
 import com.hulist.gui.MainWindow;
+import com.hulist.gui2.GUIMain;
 import com.hulist.logic.chronology.deka.DekaImporter;
 import com.hulist.logic.chronology.deka.DekaSerie;
 import com.hulist.logic.chronology.deka.DekaSeriesDataContainer;
@@ -23,9 +24,12 @@ import com.hulist.util.FileChooser;
 import com.hulist.util.LogsSaver;
 import com.hulist.util.Misc;
 import com.hulist.util.MonthsPair;
+import com.hulist.util.UserPreferences;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+import javafx.stage.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +39,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ProcessData implements Runnable {
 
-    RunParams wp = null;
-    Thread.UncaughtExceptionHandler handler = null;
+    private RunParams wp = null;
+    private Thread.UncaughtExceptionHandler handler = null;
 
     private final Logger log = LoggerFactory.getLogger(ProcessData.class);
     private Thread computationThread;
@@ -303,4 +307,13 @@ public class ProcessData implements Runnable {
             super(cause);
         }
     }
+
+    public RunParams getWp() {
+        return wp;
+    }
+
+    public void setWp(RunParams wp) {
+        this.wp = wp;
+    }
+    
 }

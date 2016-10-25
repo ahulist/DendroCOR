@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -77,17 +78,25 @@ public class MainFXMLController implements Initializable {
     @FXML
     private ChoiceBox<TabsColumnTypes> comboBoxColSelect;
     @FXML
+    private ChoiceBox<TabsColumnTypes> comboBoxColSelectDaily;
+    @FXML
     private ChoiceBox<ChronologyFileTypes> comboBoxChronoFileType;
+    @FXML
+    private ChoiceBox<ChronologyFileTypes> comboBoxChronoFileTypeDailyTab;
     @FXML
     private ChoiceBox<ClimateFileTypes> comboBoxClimateFileType;
     @FXML
     private ListView<File> listViewDendroFiles;
+    @FXML
+    private ListView<File> listViewDendroFilesDailyTab;
     @FXML
     private ListView<File> listViewClimateFiles;
     @FXML
     private TextArea textAreaMonthsRanges;
     @FXML
     private FlowPane paneColumnDendro;
+    @FXML
+    private FlowPane paneColumnDendroDailyTab;
     @FXML
     private Button buttonResetMonths;
     @FXML
@@ -121,12 +130,21 @@ public class MainFXMLController implements Initializable {
         // ComboBoxes
         comboBoxClimateFileType.setItems(FXCollections.observableArrayList(ClimateFileTypes.values()));
         comboBoxChronoFileType.setItems(FXCollections.observableArrayList(ChronologyFileTypes.values()));
+        comboBoxChronoFileTypeDailyTab.setItems(FXCollections.observableArrayList(ChronologyFileTypes.values()));
         comboBoxColSelect.setItems(FXCollections.observableArrayList(TabsColumnTypes.values()));
+        comboBoxColSelectDaily.setItems(FXCollections.observableArrayList(TabsColumnTypes.values()));
         comboBoxChronoFileType.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if (ChronologyFileTypes.TABS.ordinal() == newValue.intValue()) {
                 paneColumnDendro.setVisible(true);
             } else {
                 paneColumnDendro.setVisible(false);
+            }
+        });
+        comboBoxChronoFileTypeDailyTab.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            if (ChronologyFileTypes.TABS.ordinal() == newValue.intValue()) {
+                paneColumnDendroDailyTab.setVisible(true);
+            } else {
+                paneColumnDendroDailyTab.setVisible(false);
             }
         });
 
@@ -154,10 +172,13 @@ public class MainFXMLController implements Initializable {
             }
         };
         listViewDendroFiles.setCellFactory(factory);
+        listViewDendroFilesDailyTab.setCellFactory(factory);
         listViewClimateFiles.setCellFactory(factory);
         listViewDendroFiles.setItems(FXCollections.observableArrayList());
+        listViewDendroFilesDailyTab.setItems(FXCollections.observableArrayList());
         listViewClimateFiles.setItems(FXCollections.observableArrayList());
         listViewDendroFiles.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        listViewDendroFilesDailyTab.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listViewClimateFiles.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         EventHandler<DragEvent> doeh = (DragEvent event) -> {
             if (event.getSource() instanceof ListView) {
@@ -166,6 +187,7 @@ public class MainFXMLController implements Initializable {
             }
         };
         listViewDendroFiles.setOnDragOver(doeh);
+        listViewDendroFilesDailyTab.setOnDragOver(doeh);
         listViewClimateFiles.setOnDragOver(doeh);
         EventHandler<DragEvent> ddeh = (DragEvent event) -> {
             if (event.getDragboard().hasFiles()) {
@@ -180,6 +202,7 @@ public class MainFXMLController implements Initializable {
             }
         };
         listViewDendroFiles.setOnDragDropped(ddeh);
+        listViewDendroFilesDailyTab.setOnDragDropped(ddeh);
         listViewClimateFiles.setOnDragDropped(ddeh);
         EventHandler<KeyEvent> kpeh = (KeyEvent event) -> {
             if (event.getCode().equals(KeyCode.DELETE) && event.getSource() instanceof ListView) {
@@ -188,6 +211,7 @@ public class MainFXMLController implements Initializable {
             }
         };
         listViewDendroFiles.setOnKeyPressed(kpeh);
+        listViewDendroFilesDailyTab.setOnKeyPressed(kpeh);
         listViewClimateFiles.setOnKeyPressed(kpeh);
 
         // Buttons
@@ -259,9 +283,17 @@ public class MainFXMLController implements Initializable {
 
     @FXML
     private void onStart() {
-        selectedChronoFile = new File[listViewDendroFiles.getItems().size()];
-        for (int i = 0; i < listViewDendroFiles.getItems().size(); i++) {
-            selectedChronoFile[i] = listViewDendroFiles.getItems().get(i);
+        ObservableList<File> chronoObservableList = null;
+        switch (tabPane.getSelectionModel().selectedIndexProperty().intValue()) {
+            case 0:     // tab 0 selected : monthly
+                chronoObservableList = listViewDendroFiles.getItems();
+                break;
+            case 1:     // tab 1 selected : daily
+                chronoObservableList = listViewDendroFilesDailyTab.getItems();
+        }
+        selectedChronoFile = new File[chronoObservableList.size()];
+        for (int i = 0; i < chronoObservableList.size(); i++) {
+            selectedChronoFile[i] = chronoObservableList.get(i);
         }
         selectedClimateFile = new File[listViewClimateFiles.getItems().size()];
         for (int i = 0; i < listViewClimateFiles.getItems().size(); i++) {
@@ -279,8 +311,19 @@ public class MainFXMLController implements Initializable {
                 }
             }
 
-            ChronologyFileTypes chronologyFileType = comboBoxChronoFileType.getValue();
-            TabsColumnTypes tabsColumnType = comboBoxColSelect.getValue();
+            ChronologyFileTypes chronologyFileType = null;
+            TabsColumnTypes tabsColumnType = null;
+            switch (tabPane.getSelectionModel().getSelectedIndex()) {
+                case 0:
+                    chronologyFileType = comboBoxChronoFileType.getValue();
+                    tabsColumnType = comboBoxColSelect.getValue();
+                    break;
+                case 1:
+                    chronologyFileType = comboBoxChronoFileTypeDailyTab.getValue();
+                    tabsColumnType = comboBoxColSelectDaily.getValue();
+                    break;
+            }
+
             ClimateFileTypes climateFileType = comboBoxClimateFileType.getValue();
 
             RunParams wp = new RunParams(allYears,
@@ -305,7 +348,9 @@ public class MainFXMLController implements Initializable {
                     .append(climateFileType).append("]");
             log.debug(sb.toString());
 
-            new ProcessData(wp).go();
+            ProcessData pd = new ProcessData(wp);
+            pd.getWp().setRoot(guiMain.getMainStage());
+            pd.go();
         }
     }
 
@@ -314,25 +359,23 @@ public class MainFXMLController implements Initializable {
         int selectedTabIndex = tabPane.getSelectionModel().getSelectedIndex();
         ResourceBundle bundle = ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale());
 
-        // Plik chronologii
-        if (selectedTabIndex == 0) {
-            if (selectedChronoFile.length == 0) {
-                valid = false;
-                log.warn(bundle.getString("WYBIERZ PLIK CHRONOLOGII."));
-            } else {
-                for (File oneSelectedChronoFile : selectedChronoFile) {
-                    if (oneSelectedChronoFile == null) {
-                        valid = false;
-                        log.warn(bundle.getString("NIEPOPRAWNY PLIK CHRONOLOGII."));
-                    } else if (!oneSelectedChronoFile.isFile()) {
-                        valid = false;
-                        log.warn(String.format(bundle.getString("PLIK CHRONOLOGII %S NIE JEST PLIKIEM"), oneSelectedChronoFile.getName()));
-                    }
+        // Lista plików chronologii dendro
+        if (selectedChronoFile.length == 0) {
+            valid = false;
+            log.warn(bundle.getString("WYBIERZ PLIK CHRONOLOGII."));
+        } else {
+            for (File oneSelectedChronoFile : selectedChronoFile) {
+                if (oneSelectedChronoFile == null) {
+                    valid = false;
+                    log.warn(bundle.getString("NIEPOPRAWNY PLIK CHRONOLOGII."));
+                } else if (!oneSelectedChronoFile.isFile()) {
+                    valid = false;
+                    log.warn(String.format(bundle.getString("PLIK CHRONOLOGII %S NIE JEST PLIKIEM"), oneSelectedChronoFile.getName()));
                 }
             }
         }
 
-        // Plik klimatyczny
+        // Lista plików klimatycznych
         if (selectedTabIndex == 0) {
             if (selectedClimateFile.length == 0) {
                 valid = false;
@@ -355,20 +398,32 @@ public class MainFXMLController implements Initializable {
             // TODO
         }
 
-        // Typy plików
-        // Chronologie
-        if (selectedTabIndex == 0 && comboBoxChronoFileType.getSelectionModel().isEmpty()) {
+        // ComboBoxy plików dendro
+        ChoiceBox<ChronologyFileTypes> comboBoxChronoFileTypeGeneral = null;
+        ChoiceBox<TabsColumnTypes> comboBoxColSelectGeneral = null;
+        switch (selectedTabIndex) {
+            case 0:
+                comboBoxChronoFileTypeGeneral = comboBoxChronoFileType;
+                comboBoxColSelectGeneral = comboBoxColSelect;
+                break;
+            case 1:
+                comboBoxChronoFileTypeGeneral = comboBoxChronoFileTypeDailyTab;
+                comboBoxColSelectGeneral = comboBoxColSelectDaily;
+                break;
+        }
+
+        if (comboBoxChronoFileTypeGeneral.getSelectionModel().isEmpty()) {
             log.warn(bundle.getString("Wybierz typ pliku chronologii"));
             valid = false;
         }
-        if (selectedTabIndex == 0
-                && !comboBoxChronoFileType.getSelectionModel().isEmpty()
-                && comboBoxChronoFileType.getSelectionModel().getSelectedItem().equals(ChronologyFileTypes.TABS)
-                && comboBoxColSelect.getSelectionModel().isEmpty()) {
+        if (!comboBoxChronoFileTypeGeneral.getSelectionModel().isEmpty()
+                && comboBoxChronoFileTypeGeneral.getSelectionModel().getSelectedItem().equals(ChronologyFileTypes.TABS)
+                && comboBoxColSelectGeneral.getSelectionModel().isEmpty()) {
             log.warn(String.format(bundle.getString("Wybierz kolumnę"), ChronologyFileTypes.TABS.toString()));
             valid = false;
         }
-        // Klimatyczne
+
+        // ComboBox plików klimatycznych
         if (selectedTabIndex == 0 && comboBoxClimateFileType.getSelectionModel().isEmpty()) {
             log.warn(bundle.getString("Wybierz typ pliku klimatycznego"));
             valid = false;
