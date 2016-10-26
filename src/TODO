@@ -1,0 +1,23 @@
+usunąć BlockingQueueOutput (?)
+zrobić walidację (i zapis do Prefsów) excluded values
+zrobić dzwonek na zakończenie liczenia
+zrobić porządek z Sheet0 w Excelu
+zrobić popup do zapisu plików (parent do okna!)
+zrobić popup 'Help'
+poprawić napis w helpie na 
+	'Tree Ring Laboratory
+	Faculty of Earth Sciences
+	University of Silesia
+	Poland'
+zrobić '?' z opisem każdego pola
+ustawic progress bar w gui (+ label do niego)
+klasa wysłająca dane do progress baru i labela
+podpiąć progress bar
+przejrzeć po kolei jak leci program i zrobić porządne logi (mniej outputów)
+
+// FUTURE:
+
+obliczenia w wątkach (korelacja)
+zapis wartości istotności + krytycznej w Excelu
+dodać .rwl_crns do plików chrono
+zrobić running correlation dla daily data

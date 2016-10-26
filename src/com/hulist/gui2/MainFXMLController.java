@@ -7,9 +7,13 @@ package com.hulist.gui2;
 
 import com.hulist.logic.ProcessData;
 import com.hulist.logic.RunParams;
+import com.hulist.logic.RunType;
 import com.hulist.logic.chronology.ChronologyFileTypes;
 import com.hulist.logic.chronology.tabs.TabsColumnTypes;
 import com.hulist.logic.climate.ClimateFileTypes;
+import com.hulist.logic.daily.DailyColumnTypes;
+import com.hulist.logic.daily.DailyFileTypes;
+import com.hulist.logic.daily.YearlyCombinations;
 import com.hulist.util.Misc;
 import com.hulist.util.StaticSettings;
 import com.hulist.util.TextAreaToMonths;
@@ -21,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -86,13 +91,21 @@ public class MainFXMLController implements Initializable {
     @FXML
     private ChoiceBox<ClimateFileTypes> comboBoxClimateFileType;
     @FXML
+    private ChoiceBox<DailyFileTypes> comboBoxDailyFileType;
+    @FXML
+    private ChoiceBox<DailyColumnTypes> comboBoxDailyColumn;
+    @FXML
     private ListView<File> listViewDendroFiles;
     @FXML
     private ListView<File> listViewDendroFilesDailyTab;
     @FXML
     private ListView<File> listViewClimateFiles;
     @FXML
+    private ListView<File> listViewDailyFiles;
+    @FXML
     private TextArea textAreaMonthsRanges;
+    @FXML
+    private TextField textFieldExcludedValues;
     @FXML
     private FlowPane paneColumnDendro;
     @FXML
@@ -125,6 +138,11 @@ public class MainFXMLController implements Initializable {
         textAreaOutput.setTextFormatter(getTextAreaOutputFormatter());
         BlockingQueueOutput.setTextArea(textAreaOutput);
 
+        // YearlyCombinations
+        new Thread(() -> {
+            YearlyCombinations.initialize();
+        }).start();
+
         titledpane.heightProperty().addListener((obs, oldHeight, newHeight) -> this.guiMain.getMainStage().sizeToScene());
 
         // ComboBoxes
@@ -147,72 +165,16 @@ public class MainFXMLController implements Initializable {
                 paneColumnDendroDailyTab.setVisible(false);
             }
         });
+        comboBoxDailyFileType.setItems(FXCollections.observableArrayList(DailyFileTypes.values()));
+        comboBoxDailyColumn.setItems(FXCollections.observableArrayList(DailyColumnTypes.values()));
 
         // Lists
-        Callback<ListView<File>, ListCell<File>> factory = new Callback<ListView<File>, ListCell<File>>() {
-            @Override
-            public ListCell<File> call(ListView<File> param) {
-                ListCell<File> cell = new ListCell<File>() {
-                    Tooltip tooltip = new Tooltip();
-
-                    @Override
-                    public void updateItem(File item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setText(null);
-                            setTooltip(null);
-                        } else {
-                            setText(item.getName());
-                            tooltip.setText(item.getAbsolutePath());
-                            setTooltip(tooltip);
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
-        listViewDendroFiles.setCellFactory(factory);
-        listViewDendroFilesDailyTab.setCellFactory(factory);
-        listViewClimateFiles.setCellFactory(factory);
-        listViewDendroFiles.setItems(FXCollections.observableArrayList());
-        listViewDendroFilesDailyTab.setItems(FXCollections.observableArrayList());
-        listViewClimateFiles.setItems(FXCollections.observableArrayList());
-        listViewDendroFiles.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        listViewDendroFilesDailyTab.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        listViewClimateFiles.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        EventHandler<DragEvent> doeh = (DragEvent event) -> {
-            if (event.getSource() instanceof ListView) {
-                event.acceptTransferModes(TransferMode.ANY);
-                event.consume();
-            }
-        };
-        listViewDendroFiles.setOnDragOver(doeh);
-        listViewDendroFilesDailyTab.setOnDragOver(doeh);
-        listViewClimateFiles.setOnDragOver(doeh);
-        EventHandler<DragEvent> ddeh = (DragEvent event) -> {
-            if (event.getDragboard().hasFiles()) {
-                if (event.getSource() instanceof ListView) {
-                    ListView<File> source = (ListView<File>) event.getSource();
-                    for (File file : event.getDragboard().getFiles()) {
-                        if (!source.getItems().contains(file) && file.isFile()) {
-                            source.getItems().add(file);
-                        }
-                    }
-                }
-            }
-        };
-        listViewDendroFiles.setOnDragDropped(ddeh);
-        listViewDendroFilesDailyTab.setOnDragDropped(ddeh);
-        listViewClimateFiles.setOnDragDropped(ddeh);
-        EventHandler<KeyEvent> kpeh = (KeyEvent event) -> {
-            if (event.getCode().equals(KeyCode.DELETE) && event.getSource() instanceof ListView) {
-                ListView<File> source = (ListView<File>) event.getSource();
-                source.getItems().removeAll(source.getSelectionModel().getSelectedItems());
-            }
-        };
-        listViewDendroFiles.setOnKeyPressed(kpeh);
-        listViewDendroFilesDailyTab.setOnKeyPressed(kpeh);
-        listViewClimateFiles.setOnKeyPressed(kpeh);
+        ArrayList<ListView<File>> lists = new ArrayList<>();
+        lists.add(listViewDendroFiles);
+        lists.add(listViewClimateFiles);
+        lists.add(listViewDendroFilesDailyTab);
+        lists.add(listViewDailyFiles);
+        initializeListViews(lists);
 
         // Buttons
         buttonResetMonths.setOnMouseClicked((MouseEvent event) -> {
@@ -280,72 +242,105 @@ public class MainFXMLController implements Initializable {
 
     private File[] selectedChronoFile = null;
     private File[] selectedClimateFile = null;
+    private File[] selectedDailyFile = null;
 
     @FXML
     private void onStart() {
         ObservableList<File> chronoObservableList = null;
+        ChronologyFileTypes chronologyFileType = null;
+        TabsColumnTypes tabsColumnType = null;
         switch (tabPane.getSelectionModel().selectedIndexProperty().intValue()) {
             case 0:     // tab 0 selected : monthly
                 chronoObservableList = listViewDendroFiles.getItems();
+                chronologyFileType = comboBoxChronoFileType.getValue();
+                tabsColumnType = comboBoxColSelect.getValue();
+                selectedClimateFile = new File[listViewClimateFiles.getItems().size()];
+                for (int i = 0; i < listViewClimateFiles.getItems().size(); i++) {
+                    selectedClimateFile[i] = listViewClimateFiles.getItems().get(i);
+                }
                 break;
             case 1:     // tab 1 selected : daily
                 chronoObservableList = listViewDendroFilesDailyTab.getItems();
+                chronologyFileType = comboBoxChronoFileTypeDailyTab.getValue();
+                tabsColumnType = comboBoxColSelectDaily.getValue();
+                selectedDailyFile = new File[listViewDailyFiles.getItems().size()];
+                for (int i = 0; i < listViewDailyFiles.getItems().size(); i++) {
+                    selectedDailyFile[i] = listViewDailyFiles.getItems().get(i);
+                }
         }
+
         selectedChronoFile = new File[chronoObservableList.size()];
         for (int i = 0; i < chronoObservableList.size(); i++) {
             selectedChronoFile[i] = chronoObservableList.get(i);
         }
-        selectedClimateFile = new File[listViewClimateFiles.getItems().size()];
-        for (int i = 0; i < listViewClimateFiles.getItems().size(); i++) {
-            selectedClimateFile[i] = listViewClimateFiles.getItems().get(i);
+        boolean allYears = checkBoxAllYears.isSelected();
+        int startYear = -1, endYear = -1;
+        if (!allYears) {
+            try {
+                startYear = Integer.parseInt(textFieldYearStart.getText());
+                endYear = Integer.parseInt(textFieldYearEnd.getText());
+            } catch (NumberFormatException e) {
+            }
         }
 
         if (isDataValid()) {
-            boolean allYears = checkBoxAllYears.isSelected();
-            int startYear = -1, endYear = -1;
-            if (!allYears) {
-                try {
-                    startYear = Integer.parseInt(textFieldYearStart.getText());
-                    endYear = Integer.parseInt(textFieldYearEnd.getText());
-                } catch (NumberFormatException e) {
-                }
-            }
+            RunParams wp = null;
+            StringBuilder sb = new StringBuilder();
 
-            ChronologyFileTypes chronologyFileType = null;
-            TabsColumnTypes tabsColumnType = null;
-            switch (tabPane.getSelectionModel().getSelectedIndex()) {
+            switch (tabPane.getSelectionModel().selectedIndexProperty().intValue()) {
                 case 0:
-                    chronologyFileType = comboBoxChronoFileType.getValue();
-                    tabsColumnType = comboBoxColSelect.getValue();
+                    ClimateFileTypes climateFileType = comboBoxClimateFileType.getValue();
+                    wp = new RunParams(RunType.MONTHLY,
+                            allYears,
+                            startYear,
+                            endYear,
+                            selectedChronoFile,
+                            selectedClimateFile,
+                            chronologyFileType,
+                            tabsColumnType,
+                            climateFileType,
+                            new TextAreaToMonths(textAreaMonthsRanges).getList());
+
+                    sb.append("WindowParams: [")
+                            .append(allYears).append(", ")
+                            .append(startYear).append(", ")
+                            .append(endYear).append(", ")
+                            .append(Arrays.toString(selectedChronoFile)).append(", ")
+                            .append(Arrays.toString(selectedClimateFile)).append(", ")
+                            .append(chronologyFileType).append(", ")
+                            .append(tabsColumnType).append(", ")
+                            .append(climateFileType).append("]");
                     break;
                 case 1:
-                    chronologyFileType = comboBoxChronoFileTypeDailyTab.getValue();
-                    tabsColumnType = comboBoxColSelectDaily.getValue();
+                    DailyFileTypes dft = comboBoxDailyFileType.getValue();
+                    DailyColumnTypes dct = comboBoxDailyColumn.getValue();
+                    wp = new RunParams(RunType.DAILY,
+                            allYears,
+                            startYear,
+                            endYear,
+                            selectedChronoFile,
+                            selectedDailyFile,
+                            chronologyFileType,
+                            tabsColumnType,
+                            dft,
+                            dct,
+                            textFieldExcludedValues.getText().split("\\s*,\\s*"));
+
+                    sb.append("WindowParams: [")
+                            .append(allYears).append(", ")
+                            .append(startYear).append(", ")
+                            .append(endYear).append(", ")
+                            .append(Arrays.toString(selectedChronoFile)).append(", ")
+                            .append(Arrays.toString(selectedDailyFile)).append(", ")
+                            .append(chronologyFileType).append(", ")
+                            .append(tabsColumnType).append(", ")
+                            .append(dft).append(", ")
+                            .append(dct).append(", ")
+                            .append(textFieldExcludedValues.getText()).append("]");
                     break;
             }
 
-            ClimateFileTypes climateFileType = comboBoxClimateFileType.getValue();
-
-            RunParams wp = new RunParams(allYears,
-                    startYear,
-                    endYear,
-                    selectedChronoFile,
-                    selectedClimateFile,
-                    chronologyFileType,
-                    tabsColumnType,
-                    climateFileType,
-                    new TextAreaToMonths(textAreaMonthsRanges).getList());
             wp.setPrefs(prefsController.getRunParams());
-            StringBuilder sb = new StringBuilder();
-            sb.append("WindowParams: [")
-                    .append(allYears).append(", ")
-                    .append(startYear).append(", ")
-                    .append(endYear).append(", ")
-                    .append(Arrays.toString(selectedChronoFile)).append(", ")
-                    .append(Arrays.toString(selectedClimateFile)).append(", ")
-                    .append(chronologyFileType).append(", ")
-                    .append(tabsColumnType).append(", ")
-                    .append(climateFileType).append("]");
             log.debug(sb.toString());
 
             ProcessData pd = new ProcessData(wp);
@@ -393,9 +388,22 @@ public class MainFXMLController implements Initializable {
             }
         }
 
-        // Plik dzienny
-        if (true) {
-            // TODO
+        // Lista plików dziennych
+        if (selectedTabIndex == 1) {
+            if (selectedDailyFile.length == 0) {
+                valid = false;
+                log.warn(bundle.getString("WYBIERZ PLIK DZIENNY."));
+            } else {
+                for (File oneSelectedDailyFile : selectedDailyFile) {
+                    if (oneSelectedDailyFile == null) {
+                        valid = false;
+                        log.warn(bundle.getString("NIEPOPRAWNY PLIK DZIENNY."));
+                    } else if (!oneSelectedDailyFile.isFile()) {
+                        valid = false;
+                        log.warn(String.format(bundle.getString("PLIK DZIENNY %S NIE JEST PLIKIEM"), oneSelectedDailyFile.getName()));
+                    }
+                }
+            }
         }
 
         // ComboBoxy plików dendro
@@ -426,6 +434,16 @@ public class MainFXMLController implements Initializable {
         // ComboBox plików klimatycznych
         if (selectedTabIndex == 0 && comboBoxClimateFileType.getSelectionModel().isEmpty()) {
             log.warn(bundle.getString("Wybierz typ pliku klimatycznego"));
+            valid = false;
+        }
+
+        // ComboBox plików dziennych
+        if (selectedTabIndex == 1 && comboBoxDailyFileType.getSelectionModel().isEmpty()) {
+            log.warn(bundle.getString("Wybierz typ pliku dziennego"));
+            valid = false;
+        }
+        if (selectedTabIndex == 1 && comboBoxDailyColumn.getSelectionModel().isEmpty()) {
+            log.warn(bundle.getString("Wybierz kolumne dla pliku dziennego"));
             valid = false;
         }
 
@@ -494,6 +512,64 @@ public class MainFXMLController implements Initializable {
 
     private TextFormatter<String> getTextAreaOutputFormatter() {
         return null;
+    }
+
+    private void initializeListViews(ArrayList<ListView<File>> lists) {
+        Callback<ListView<File>, ListCell<File>> factory = new Callback<ListView<File>, ListCell<File>>() {
+            @Override
+            public ListCell<File> call(ListView<File> param) {
+                ListCell<File> cell = new ListCell<File>() {
+                    Tooltip tooltip = new Tooltip();
+
+                    @Override
+                    public void updateItem(File item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText(null);
+                            setTooltip(null);
+                        } else {
+                            setText(item.getName());
+                            tooltip.setText(item.getAbsolutePath());
+                            setTooltip(tooltip);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+        EventHandler<DragEvent> doeh = (DragEvent event) -> {
+            if (event.getSource() instanceof ListView) {
+                event.acceptTransferModes(TransferMode.ANY);
+                event.consume();
+            }
+        };
+        EventHandler<DragEvent> ddeh = (DragEvent event) -> {
+            if (event.getDragboard().hasFiles()) {
+                if (event.getSource() instanceof ListView) {
+                    ListView<File> source = (ListView<File>) event.getSource();
+                    for (File file : event.getDragboard().getFiles()) {
+                        if (!source.getItems().contains(file) && file.isFile()) {
+                            source.getItems().add(file);
+                        }
+                    }
+                }
+            }
+        };
+        EventHandler<KeyEvent> kpeh = (KeyEvent event) -> {
+            if (event.getCode().equals(KeyCode.DELETE) && event.getSource() instanceof ListView) {
+                ListView<File> source = (ListView<File>) event.getSource();
+                source.getItems().removeAll(source.getSelectionModel().getSelectedItems());
+            }
+        };
+
+        for (ListView<File> list : lists) {
+            list.setCellFactory(factory);
+            list.setItems(FXCollections.observableArrayList());
+            list.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            list.setOnDragOver(doeh);
+            list.setOnDragDropped(ddeh);
+            list.setOnKeyPressed(kpeh);
+        }
     }
 
     public class HackClassLoader extends ClassLoader {

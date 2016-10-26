@@ -1,6 +1,6 @@
 package com.hulist.logic;
 
-import com.hulist.gui.MainWindow;
+import com.hulist.gui2.GUIMain;
 import com.hulist.util.ExcelUtil;
 import com.hulist.util.Misc;
 import com.hulist.util.MonthsPair;
@@ -10,18 +10,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -29,7 +22,6 @@ import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -50,9 +42,9 @@ public class ResultsSaver {
 
     enum Sheets {
 
-        CORR(ResourceBundle.getBundle(MainWindow.BUNDLE, new Locale("en")).getString("Korelacja")),
-        RUNNING_CORR(ResourceBundle.getBundle(MainWindow.BUNDLE, new Locale("en")).getString("Korelacja kroczaca")),
-        DAILY(ResourceBundle.getBundle(MainWindow.BUNDLE, new Locale("en")).getString("Dane dzienne"));
+        CORR(ResourceBundle.getBundle(GUIMain.BUNDLE, new Locale("en")).getString("Korelacja")),
+        RUNNING_CORR(ResourceBundle.getBundle(GUIMain.BUNDLE, new Locale("en")).getString("Korelacja kroczaca")),
+        DAILY(ResourceBundle.getBundle(GUIMain.BUNDLE, new Locale("en")).getString("Dane dzienne"));
 
         String name;
 
@@ -86,12 +78,12 @@ public class ResultsSaver {
         if (success) {
             int dialogButton = JOptionPane.YES_NO_OPTION;
             int dialogResult = JOptionPane.showConfirmDialog(null,
-                    String.format(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("czy chcesz otworzyc zapisany plik")), "Warning", dialogButton);
+                    String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("czy chcesz otworzyc zapisany plik")), "Warning", dialogButton);
             if (dialogResult == JOptionPane.YES_OPTION) {
                 try {
                     Desktop.getDesktop().open(file);
                 } catch (IOException ex) {
-                    log.warn(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName());
+                    log.warn(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName());
                 }
             }
         }
@@ -113,7 +105,7 @@ public class ResultsSaver {
                 fis = new FileInputStream(file);
                 wb = new XSSFWorkbook(OPCPackage.open(fis));
             } catch (InvalidFormatException | IOException ex) {
-                log.error(String.format(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
+                log.error(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
                 log.trace(Misc.stackTraceToString(ex));
                 throw new RuntimeException();
             }
@@ -123,7 +115,7 @@ public class ResultsSaver {
                 //fis = new FileInputStream(template.getPath());
                 wb = new XSSFWorkbook(OPCPackage.open(ClassLoader.class.getResourceAsStream("/templates/template.xlsm")));
             } catch (InvalidFormatException | IOException ex) {
-                log.error(String.format(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
+                log.error(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
                 log.trace(Misc.stackTraceToString(ex));
                 throw new RuntimeException();
             }
@@ -155,10 +147,10 @@ public class ResultsSaver {
 
         try {
             ExcelUtil.saveToFile(file, wb);
-            log.info(String.format("\n" + ResourceBundle.getBundle(MainWindow.BUNDLE).getString("DANE ZAPISANO DO PLIKU %S")
+            log.info(String.format("\n" + ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("DANE ZAPISANO DO PLIKU %S")
                     + "\n-------------------------------------", file.getName()));
         } catch (IOException ex) {
-            log.error(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD ZAPISU PLIKU."));
+            log.error(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĄD ZAPISU PLIKU."));
             log.trace(Misc.stackTraceToString(ex));
         }
 
@@ -173,7 +165,7 @@ public class ResultsSaver {
         }
 
         if (appendingToExistingFile && !isFirstRowCoherent(sh)) {
-            log.error(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("NIESPÓJNE KOLUMNY W ISTNIEJĄCYM PLIKU."));
+            log.error(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("NIESPÓJNE KOLUMNY W ISTNIEJĄCYM PLIKU."));
             return false;
         }
 
@@ -249,7 +241,7 @@ public class ResultsSaver {
                 Cell rowName2 = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 1, Cell.CELL_TYPE_STRING);
                 rowName2.setCellValue(res.climateTitle);
                 Cell rowName3 = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 2, Cell.CELL_TYPE_STRING);
-                rowName3.setCellValue(res.yearStart + "-" + res.yearEnd + " (" + ResourceBundle.getBundle(MainWindow.BUNDLE).getString("okno korelacji skrot") + ": " + res.getWindowSize() + ")");
+                rowName3.setCellValue(res.yearStart + "-" + res.yearEnd + " (" + ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("okno korelacji skrot") + ": " + res.getWindowSize() + ")");
 
                 for (MonthsPair col : wp.getMonthsColumns()) {
                     int colCounter = FIRST_COL_NUM;

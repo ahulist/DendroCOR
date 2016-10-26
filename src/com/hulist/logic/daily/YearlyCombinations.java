@@ -11,6 +11,8 @@ import java.util.Set;
 import org.apache.commons.collections4.map.MultiKeyMap;
 import org.joda.time.LocalDate;
 import org.joda.time.MonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -19,16 +21,20 @@ import org.joda.time.MonthDay;
 public class YearlyCombinations {
 
     private static boolean isInitialized = false;
+    private static boolean isInitializationStarted = false;
 
     public final static int DAYS_IN_YEAR = 366;
     public final static int SAMPLE_LEAP_YEAR = 2016;
     private final static MultiKeyMap<Integer, /*Integer*/ MonthDay> days = new MultiKeyMap();
     private final static Set<Pair<MonthDay, MonthDay>> combinations = new HashSet<>(getCardinality(DAYS_IN_YEAR));
 
+    private static final Logger log = LoggerFactory.getLogger(YearlyCombinations.class);
+    
     /**
      * This initialization takes ~160 ms
      */
     public static void initialize() {
+        isInitializationStarted = true;
         initDays();
         initCombinations();
         isInitialized = true;
@@ -73,18 +79,20 @@ public class YearlyCombinations {
 
     public static Set<Pair<MonthDay, MonthDay>> getCombinations() {
         while (!isInitialized) {
-            // czeka aż wszystko będzie zainicjalizowane.
-            // teoretycznie DC nigdy nie powinien tutaj zawisnąć na wieki.
-            // teoretycznie.
+            if (!isInitializationStarted) {
+                initialize();
+                log.debug("Late YearlyCombinations initialization in getCombinations()!");
+            }
         }
         return combinations;
     }
 
     public static MultiKeyMap<Integer, /*Integer*/ MonthDay> getDays() {
         while (!isInitialized) {
-            // czeka aż wszystko będzie zainicjalizowane.
-            // teoretycznie DC nigdy nie powinien tutaj zawisnąć na wieki.
-            // teoretycznie.
+            if (!isInitializationStarted) {
+                initialize();
+                log.debug("Late YearlyCombinations initialization in getDays()!");
+            }
         }
         return days;
     }

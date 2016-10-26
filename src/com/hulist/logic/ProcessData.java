@@ -28,13 +28,11 @@ import com.hulist.util.FileChooser;
 import com.hulist.util.LogsSaver;
 import com.hulist.util.Misc;
 import com.hulist.util.MonthsPair;
-import com.hulist.util.UserPreferences;
 import com.hulist.util.Pair;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.stage.Window;
 import java.util.concurrent.ExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +65,7 @@ public class ProcessData implements Runnable {
 
         this.computationThread = new Thread(this);
 
-        fc.setOnSaveDialogMessage(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("CZY ZAPISAĆ OTRZYMANE DANE DO PLIKU?"));
+        fc.setOnSaveDialogMessage(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("CZY ZAPISAĆ OTRZYMANE DANE DO PLIKU?"));
     }
 
     public ProcessData(RunParams wp, Thread.UncaughtExceptionHandler handler) {
@@ -183,7 +181,7 @@ public class ProcessData implements Runnable {
                         int commonYearEndLimit = Math.min(chronology.getYearMax(), climate.getYearMax());
 
                         if (commonYearStartLimit > commonYearEndLimit) {
-                            throw new DataException(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("niepokrywające się lata"));
+                            throw new DataException(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("niepokrywające się lata"));
                         }
 
                         double[] primaryColumnData = null;
@@ -226,10 +224,10 @@ public class ProcessData implements Runnable {
 
                         if (chronology.isEmpty() || climate.isEmpty()) {
                             if (chronology.isEmpty()) {
-                                log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
+                                log.error(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
                             }
                             if (climate.isEmpty()) {
-                                log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), climateColumnsName));
+                                log.error(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), climateColumnsName));
                             }
                             break;
                         }
@@ -252,7 +250,7 @@ public class ProcessData implements Runnable {
                         int commonYearEndLimit = Math.min(chronology.getYearMax(), daily.getYearMax());
 
                         if (commonYearStartLimit > commonYearEndLimit) {
-                            throw new DataException(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("niepokrywające się lata"));
+                            throw new DataException(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("niepokrywające się lata"));
                         }
 
                         double[] primaryColumnData = null;
@@ -329,16 +327,16 @@ public class ProcessData implements Runnable {
 
                         if (chronology.isEmpty() || daily.isEmpty()) {
                             if (chronology.isEmpty()) {
-                                log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
+                                log.error(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
                             }
                             if (daily.isEmpty()) {
                                 // TODO
-                                //log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), dailyColumnsName));
+                                //log.log(Level.SEVERE, String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), dailyColumnsName));
                             }
                             break;
                         }
 
-                        log.log(Level.INFO, primaryColumnName + " : " + secondaryName);
+                        log.info(primaryColumnName + " : " + secondaryName);
 
                         // bottleneck 3:
                         CorrelationProcessing pearsons = new CorrelationProcessing(runParams, dataToCorrelate);
@@ -363,7 +361,7 @@ public class ProcessData implements Runnable {
     private void save() {
         File[] saveDest = fc.call();
         if (saveDest != null && saveDest.length > 0 && saveDest[0] != null) {
-            log.info(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ZAPISYWANIE..."));
+            log.info(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("ZAPISYWANIE..."));
             ResultsSaver saver = new ResultsSaver(runParams, saveDest[0], results);
             saver.save();
         }
@@ -375,7 +373,7 @@ public class ProcessData implements Runnable {
     public void run() {
         LogsSaver.getInstance().setIsLoggingOn(true/*wp.getPreferencesFrame().getCheckBoxLogging().isSelected()*/);
         long start = System.currentTimeMillis();
-        log.debug(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("URUCHOMIONO PRZETWARZANIE DANYCH."));
+        log.debug(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("URUCHOMIONO PRZETWARZANIE DANYCH."));
         /*
          load all data to respective data containers
          */
@@ -422,11 +420,11 @@ public class ProcessData implements Runnable {
             log.trace(Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
         } catch (NullPointerException | IOException ex) {
-            log.error(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD ODCZYTU Z PLIKU."));
+            log.error(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĄD ODCZYTU Z PLIKU."));
             log.trace(Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
         } catch (Exception ex) {
-            log.error(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("WYSTĄPIŁ NIEZNANY BŁĄD."));
+            log.error(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("WYSTĄPIŁ NIEZNANY BŁĄD."));
             log.trace(Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
         }
@@ -455,11 +453,11 @@ public class ProcessData implements Runnable {
     }
 
     public RunParams getWp() {
-        return wp;
+        return runParams;
     }
 
     public void setWp(RunParams wp) {
-        this.wp = wp;
+        this.runParams = wp;
     }
     
 }

@@ -5,7 +5,6 @@
  */
 package com.hulist.logic.chronology;
 
-import static com.hulist.gui.MainWindow.BUNDLE;
 import com.hulist.gui2.GUIMain;
 import java.util.ResourceBundle;
 
@@ -15,7 +14,7 @@ import java.util.ResourceBundle;
  */
 public enum ChronologyFileTypes {
 
-    DEKADOWY("ID Tucson (*.rwl)"/*java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("dekadowy")*/),
+    DEKADOWY("ID Tucson (*.rwl)"/*java.util.ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("dekadowy")*/),
     TABS("ID Arstan (*_tabs.txt)"),
     TABS_MULTICOL("ID Arstan multicol");
 
@@ -26,7 +25,7 @@ public enum ChronologyFileTypes {
     }
 
     public String getDisplayName() {
-        return ResourceBundle.getBundle(BUNDLE, GUIMain.getCurrLocale()).getString(this.displayNameId);
+        return ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString(this.displayNameId);
     }
     
     /**

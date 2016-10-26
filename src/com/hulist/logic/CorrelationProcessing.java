@@ -1,22 +1,13 @@
 package com.hulist.logic;
 
-import com.hulist.gui.MainWindow;
 import com.hulist.gui2.GUIMain;
 import com.hulist.logic.correlation.Correlator;
 import com.hulist.logic.correlation.PearsonCorrelation;
-import com.hulist.util.Concurrent;
 import com.hulist.util.MonthsPair;
 import com.hulist.util.Pair;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.joda.time.MonthDay;
@@ -132,7 +123,7 @@ public class CorrelationProcessing {
         if (shift > 0) {
             if (readyChrono.length - shift < 2) {
                 // TODO
-                // log.log(Level.SEVERE, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ZBYT DUŻE PRZESUNIĘCIE LAT: %S"), month.toString()));
+                // log.log(Level.SEVERE, String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("ZBYT DUŻE PRZESUNIĘCIE LAT: %S"), month.toString()));
                 return null;
             }
 
@@ -149,11 +140,11 @@ public class CorrelationProcessing {
         /*
          *   CORRELATION / BOOTSTRAP
          */
-        boolean isSignificance = wp.getPreferencesFrame().getCheckBoxSignificance().isSelected();
-        boolean isBootstrap = wp.getPreferencesFrame().getCheckBoxBootstrap().isSelected();
-        int bootstrapRepetitions = Integer.parseInt(wp.getPreferencesFrame().getBootstrapTextField().getText());
-        double alpha = Double.parseDouble(wp.getPreferencesFrame().getSignificanceTextField().getText());
-        if (wp.getPreferencesFrame().getCheckBoxTwoSidedTest().isSelected()) {
+        boolean isSignificance = wp.getPrefs().isIsStatisticalSignificance();
+        boolean isBootstrap = wp.getPrefs().isIsBootstrapSampling();
+        int bootstrapRepetitions = wp.getPrefs().getBootstrapSamples();
+        double alpha = wp.getPrefs().getSignificanceLevelAlpha();
+        if (wp.getPrefs().isIsTwoTailedTest()) {
             alpha /= 2;
         }
 
@@ -172,7 +163,7 @@ public class CorrelationProcessing {
         }
 
         // TODO
-        //String logMsg = String.format("%s %-70.70s\n%- 10.10f", ResourceBundle.getBundle(MainWindow.BUNDLE).getString("KORELACJA"), " " + primaryName + " / " + climateName + date, correlation.getCorrelation());
+        //String logMsg = String.format("%s %-70.70s\n%- 10.10f", ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("KORELACJA"), " " + primaryName + " / " + climateName + date, correlation.getCorrelation());
 
         /*
          *   SIGNIFICANCE LEVEL
@@ -182,20 +173,20 @@ public class CorrelationProcessing {
                 case MONTHLY:
                     results.climateMap.get(month).settTestValue(correlation.gettTestValue());
                     // TODO
-                    //logMsg += "\n" + ResourceBundle.getBundle(MainWindow.BUNDLE).getString("poziom istotności T-Studenta") + ": " + correlation.gettTestValue();
+                    //logMsg += "\n" + ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("poziom istotności T-Studenta") + ": " + correlation.gettTestValue();
 
                     results.climateMap.get(month).settTestCritVal(correlation.gettTestCritVal());
                     // TODO
-                    //logMsg += ", " + ResourceBundle.getBundle(MainWindow.BUNDLE).getString("poziom krytyczny") + ": " + correlation.gettTestCritVal();
+                    //logMsg += ", " + ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("poziom krytyczny") + ": " + correlation.gettTestCritVal();
                     break;
                 case DAILY:
                     results.dailyMap.get(p).settTestValue(correlation.gettTestValue());
                     // TODO
-                    //logMsg += "\n" + ResourceBundle.getBundle(MainWindow.BUNDLE).getString("poziom istotności T-Studenta") + ": " + correlation.gettTestValue();
+                    //logMsg += "\n" + ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("poziom istotności T-Studenta") + ": " + correlation.gettTestValue();
 
                     results.dailyMap.get(p).settTestCritVal(correlation.gettTestCritVal());
                     // TODO
-                    //logMsg += ", " + ResourceBundle.getBundle(MainWindow.BUNDLE).getString("poziom krytyczny") + ": " + correlation.gettTestCritVal();
+                    //logMsg += ", " + ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("poziom krytyczny") + ": " + correlation.gettTestCritVal();
                     break;
             }
 
@@ -208,11 +199,11 @@ public class CorrelationProcessing {
         /*
          *   RUNNING CORRELATION
          */
-        if (wp.getPreferencesFrame().getCheckBoxRunCorr().isSelected() && wp.getRunType().equals(RunType.MONTHLY)) {
-            int windowSize = wp.getPreferencesFrame().getSliderCorrVal();
+        if (wp.getPrefs().isIsRunningCorrelation() && wp.getRunType().equals(RunType.MONTHLY)) {
+            int windowSize = wp.getPrefs().getRunningCorrWindowSize();
 
             if (windowSize >= readyChrono.length) {
-                log.log(Level.WARNING, String.format(ResourceBundle.getBundle(MainWindow.BUNDLE).getString("zbyt duże okno korelacji kroczącej")));
+                log.warn(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("zbyt duże okno korelacji kroczącej")));
             } else {
                 results.setIsRunningCorr(true);
                 results.setWindowSize(windowSize);
@@ -228,7 +219,7 @@ public class CorrelationProcessing {
                     }
                     results.runningCorrMap.get(month).put(yearMin + i, resRunn);
                 }
-                log.log(Level.INFO, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("korel kroczaca obliczona dla"), yearMin, yearMax, windowSize, month));
+                log.info(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("korel kroczaca obliczona dla"), yearMin, yearMax, windowSize, month));
             }
         }
 

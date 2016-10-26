@@ -5,16 +5,10 @@
  */
 package com.hulist.util;
 
-import com.hulist.gui.MainWindow;
-import java.awt.Color;
-import java.awt.Window;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import org.jdesktop.swingx.JXCollapsiblePane;
 import org.slf4j.Logger;
@@ -118,7 +112,7 @@ public class TextAreaLogHandler extends Handler {
     }
 
     /*public void setLoggingLevel(Level l) {
-        log.log(Level.FINE, String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ZMIENIONO POZIOM LOGOWANINA NA %S"), l));
+        log.log(Level.FINE, String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("ZMIENIONO POZIOM LOGOWANINA NA %S"), l));
         this.level = l;
     }
 

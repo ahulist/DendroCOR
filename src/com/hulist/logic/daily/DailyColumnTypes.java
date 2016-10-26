@@ -5,7 +5,7 @@
  */
 package com.hulist.logic.daily;
 
-import static com.hulist.gui.MainWindow.BUNDLE;
+import com.hulist.gui2.GUIMain;
 import java.util.ResourceBundle;
 
 /**
@@ -22,7 +22,7 @@ public enum DailyColumnTypes {
     }
 
     public String getDisplayName() {
-        return ResourceBundle.getBundle(BUNDLE).getString(this.displayNameId);
+        return ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString(this.displayNameId);
     }
     
     /**

@@ -5,7 +5,7 @@
  */
 package com.hulist.logic.climate.ao;
 
-import com.hulist.gui.MainWindow;
+import com.hulist.gui2.GUIMain;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
 import com.hulist.logic.RunParams;
@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 
 /**
@@ -64,12 +65,12 @@ public class AoImporter extends BaseImporter implements DataImporter<AoDataConta
                          if( value < ICRU_VALUE_MIN || value > ICRU_VALUE_MAX ){
                          StringBuilder sb = new StringBuilder();
                          if( value < ICRU_VALUE_MIN ){
-                         sb.append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ODCZYTANA WARTOŚĆ < ")).append(ICRU_VALUE_MIN);
+                         sb.append(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("ODCZYTANA WARTOŚĆ < ")).append(ICRU_VALUE_MIN);
                          }
                          if( value > ICRU_VALUE_MAX ){
-                         sb.append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("ODCZYTANA WARTOŚĆ > ")).append(ICRU_VALUE_MAX);
+                         sb.append(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("ODCZYTANA WARTOŚĆ > ")).append(ICRU_VALUE_MAX);
                          }
-                         sb.append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString(", W PLIKU ")).append(f.getCanonicalPath()).append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString(" DLA ROKU ")).append(year).append(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString(", DLA MIESIĄCA ")).append(month);
+                         sb.append(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString(", W PLIKU ")).append(f.getCanonicalPath()).append(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString(" DLA ROKU ")).append(year).append(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString(", DLA MIESIĄCA ")).append(month);
                          throw new IllegalArgumentException(sb.toString());
                          }
                          lineData.addMonthlyData(month, value);
@@ -78,12 +79,12 @@ public class AoImporter extends BaseImporter implements DataImporter<AoDataConta
                         container.addLine(year, month, val);
                     }
                 } catch( IOException | AssertionError | NumberFormatException e ) {
-                    String msg = String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), lineCounter);
+                    String msg = String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), lineCounter);
                     log.warn(msg);
                     log.trace(Misc.stackTraceToString(e));
                     throw new IOException(msg);
                 } catch( IllegalArgumentException e ) {
-                    String msg = String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĘDNY FORMAT PLIKU %S."), f.getName());
+                    String msg = String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĘDNY FORMAT PLIKU %S."), f.getName());
                     log.warn(msg);
                     log.trace(Misc.stackTraceToString(e));
                     throw new RuntimeException();

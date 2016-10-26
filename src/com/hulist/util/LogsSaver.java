@@ -5,7 +5,7 @@
  */
 package com.hulist.util;
 
-import com.hulist.gui.MainWindow;
+import com.hulist.gui2.GUIMain;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import org.slf4j.Logger;
@@ -71,7 +72,7 @@ public class LogsSaver {
             try( PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(LOGS_DIR + File.separator + NAME_PREFIX + df.format(new Date()) + NAME_SUFFIX, true))) ) {
             out.println(msg);
         } catch( IOException e ) {
-            log.warn(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS ZAPISU DANYCH DO LOGU."));
+            log.warn(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĄD PODCZAS ZAPISU DANYCH DO LOGU."));
             log.trace(e.getLocalizedMessage());
         }
         }
@@ -103,7 +104,7 @@ public class LogsSaver {
             if( counter < filesToDelete ){
                 File file = entry.getValue();
                 if( !file.delete() ){
-                    log.warn(String.format(java.util.ResourceBundle.getBundle(MainWindow.BUNDLE).getString("BŁĄD PODCZAS USUWANIA LOGU %S"), file.getName()));
+                    log.warn(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĄD PODCZAS USUWANIA LOGU %S"), file.getName()));
                 }
                 counter++;
             } else {
