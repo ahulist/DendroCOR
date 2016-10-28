@@ -5,10 +5,12 @@
  */
 package com.hulist.util;
 
+import com.hulist.gui2.GUIMain;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 /**
@@ -28,5 +30,9 @@ public class Misc {
         Stream<Map.Entry<K, V>> st = map.entrySet().stream();
         st.sorted(Map.Entry.comparingByValue()).forEachOrdered(e -> result.put(e.getKey(), e.getValue()));
         return result;
+    }
+    
+    public static String getInternationalized(String key){
+        return ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString(key);
     }
 }

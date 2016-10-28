@@ -5,10 +5,10 @@
  */
 package com.hulist.logic.chronology.tabs_multicol;
 
-import com.hulist.gui2.GUIMain;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
 import com.hulist.logic.RunParams;
+import com.hulist.util.Misc;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,7 +18,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 
 /**
@@ -69,7 +68,7 @@ public class TabsMulticolImporter extends BaseImporter implements DataImporter<T
                     }
                 }
             } catch (IOException | NumberFormatException | AssertionError e) {
-                String msg = String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), row);
+                String msg = String.format(Misc.getInternationalized("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), row);
                 log.warn(msg);
                 log.trace(msg);
                 throw new IOException(msg);

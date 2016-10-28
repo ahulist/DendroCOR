@@ -1,11 +1,10 @@
 package com.hulist.logic;
 
-import com.hulist.gui2.GUIMain;
 import com.hulist.logic.correlation.Correlator;
 import com.hulist.logic.correlation.PearsonCorrelation;
+import com.hulist.util.Misc;
 import com.hulist.util.MonthsPair;
 import com.hulist.util.Pair;
-import java.util.ResourceBundle;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 import org.slf4j.Logger;
@@ -123,7 +122,7 @@ public class CorrelationProcessing {
         if (shift > 0) {
             if (readyChrono.length - shift < 2) {
                 // TODO
-                // log.log(Level.SEVERE, String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("ZBYT DUŻE PRZESUNIĘCIE LAT: %S"), month.toString()));
+                // log.log(Level.SEVERE, String.format(Misc.getInternationalized("ZBYT DUŻE PRZESUNIĘCIE LAT: %S"), month.toString()));
                 return null;
             }
 
@@ -140,11 +139,11 @@ public class CorrelationProcessing {
         /*
          *   CORRELATION / BOOTSTRAP
          */
-        boolean isSignificance = wp.getPrefs().isIsStatisticalSignificance();
-        boolean isBootstrap = wp.getPrefs().isIsBootstrapSampling();
+        boolean isSignificance = wp.getPrefs().isStatisticalSignificance();
+        boolean isBootstrap = wp.getPrefs().isBootstrapSampling();
         int bootstrapRepetitions = wp.getPrefs().getBootstrapSamples();
         double alpha = wp.getPrefs().getSignificanceLevelAlpha();
-        if (wp.getPrefs().isIsTwoTailedTest()) {
+        if (wp.getPrefs().isTwoTailedTest()) {
             alpha /= 2;
         }
 
@@ -163,7 +162,7 @@ public class CorrelationProcessing {
         }
 
         // TODO
-        //String logMsg = String.format("%s %-70.70s\n%- 10.10f", ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("KORELACJA"), " " + primaryName + " / " + climateName + date, correlation.getCorrelation());
+        //String logMsg = String.format("%s %-70.70s\n%- 10.10f", Misc.getInternationalized("KORELACJA"), " " + primaryName + " / " + climateName + date, correlation.getCorrelation());
 
         /*
          *   SIGNIFICANCE LEVEL
@@ -173,20 +172,20 @@ public class CorrelationProcessing {
                 case MONTHLY:
                     results.climateMap.get(month).settTestValue(correlation.gettTestValue());
                     // TODO
-                    //logMsg += "\n" + ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("poziom istotności T-Studenta") + ": " + correlation.gettTestValue();
+                    //logMsg += "\n" + Misc.getInternationalized("poziom istotności T-Studenta") + ": " + correlation.gettTestValue();
 
                     results.climateMap.get(month).settTestCritVal(correlation.gettTestCritVal());
                     // TODO
-                    //logMsg += ", " + ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("poziom krytyczny") + ": " + correlation.gettTestCritVal();
+                    //logMsg += ", " + Misc.getInternationalized("poziom krytyczny") + ": " + correlation.gettTestCritVal();
                     break;
                 case DAILY:
                     results.dailyMap.get(p).settTestValue(correlation.gettTestValue());
                     // TODO
-                    //logMsg += "\n" + ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("poziom istotności T-Studenta") + ": " + correlation.gettTestValue();
+                    //logMsg += "\n" + Misc.getInternationalized("poziom istotności T-Studenta") + ": " + correlation.gettTestValue();
 
                     results.dailyMap.get(p).settTestCritVal(correlation.gettTestCritVal());
                     // TODO
-                    //logMsg += ", " + ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("poziom krytyczny") + ": " + correlation.gettTestCritVal();
+                    //logMsg += ", " + Misc.getInternationalized("poziom krytyczny") + ": " + correlation.gettTestCritVal();
                     break;
             }
 
@@ -199,11 +198,11 @@ public class CorrelationProcessing {
         /*
          *   RUNNING CORRELATION
          */
-        if (wp.getPrefs().isIsRunningCorrelation() && wp.getRunType().equals(RunType.MONTHLY)) {
+        if (wp.getPrefs().isRunningCorrelation() && wp.getRunType().equals(RunType.MONTHLY)) {
             int windowSize = wp.getPrefs().getRunningCorrWindowSize();
 
             if (windowSize >= readyChrono.length) {
-                log.warn(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("zbyt duże okno korelacji kroczącej")));
+                log.warn(String.format(Misc.getInternationalized("zbyt duże okno korelacji kroczącej")));
             } else {
                 results.setIsRunningCorr(true);
                 results.setWindowSize(windowSize);
@@ -219,7 +218,7 @@ public class CorrelationProcessing {
                     }
                     results.runningCorrMap.get(month).put(yearMin + i, resRunn);
                 }
-                log.info(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("korel kroczaca obliczona dla"), yearMin, yearMax, windowSize, month));
+                log.info(String.format(Misc.getInternationalized("korel kroczaca obliczona dla"), yearMin, yearMax, windowSize, month));
             }
         }
 

@@ -112,7 +112,7 @@ public class TextAreaLogHandler extends Handler {
     }
 
     /*public void setLoggingLevel(Level l) {
-        log.log(Level.FINE, String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("ZMIENIONO POZIOM LOGOWANINA NA %S"), l));
+        log.log(Level.FINE, String.format(Misc.getInternationalized("ZMIENIONO POZIOM LOGOWANINA NA %S"), l));
         this.level = l;
     }
 

@@ -5,12 +5,10 @@
  */
 package com.hulist.util;
 
-import com.hulist.gui2.GUIMain;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.slf4j.Logger;
@@ -75,7 +73,7 @@ public class FileChooser {
                     break;
             }
         } catch (HeadlessException e) {
-            log.error(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("WYSTĄPIŁ BŁĄD PODCZAS OTWIERANIA OKNA DIALOGOWEGO"));
+            log.error(Misc.getInternationalized("WYSTĄPIŁ BŁĄD PODCZAS OTWIERANIA OKNA DIALOGOWEGO"));
             log.trace(Misc.stackTraceToString(e));
         }
 
@@ -103,7 +101,7 @@ public class FileChooser {
                 try {
                     String n = filesArray[0].getCanonicalPath();
                     /*if( n.endsWith(".xls") ){
-                     log.warn(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("WYBRANO PLIK Z ROZSZERZENIEM .XLS - ZMIANA NA .XLSX"));
+                     log.warn(Misc.getInternationalized("WYBRANO PLIK Z ROZSZERZENIEM .XLS - ZMIANA NA .XLSX"));
                      }*/
                     if (!n.endsWith(".xlsm")) {
                         String n2 = filesArray[0].getCanonicalPath() + ".xlsm";

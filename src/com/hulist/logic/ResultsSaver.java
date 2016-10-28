@@ -8,14 +8,24 @@ import com.hulist.util.Pair;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javax.swing.JOptionPane;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -54,17 +64,18 @@ public class ResultsSaver {
     }
 
     private final File file;
-    private final RunParams wp;
+    private final RunParams runParams;
     private final ArrayList<Results> results;
     private final Logger log = LoggerFactory.getLogger(ResultsSaver.class);
     private CellStyle style;
 
-    private int howManyDaily = 100;     // * 2 for two ends
+    private final int howManyDaily = 100;     // * 2 for two ends
 
-    private final URL template = getClass().getClassLoader().getResource("templates/template.xlsm");
+    private final String templateEmptyPath = "templates/template_empty.xlsm";
+    private final String templateMonthlyPath = "templates/template_monthly.xlsm";
 
     public ResultsSaver(RunParams wp, File file, ArrayList<Results> results) {
-        this.wp = wp;
+        this.runParams = wp;
         this.file = file;
         this.results = results;
     }
@@ -76,17 +87,22 @@ public class ResultsSaver {
         boolean success = this.saver();
 
         if (success) {
-            int dialogButton = JOptionPane.YES_NO_OPTION;
-            int dialogResult = JOptionPane.showConfirmDialog(null,
-                    String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("czy chcesz otworzyc zapisany plik")), "Warning", dialogButton);
-            if (dialogResult == JOptionPane.YES_OPTION) {
-                try {
-                    Desktop.getDesktop().open(file);
-                } catch (IOException ex) {
-                    log.warn(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName());
+            Platform.runLater(() -> {
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.initOwner(runParams.getRoot());
+                alert.setHeaderText(Misc.getInternationalized("czy otworzyc plik"));
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    try {
+                        Desktop.getDesktop().open(file);
+                    } catch (IOException ex) {
+                        log.warn(Misc.getInternationalized("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName());
+                    }
                 }
-            }
+            });
         }
+
         return success;
     }
 
@@ -97,48 +113,62 @@ public class ResultsSaver {
         boolean appendingToExistingFile = false;
         boolean intermediateSuccess;
         XSSFWorkbook wb = null;
+        OPCPackage pkg = null;
+        FileInputStream fis = null;
 
         if (file.exists()) {
             appendingToExistingFile = true;
-            FileInputStream fis;
             try {
                 fis = new FileInputStream(file);
-                wb = new XSSFWorkbook(OPCPackage.open(fis));
-            } catch (InvalidFormatException | IOException ex) {
-                log.error(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
+            } catch (FileNotFoundException ex) {
+                log.error(String.format(Misc.getInternationalized("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
                 log.trace(Misc.stackTraceToString(ex));
                 throw new RuntimeException();
             }
         } else {
             try {
-                //ClassLoader.class.getResourceAsStream("templates/template.xlsm");
-                //fis = new FileInputStream(template.getPath());
-                wb = new XSSFWorkbook(OPCPackage.open(ClassLoader.class.getResourceAsStream("/templates/template.xlsm")));
-            } catch (InvalidFormatException | IOException ex) {
-                log.error(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
+                switch (runParams.getRunType()) {
+                    case MONTHLY:
+                        fis = new FileInputStream(getClass().getClassLoader().getResource(templateMonthlyPath).getPath());
+                        break;
+                    case DAILY:
+                        fis = new FileInputStream(getClass().getClassLoader().getResource(templateEmptyPath).getPath());
+                        break;
+                }
+            } catch (FileNotFoundException ex) {
+                log.error(String.format(Misc.getInternationalized("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
                 log.trace(Misc.stackTraceToString(ex));
                 throw new RuntimeException();
             }
         }
 
+        try {
+            pkg = OPCPackage.open(fis);
+            wb = new XSSFWorkbook(pkg);
+        } catch (InvalidFormatException | IOException ex) {
+            log.error(String.format(Misc.getInternationalized("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
+            log.debug(Misc.stackTraceToString(ex));
+            throw new RuntimeException();
+        }
+
         createSignificantCellStyle(wb);
 
-        switch (wp.getRunType()) {
+        switch (runParams.getRunType()) {
             case MONTHLY:
                 intermediateSuccess = populateCorrelation(wb, appendingToExistingFile);
                 if (!intermediateSuccess) {
                     return false;
                 }
 
-                intermediateSuccess = populateRunningCorrelation(wb);
-                if (!intermediateSuccess) {
-                    return false;
+                if (runParams.getPrefs().isRunningCorrelation()) {
+                    intermediateSuccess = populateRunningCorrelation(wb);
+                    if (!intermediateSuccess) {
+                        return false;
+                    }
                 }
                 break;
             case DAILY:
                 intermediateSuccess = populateDaily(wb, appendingToExistingFile);
-                // TODO:
-//                wb.removeSheetAt(0);
                 if (!intermediateSuccess) {
                     return false;
                 }
@@ -146,35 +176,49 @@ public class ResultsSaver {
         }
 
         try {
+            fis.close();
+        } catch (NullPointerException | IOException ex) {
+            log.debug(Misc.stackTraceToString(ex));
+        }
+
+        try {
             ExcelUtil.saveToFile(file, wb);
-            log.info(String.format("\n" + ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("DANE ZAPISANO DO PLIKU %S")
+            log.info(String.format("\n" + Misc.getInternationalized("DANE ZAPISANO DO PLIKU %S")
                     + "\n-------------------------------------", file.getName()));
         } catch (IOException ex) {
-            log.error(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĄD ZAPISU PLIKU."));
+            log.error(Misc.getInternationalized("BŁĄD ZAPISU PLIKU."));
             log.trace(Misc.stackTraceToString(ex));
         }
 
+        if (pkg != null) {
+            try {
+                pkg.close();
+            } catch (IOException ex) {
+                log.debug(Misc.stackTraceToString(ex));
+            }
+        }
         return true;
     }
 
     private boolean populateCorrelation(XSSFWorkbook wb, boolean appendingToExistingFile) {
         XSSFSheet sh;
         sh = wb.getSheet(Sheets.CORR.name);
-        if (sh==null) {
+        if (sh == null) {
             sh = wb.createSheet(Sheets.CORR.name);
         }
 
-        if (appendingToExistingFile && !isFirstRowCoherent(sh)) {
-            log.error(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("NIESPÓJNE KOLUMNY W ISTNIEJĄCYM PLIKU."));
+        int firstFreeRow = sh.getLastRowNum() + 1;
+
+        if (appendingToExistingFile && !isFirstRowCoherent(sh) && firstFreeRow != 1) {
+            log.error(Misc.getInternationalized("NIESPÓJNE KOLUMNY W ISTNIEJĄCYM PLIKU."));
             return false;
         }
 
-        int firstFreeRow = sh.getLastRowNum() + 1;
         if (firstFreeRow == 1) {
             createFirstRow(sh);
         }
 
-        if (appendingToExistingFile) {
+        if (appendingToExistingFile && firstFreeRow != 1) {
             firstFreeRow++;
         }
 
@@ -187,7 +231,7 @@ public class ResultsSaver {
             rowName3.setCellValue(res.yearStart + "-" + res.yearEnd);
 
             int colCounter = FIRST_COL_NUM;
-            for (MonthsPair col : wp.getMonthsColumns()) {
+            for (MonthsPair col : runParams.getMonthsColumns()) {
                 Cell c = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), colCounter, Cell.CELL_TYPE_NUMERIC);
                 c.setCellValue(res.climateMap.get(col).getCorrelation());
 
@@ -202,7 +246,7 @@ public class ResultsSaver {
             firstFreeRow++;
         }
 
-        autosizeColumns(wp, sh);
+        autosizeColumns(runParams, sh);
 
         return true;
     }
@@ -241,9 +285,9 @@ public class ResultsSaver {
                 Cell rowName2 = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 1, Cell.CELL_TYPE_STRING);
                 rowName2.setCellValue(res.climateTitle);
                 Cell rowName3 = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 2, Cell.CELL_TYPE_STRING);
-                rowName3.setCellValue(res.yearStart + "-" + res.yearEnd + " (" + ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("okno korelacji skrot") + ": " + res.getWindowSize() + ")");
+                rowName3.setCellValue(res.yearStart + "-" + res.yearEnd + " (" + Misc.getInternationalized("okno korelacji skrot") + ": " + res.getWindowSize() + ")");
 
-                for (MonthsPair col : wp.getMonthsColumns()) {
+                for (MonthsPair col : runParams.getMonthsColumns()) {
                     int colCounter = FIRST_COL_NUM;
                     Cell c = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), colCounter, Cell.CELL_TYPE_STRING);
                     c.setCellValue(col.toString());
@@ -258,7 +302,7 @@ public class ResultsSaver {
             }
         }
 
-        autosizeColumns(wp, sh);
+        autosizeColumns(runParams, sh);
 
         return true;
     }
@@ -313,7 +357,7 @@ public class ResultsSaver {
 
                 for (Pair<MonthDay, MonthDay> p : iter) {
                     if (!yearsSet) {
-                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow - 1), 0, Cell.CELL_TYPE_STRING).setCellValue(res.chronoTitle + " / " + res.dailyTitle + " ("+res.params.getDailyColumnType().getDisplayName()+")");
+                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow - 1), 0, Cell.CELL_TYPE_STRING).setCellValue(res.chronoTitle + " / " + res.dailyTitle + " (" + res.params.getDailyColumnType().getDisplayName() + ")");
                         yearsSet = true;
                     }
 
@@ -335,12 +379,16 @@ public class ResultsSaver {
             }
         }
 
+        if (wb.getSheet("A") != null) {
+            wb.removeSheetAt(wb.getSheetIndex(wb.getSheet("A")));
+        }
+
         return true;
     }
 
     private void createFirstRow(XSSFSheet sh) {
         int counter = FIRST_COL_NUM;
-        for (MonthsPair col : wp.getMonthsColumns()) {
+        for (MonthsPair col : runParams.getMonthsColumns()) {
             Cell c = ExcelUtil.getCell(ExcelUtil.getRow(sh, 0), counter, Cell.CELL_TYPE_STRING);
 
             String columnName = transformToNewMonthsName(col.toString());
@@ -351,14 +399,14 @@ public class ResultsSaver {
 
     private boolean isFirstRowCoherent(XSSFSheet sh) {
         XSSFRow existingRow = ExcelUtil.getRow(sh, 0);
-        int monthsCount = wp.getMonthsColumns().size();
+        int monthsCount = runParams.getMonthsColumns().size();
         int monthsCountInFile = existingRow.getLastCellNum() - FIRST_COL_NUM;
         if (monthsCount != monthsCountInFile) {
             return false;
         }
         for (int i = FIRST_COL_NUM; i < existingRow.getLastCellNum(); i++) {
             String existing = existingRow.getCell(i).getStringCellValue();
-            String newVal = wp.getMonthsColumns().get(i - FIRST_COL_NUM).toString();
+            String newVal = runParams.getMonthsColumns().get(i - FIRST_COL_NUM).toString();
             if (!(existing.equals(newVal) || existing.equals(transformToNewMonthsName(newVal)))) {
                 return false;
             }

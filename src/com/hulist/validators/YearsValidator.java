@@ -5,9 +5,8 @@
  */
 package com.hulist.validators;
 
-import com.hulist.gui2.GUIMain;
+import com.hulist.util.Misc;
 import java.util.Calendar;
-import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +57,7 @@ public class YearsValidator {
             num = Integer.parseInt(year);
         } catch (NumberFormatException e) {
             if (!silent) {
-                log.warn(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("Liczba niecałkowita"),year));
+                log.warn(String.format(Misc.getInternationalized("Liczba niecałkowita"),year));
             }
             result = false;
             return result;
@@ -66,12 +65,12 @@ public class YearsValidator {
 
         if (num < YEAR_MIN) {
             if (!silent) {
-                log.warn(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("Rok %d musi być większy niż %d"), num,YEAR_MIN));
+                log.warn(String.format(Misc.getInternationalized("Rok %d musi być większy niż %d"), num,YEAR_MIN));
             }
             result = false;
         } else if (num > YEAR_MAX) {
             if (!silent) {
-                log.warn(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("Rok %d musi być mniejszy niż %d"), num, YEAR_MAX));
+                log.warn(String.format(Misc.getInternationalized("Rok %d musi być mniejszy niż %d"), num, YEAR_MAX));
             }
             result = false;
         }
@@ -92,7 +91,7 @@ public class YearsValidator {
         if (yearStart > yearEnd) {
             result = false;
             if (!silent) {
-                log.warn(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("Rok początkowy musi być mniejszy niż rok końcowy"));
+                log.warn(Misc.getInternationalized("Rok początkowy musi być mniejszy niż rok końcowy"));
             }
         }
 

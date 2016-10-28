@@ -65,9 +65,9 @@ public class GUIMain extends Application {
 
     void switchLocale(Locale newLocale) {
         currLocale = newLocale;
-        mainController.switchLocale(newLocale);
+        mainController.switchLocale(currLocale);
         if (prefsController != null) {
-            prefsController.switchLocale(newLocale);
+            prefsController.switchLocale(currLocale);
         }
     }
 
@@ -80,10 +80,6 @@ public class GUIMain extends Application {
 
     public static Locale getCurrLocale() {
         return currLocale;
-    }
-
-    public String getBundle() {
-        return BUNDLE;
     }
 
     public Stage getMainStage() {

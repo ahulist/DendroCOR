@@ -75,12 +75,12 @@ public class PreferencesFXMLController implements Initializable {
                 try {
                     double newAlpha = Double.parseDouble(textFieldSignifLevelAlpha.getText());
                     if (newAlpha < 0 || newAlpha > 1) {
-                        log.warn(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("Alfa nie jest w zakresie"));
+                        log.warn(Misc.getInternationalized("Alfa nie jest w zakresie"));
                     } else {
                         UserPreferences.getInstance().getPrefs().put(textFieldSignifLevelAlpha.getId(), textFieldSignifLevelAlpha.getText());
                     }
                 } catch (NumberFormatException | NullPointerException e) {
-                    log.warn(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("Alfa nie jest liczbą"));
+                    log.warn(Misc.getInternationalized("Alfa nie jest liczbą"));
                     log.debug(Misc.stackTraceToString(e));
                 }
                 textFieldSignifLevelAlpha.setText(UserPreferences.getInstance().getPrefs().get(textFieldSignifLevelAlpha.getId(), "0.05"));
@@ -111,12 +111,12 @@ public class PreferencesFXMLController implements Initializable {
                 try {
                     int newBootstrap = Integer.parseInt(textFieldBootstrapSamples.getText());
                     if (newBootstrap < 0) {
-                        log.warn(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("Wartość bootstrap jest ujemna"));
+                        log.warn(Misc.getInternationalized("Wartość bootstrap jest ujemna"));
                     } else {
                         UserPreferences.getInstance().getPrefs().put(textFieldBootstrapSamples.getId(), textFieldBootstrapSamples.getText());
                     }
                 } catch (NumberFormatException | NullPointerException e) {
-                    log.warn(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("Wartość bootstrap nie jest liczbą całkowitą"));
+                    log.warn(Misc.getInternationalized("Wartość bootstrap nie jest liczbą całkowitą"));
                     log.debug(Misc.stackTraceToString(e));
                 }
                 textFieldBootstrapSamples.setText(UserPreferences.getInstance().getPrefs().get(textFieldBootstrapSamples.getId(), "10000"));
@@ -128,7 +128,7 @@ public class PreferencesFXMLController implements Initializable {
 
     void switchLocale(Locale newLocale) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(PREFS_FXML_NAME), ResourceBundle.getBundle(guiMain.getBundle(), newLocale));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(PREFS_FXML_NAME), ResourceBundle.getBundle(GUIMain.BUNDLE, newLocale));
             Parent newRoot = fxmlLoader.load();
             mainController.setPrefsController(fxmlLoader.getController());
             mainController.setPrefsScene(newRoot);

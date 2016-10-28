@@ -32,19 +32,19 @@ public class RunParamsPrefs {
         this.bootstrapSamples = bootstrapSamples;
     }
 
-    public boolean isIsStatisticalSignificance() {
+    public boolean isStatisticalSignificance() {
         return isStatisticalSignificance;
     }
 
-    public void setIsStatisticalSignificance(boolean isStatisticalSignificance) {
+    public void setStatisticalSignificance(boolean isStatisticalSignificance) {
         this.isStatisticalSignificance = isStatisticalSignificance;
     }
 
-    public boolean isIsTwoTailedTest() {
+    public boolean isTwoTailedTest() {
         return isTwoTailedTest;
     }
 
-    public void setIsTwoTailedTest(boolean isTwoTailedTest) {
+    public void setTwoTailedTest(boolean isTwoTailedTest) {
         this.isTwoTailedTest = isTwoTailedTest;
     }
 
@@ -56,11 +56,11 @@ public class RunParamsPrefs {
         this.significanceLevelAlpha = significanceLevelAlpha;
     }
 
-    public boolean isIsRunningCorrelation() {
+    public boolean isRunningCorrelation() {
         return isRunningCorrelation;
     }
 
-    public void setIsRunningCorrelation(boolean isRunningCorrelation) {
+    public void setRunningCorrelation(boolean isRunningCorrelation) {
         this.isRunningCorrelation = isRunningCorrelation;
     }
 
@@ -72,11 +72,11 @@ public class RunParamsPrefs {
         this.runningCorrWindowSize = runningCorrWindowSize;
     }
 
-    public boolean isIsBootstrapSampling() {
+    public boolean isBootstrapSampling() {
         return isBootstrapSampling;
     }
 
-    public void setIsBootstrapSampling(boolean isBootstrapSampling) {
+    public void setBootstrapSampling(boolean isBootstrapSampling) {
         this.isBootstrapSampling = isBootstrapSampling;
     }
 

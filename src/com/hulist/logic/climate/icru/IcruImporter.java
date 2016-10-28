@@ -67,12 +67,12 @@ public class IcruImporter extends BaseImporter implements DataImporter<IcruDataC
                             if( value < ICRU_VALUE_MIN || value > ICRU_VALUE_MAX ){
                                 StringBuilder sb = new StringBuilder();
                                 if( value < ICRU_VALUE_MIN ){
-                                    sb.append(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("ODCZYTANA WARTOŚĆ < ")).append(ICRU_VALUE_MIN);
+                                    sb.append(Misc.getInternationalized("ODCZYTANA WARTOŚĆ < ")).append(ICRU_VALUE_MIN);
                                 }
                                 if( value > ICRU_VALUE_MAX ){
-                                    sb.append(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("ODCZYTANA WARTOŚĆ > ")).append(ICRU_VALUE_MAX);
+                                    sb.append(Misc.getInternationalized("ODCZYTANA WARTOŚĆ > ")).append(ICRU_VALUE_MAX);
                                 }
-                                sb.append(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString(", W PLIKU ")).append(f.getCanonicalPath()).append(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString(" DLA ROKU ")).append(year).append(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString(", DLA MIESIĄCA ")).append(month);
+                                sb.append(Misc.getInternationalized(", W PLIKU ")).append(f.getCanonicalPath()).append(Misc.getInternationalized(" DLA ROKU ")).append(year).append(Misc.getInternationalized(", DLA MIESIĄCA ")).append(month);
                                 throw new IllegalArgumentException(sb.toString());
                             }
                             lineData.addMonthlyData(month, value);
@@ -81,12 +81,12 @@ public class IcruImporter extends BaseImporter implements DataImporter<IcruDataC
                         container.addYearlyData(year, lineData);
                     }
                 } catch( AssertionError e ) {
-                    String msg = String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("błędna liczba kolumn"), f.getName(), lineCounter);
+                    String msg = String.format(Misc.getInternationalized("błędna liczba kolumn"), f.getName(), lineCounter);
                     log.warn(msg);
                     log.trace(Misc.stackTraceToString(e));
                     throw new IOException(msg);
                 } catch( NumberFormatException e ) {
-                    String msg = String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("błędny format liczby"), f.getName(), lineCounter);
+                    String msg = String.format(Misc.getInternationalized("błędny format liczby"), f.getName(), lineCounter);
                     log.warn(msg);
                     log.trace(Misc.stackTraceToString(e));
                     throw new IOException(msg);
@@ -96,7 +96,7 @@ public class IcruImporter extends BaseImporter implements DataImporter<IcruDataC
                     log.trace(Misc.stackTraceToString(e));
                     throw new IOException();
                 } catch( IOException e ) {
-                    String msg = String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĘDNY FORMAT PLIKU %S W LINII %D."), f.getName(), lineCounter);
+                    String msg = String.format(Misc.getInternationalized("BŁĘDNY FORMAT PLIKU %S W LINII %D."), f.getName(), lineCounter);
                     log.warn(msg);
                     log.trace(Misc.stackTraceToString(e));
                     throw new IOException(msg);

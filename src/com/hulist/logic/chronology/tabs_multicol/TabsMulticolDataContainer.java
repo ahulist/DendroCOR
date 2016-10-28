@@ -62,7 +62,7 @@ public class TabsMulticolDataContainer extends FileDataContainer {
             colCount = values.size();
         }else{
             if (colCount != values.size()) {
-                String msg = String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("TabsMulticolDataContainer błędna liczba kolumn"), getSourceFile().getName(), values.size(), colCount);
+                String msg = String.format(Misc.getInternationalized("TabsMulticolDataContainer błędna liczba kolumn"), getSourceFile().getName(), values.size(), colCount);
                 throw new IOException(msg);
             }
         }

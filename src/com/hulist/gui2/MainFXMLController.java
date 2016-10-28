@@ -27,9 +27,12 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+import java.util.prefs.Preferences;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -131,6 +134,7 @@ public class MainFXMLController implements Initializable {
     private GUIMain guiMain;
     private PreferencesFXMLController prefsController;
     private Stage prefsStage;
+    private Preferences prefs = UserPreferences.getInstance().getPrefs();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -179,7 +183,7 @@ public class MainFXMLController implements Initializable {
         // Buttons
         buttonResetMonths.setOnMouseClicked((MouseEvent event) -> {
             textAreaMonthsRanges.setText(StaticSettings.getDefaultMonths());
-            UserPreferences.getInstance().getPrefs().put(textAreaMonthsRanges.getId(), textAreaMonthsRanges.getText());
+            prefs.put(textAreaMonthsRanges.getId(), textAreaMonthsRanges.getText());
         });
         buttonClearOutput.setOnMouseClicked((MouseEvent event) -> {
             textAreaOutput.clear();
@@ -193,12 +197,40 @@ public class MainFXMLController implements Initializable {
             Parent root = loader.load();
             setPrefsScene(root);
             prefsStage.setResizable(false);
-            prefsStage.setTitle(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("MainWindow.menuSettings.text"));
+            prefsStage.setTitle(Misc.getInternationalized("MainWindow.menuSettings.text"));
             prefsStage.initModality(Modality.WINDOW_MODAL);
             prefsController = loader.getController();
         } catch (IOException ex) {
             log.error(ex.toString());
         }
+
+        // TextField
+        textFieldExcludedValues.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if (!newValue) {    // focus lost
+                textFieldExcludedValues.setText(textFieldExcludedValues.getText().replace(",","."));
+                textFieldExcludedValues.setText(textFieldExcludedValues.getText().replace(";;",";"));
+                String[] ev = textFieldExcludedValues.getText().split(";");
+                boolean ok = true;
+                for (String val : ev) {
+                    if (!val.trim().isEmpty()) {
+                        try {
+                            double number = Double.parseDouble(val.trim());
+                        } catch (NumberFormatException e) {
+                            ok = false;
+                            log.info(String.format(Misc.getInternationalized("zla wartosc (%s) excludedValue"), val.trim()));
+                        }
+                    }
+                }
+                if (ok) {
+                    prefs.put(textFieldExcludedValues.getId(), textFieldExcludedValues.getText());
+                }
+            }
+        });
+        
+        // Tabs
+        tabPane.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            prefs.putInt(tabPane.getId()+":selectedTabIndex", newValue.intValue());
+        });
 
         // Set values from UserPreferences
         setValuesFromPrefs();
@@ -217,27 +249,27 @@ public class MainFXMLController implements Initializable {
     @FXML
     void onKeyReleasedTextFieldYearStart(KeyEvent event) {
         if (new YearsValidator().validateSingleYear(textFieldYearStart.getText(), true) || textFieldYearStart.getText().equals("")) {
-            UserPreferences.getInstance().getPrefs().put(textFieldYearStart.getId(), textFieldYearStart.getText());
+            prefs.put(textFieldYearStart.getId(), textFieldYearStart.getText());
         }
     }
 
     @FXML
     void onKeyReleasedTextFieldYearEnd(KeyEvent event) {
         if (new YearsValidator().validateSingleYear(textFieldYearEnd.getText(), true) || textFieldYearEnd.getText().equals("")) {
-            UserPreferences.getInstance().getPrefs().put(textFieldYearEnd.getId(), textFieldYearEnd.getText());
+            prefs.put(textFieldYearEnd.getId(), textFieldYearEnd.getText());
         }
     }
 
     @FXML
     void onKeyReleasedTextAreaMonths(KeyEvent event) {
-        UserPreferences.getInstance().getPrefs().put(textAreaMonthsRanges.getId(), textAreaMonthsRanges.getText());
+        prefs.put(textAreaMonthsRanges.getId(), textAreaMonthsRanges.getText());
     }
 
     @FXML
     void onKeyReleasedCheckBoxAllYears(ActionEvent event) {
         textFieldYearStart.setDisable(checkBoxAllYears.isSelected());
         textFieldYearEnd.setDisable(checkBoxAllYears.isSelected());
-        UserPreferences.getInstance().getPrefs().putBoolean(checkBoxAllYears.getId(), checkBoxAllYears.isSelected());
+        prefs.putBoolean(checkBoxAllYears.getId(), checkBoxAllYears.isSelected());
     }
 
     private File[] selectedChronoFile = null;
@@ -314,6 +346,8 @@ public class MainFXMLController implements Initializable {
                 case 1:
                     DailyFileTypes dft = comboBoxDailyFileType.getValue();
                     DailyColumnTypes dct = comboBoxDailyColumn.getValue();
+                    List<String> excludedValues = Arrays.asList(textFieldExcludedValues.getText().split(";", -1));
+                    excludedValues.removeAll(Arrays.asList(""));
                     wp = new RunParams(RunType.DAILY,
                             allYears,
                             startYear,
@@ -324,7 +358,7 @@ public class MainFXMLController implements Initializable {
                             tabsColumnType,
                             dft,
                             dct,
-                            textFieldExcludedValues.getText().split("\\s*,\\s*"));
+                            excludedValues);
 
                     sb.append("WindowParams: [")
                             .append(allYears).append(", ")
@@ -350,6 +384,7 @@ public class MainFXMLController implements Initializable {
     }
 
     private boolean isDataValid() {
+        log.info(Misc.getInternationalized("Starting data validation"));
         boolean valid = true;
         int selectedTabIndex = tabPane.getSelectionModel().getSelectedIndex();
         ResourceBundle bundle = ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale());
@@ -461,12 +496,27 @@ public class MainFXMLController implements Initializable {
             valid = false;
         }
 
+        // Excluded values
+        if (selectedTabIndex == 1) {
+            String[] ev = textFieldExcludedValues.getText().split(";");
+            for (String val : ev) {
+                if (!val.trim().isEmpty()) {
+                    try {
+                        double number = Double.parseDouble(val.trim());
+                    } catch (NumberFormatException e) {
+                        valid = false;
+                        log.info(String.format(Misc.getInternationalized("zla wartosc (%s) excludedValue"), val.trim()));
+                    }
+                }
+            }
+        }
+
         return valid;
     }
 
     public void switchLocale(Locale newLocale) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(MAIN_FXML_NAME), ResourceBundle.getBundle(guiMain.getBundle(), newLocale));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(MAIN_FXML_NAME), ResourceBundle.getBundle(GUIMain.BUNDLE, newLocale));
             Parent newRoot = fxmlLoader.load();
             this.guiMain.setMainController(fxmlLoader.getController());
             this.guiMain.setMainScene(newRoot);
@@ -502,12 +552,15 @@ public class MainFXMLController implements Initializable {
     }
 
     private void setValuesFromPrefs() {
-        textFieldYearStart.setText(UserPreferences.getInstance().getPrefs().get(textFieldYearStart.getId(), ""));
-        textFieldYearEnd.setText(UserPreferences.getInstance().getPrefs().get(textFieldYearEnd.getId(), ""));
-        checkBoxAllYears.setSelected(UserPreferences.getInstance().getPrefs().getBoolean(checkBoxAllYears.getId(), false));
-        textAreaMonthsRanges.setText(UserPreferences.getInstance().getPrefs().get(textAreaMonthsRanges.getId(), StaticSettings.getDefaultMonths()));
+        textFieldYearStart.setText(prefs.get(textFieldYearStart.getId(), ""));
+        textFieldYearEnd.setText(prefs.get(textFieldYearEnd.getId(), ""));
+        textFieldExcludedValues.setText(prefs.get(textFieldExcludedValues.getId(), ""));
+        checkBoxAllYears.setSelected(prefs.getBoolean(checkBoxAllYears.getId(), false));
+        textAreaMonthsRanges.setText(prefs.get(textAreaMonthsRanges.getId(), StaticSettings.getDefaultMonths()));
         textFieldYearStart.setDisable(checkBoxAllYears.isSelected());
         textFieldYearEnd.setDisable(checkBoxAllYears.isSelected());
+        
+        tabPane.getSelectionModel().select(prefs.getInt(tabPane.getId()+":selectedTabIndex", 0));
     }
 
     private TextFormatter<String> getTextAreaOutputFormatter() {

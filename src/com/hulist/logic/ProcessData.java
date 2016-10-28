@@ -5,7 +5,6 @@
  */
 package com.hulist.logic;
 
-import com.hulist.gui2.GUIMain;
 import com.hulist.logic.chronology.deka.DekaImporter;
 import com.hulist.logic.chronology.deka.DekaSerie;
 import com.hulist.logic.chronology.deka.DekaSeriesDataContainer;
@@ -24,7 +23,6 @@ import com.hulist.logic.daily.YearlyCombinations;
 import com.hulist.logic.daily.type1.Type1DataContainer;
 import com.hulist.logic.daily.type1.Type1Importer;
 import com.hulist.logic.daily.type1.Type1SeriesDataContainer;
-import com.hulist.util.FileChooser;
 import com.hulist.util.LogsSaver;
 import com.hulist.util.Misc;
 import com.hulist.util.MonthsPair;
@@ -32,8 +30,10 @@ import com.hulist.util.Pair;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
+import javafx.application.Platform;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.joda.time.LocalDate;
@@ -57,15 +57,9 @@ public class ProcessData implements Runnable {
     private final DataToCorrelate dataToCorrelate = new DataToCorrelate();
     private final ArrayList<Results> results = new ArrayList<>();
 
-    private final FileChooser fc = new FileChooser(FileChooser.Purpose.SAVE);
-
     public ProcessData(RunParams wp) {
         this.runParams = wp;
-        fc.setAddXlsmExt(true);
-
         this.computationThread = new Thread(this);
-
-        fc.setOnSaveDialogMessage(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("CZY ZAPISAĆ OTRZYMANE DANE DO PLIKU?"));
     }
 
     public ProcessData(RunParams wp, Thread.UncaughtExceptionHandler handler) {
@@ -73,37 +67,6 @@ public class ProcessData implements Runnable {
         this.handler = handler;
     }
 
-    /*@Override
-     public void run() {
-     Logger.getLogger(this.getClass().getCanonicalName()).log(Level.FINE, "Uruchomiono przetwarzanie danych.");
-     switch( wp.getSecColFileType() ) {
-     case TABS:
-     try {
-     Results res = processTabs();
-                    
-     } catch( NullPointerException | IOException ex ) {
-     log.error("Błąd odczytu z pliku.");
-     log.trace(ex.getMessage());
-     throw new RuntimeException(ex);
-     } catch( Exception ex ){
-     log.error("Wystąpił nieznany błąd.");
-     log.trace(ex.getMessage());
-     throw new RuntimeException(ex);
-     }
-     break;
-     case DEKADOWY:
-     break;
-     }
-     }
-
-     public void go() {
-     Thread t = new Thread(this);
-     if( this.handler != null ){
-     // TODO dodać obsługę w klasie wywołującej
-     t.setUncaughtExceptionHandler(handler);
-     }
-     t.start();
-     }*/
     private void getTabsExt() throws IOException, NullPointerException {
         for (File file : runParams.getChronologyFiles()) {
             TabsMulticolImporter tabsImporter = new TabsMulticolImporter(runParams);
@@ -181,7 +144,7 @@ public class ProcessData implements Runnable {
                         int commonYearEndLimit = Math.min(chronology.getYearMax(), climate.getYearMax());
 
                         if (commonYearStartLimit > commonYearEndLimit) {
-                            throw new DataException(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("niepokrywające się lata"));
+                            throw new DataException(Misc.getInternationalized("niepokrywające się lata"));
                         }
 
                         double[] primaryColumnData = null;
@@ -224,10 +187,10 @@ public class ProcessData implements Runnable {
 
                         if (chronology.isEmpty() || climate.isEmpty()) {
                             if (chronology.isEmpty()) {
-                                log.error(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
+                                log.error(String.format(Misc.getInternationalized("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
                             }
                             if (climate.isEmpty()) {
-                                log.error(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), climateColumnsName));
+                                log.error(String.format(Misc.getInternationalized("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), climateColumnsName));
                             }
                             break;
                         }
@@ -250,7 +213,7 @@ public class ProcessData implements Runnable {
                         int commonYearEndLimit = Math.min(chronology.getYearMax(), daily.getYearMax());
 
                         if (commonYearStartLimit > commonYearEndLimit) {
-                            throw new DataException(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("niepokrywające się lata"));
+                            throw new DataException(Misc.getInternationalized("niepokrywające się lata"));
                         }
 
                         double[] primaryColumnData = null;
@@ -278,16 +241,17 @@ public class ProcessData implements Runnable {
                                 + "-" + commonYearEndLimit;
                         int max = YearlyCombinations.getCombinations().size();
                         float curr = 1;
-                        double b1e = (System.currentTimeMillis() - b1s)/1000.0;
-                        
+                        double b1e = (System.currentTimeMillis() - b1s) / 1000.0;
+                        log.debug("Bottleneck 1 (averaging): "+b1e+" ms");
+
                         // bottleneck 2:
                         long b2s = System.currentTimeMillis();
                         for (Pair<MonthDay, MonthDay> p : YearlyCombinations.getCombinations()) {
 
-                            System.out.println("Values prep.: "+curr / max * 100 + " %");
+                            System.out.println("Values prep.: " + curr / max * 100 + " %");
 
-                            ArrayList<Double> priCol = new ArrayList<>(commonYearEndLimit-commonYearStartLimit);
-                            ArrayList<Double> daiCol = new ArrayList<>(commonYearEndLimit-commonYearStartLimit);
+                            ArrayList<Double> priCol = new ArrayList<>(commonYearEndLimit - commonYearStartLimit);
+                            ArrayList<Double> daiCol = new ArrayList<>(commonYearEndLimit - commonYearStartLimit);
                             for (int i = commonYearStartLimit; i <= commonYearEndLimit; i++) {
                                 LocalDate ld1;
                                 LocalDate ld2;
@@ -323,15 +287,16 @@ public class ProcessData implements Runnable {
                             dataToCorrelate.daily.put(p, new Pair<>(new Column(primaryColumnName, priVals), new Column(colName, vals)));
                             curr++;
                         }
-                        double b2e = (System.currentTimeMillis() - b2s)/1000.0;
+                        double b2e = (System.currentTimeMillis() - b2s) / 1000.0;
+                        log.debug("Bottleneck 2 (values prep.): "+b2e+" ms");
 
                         if (chronology.isEmpty() || daily.isEmpty()) {
                             if (chronology.isEmpty()) {
-                                log.error(String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
+                                log.error(String.format(Misc.getInternationalized("CHRONOLOGIA %S NIE MIEŚCI SIĘ W ZAKRESIE DAT."), primaryColumnName));
                             }
                             if (daily.isEmpty()) {
                                 // TODO
-                                //log.log(Level.SEVERE, String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), dailyColumnsName));
+                                //log.log(Level.SEVERE, String.format(Misc.getInternationalized("DANE KLIMATYCZNE %S NIE MIESZCZĄ SIĘ W ZAKRESIE DAT."), dailyColumnsName));
                             }
                             break;
                         }
@@ -342,7 +307,8 @@ public class ProcessData implements Runnable {
                         CorrelationProcessing pearsons = new CorrelationProcessing(runParams, dataToCorrelate);
                         long b3s = System.currentTimeMillis();
                         Results result = pearsons.go(commonYearStartLimit, commonYearEndLimit);
-                        double b3e = (System.currentTimeMillis() - b3s)/1000.0;
+                        double b3e = (System.currentTimeMillis() - b3s) / 1000.0;
+                        log.debug("Bottleneck 3 (correlating): "+b3e+" ms");
                         if (result != null) {
                             result.yearStart = commonYearStartLimit;
                             result.yearEnd = commonYearEndLimit;
@@ -358,11 +324,10 @@ public class ProcessData implements Runnable {
         }
     }
 
-    private void save() {
-        File[] saveDest = fc.call();
-        if (saveDest != null && saveDest.length > 0 && saveDest[0] != null) {
-            log.info(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("ZAPISYWANIE..."));
-            ResultsSaver saver = new ResultsSaver(runParams, saveDest[0], results);
+    private void save(File f) {
+        if (f != null) {
+            log.info(Misc.getInternationalized("ZAPISYWANIE..."));
+            ResultsSaver saver = new ResultsSaver(runParams, f, results);
             saver.save();
         }
         results.clear();
@@ -373,7 +338,7 @@ public class ProcessData implements Runnable {
     public void run() {
         LogsSaver.getInstance().setIsLoggingOn(true/*wp.getPreferencesFrame().getCheckBoxLogging().isSelected()*/);
         long start = System.currentTimeMillis();
-        log.debug(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("URUCHOMIONO PRZETWARZANIE DANYCH."));
+        log.debug(Misc.getInternationalized("URUCHOMIONO PRZETWARZANIE DANYCH."));
         /*
          load all data to respective data containers
          */
@@ -414,17 +379,33 @@ public class ProcessData implements Runnable {
             long end = System.currentTimeMillis();
             LogsSaver.getInstance().setIsLoggingOn(true);
             log.trace("runtime: " + (end - start) + "ms");
-            save();
+
+            Platform.runLater(() -> {
+                Media media = new Media(getClass().getClassLoader().getResource("resources/bell_ring.mp3").toString());
+                MediaPlayer mp = new MediaPlayer(media);
+                mp.play();
+
+                javafx.stage.FileChooser fc = new javafx.stage.FileChooser();
+                File file = fc.showSaveDialog(runParams.getRoot());
+
+                new Thread(() -> {
+                    File dst = file;
+                    if (!dst.getName().endsWith(".xlsm")) {
+                        dst = new File(dst.getParent(), dst.getName() + ".xlsm");
+                    }
+                    save(dst);
+                }).start();
+            });
         } catch (DataException ex) {
             log.error(ex.getMessage());
             log.trace(Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
         } catch (NullPointerException | IOException ex) {
-            log.error(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĄD ODCZYTU Z PLIKU."));
+            log.error(Misc.getInternationalized("BŁĄD ODCZYTU Z PLIKU."));
             log.trace(Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
         } catch (Exception ex) {
-            log.error(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("WYSTĄPIŁ NIEZNANY BŁĄD."));
+            log.error(Misc.getInternationalized("WYSTĄPIŁ NIEZNANY BŁĄD."));
             log.trace(Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
         }
@@ -459,5 +440,5 @@ public class ProcessData implements Runnable {
     public void setWp(RunParams wp) {
         this.runParams = wp;
     }
-    
+
 }

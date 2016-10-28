@@ -220,7 +220,7 @@
                                                         <Insets left="10.0" />
                                                     </FlowPane.margin>
                                                 </Label>
-                                                <ChoiceBox fx:id="comboBoxChronoFileTypeDailyTab" prefWidth="150.0">
+                                                <ChoiceBox fx:id="comboBoxChronoFileTypeDailyTab" prefWidth="170.0">
                                                     <FlowPane.margin>
                                                         <Insets right="10.0" top="5.0" />
                                                     </FlowPane.margin>
@@ -240,7 +240,7 @@
                                                         <Insets left="10.0" />
                                                     </FlowPane.margin>
                                                 </Label>
-                                                <ChoiceBox fx:id="comboBoxColSelectDaily" prefWidth="150.0">
+                                                <ChoiceBox fx:id="comboBoxColSelectDaily" prefWidth="170.0">
                                                     <FlowPane.margin>
                                                         <Insets right="10.0" />
                                                     </FlowPane.margin>
@@ -282,7 +282,7 @@
                                                         <Insets left="10.0" />
                                                     </FlowPane.margin>
                                                 </Label>
-                                                <ChoiceBox fx:id="comboBoxDailyFileType" prefWidth="150.0">
+                                                <ChoiceBox fx:id="comboBoxDailyFileType" prefWidth="170.0">
                                                     <FlowPane.margin>
                                                         <Insets right="10.0" top="5.0" />
                                                     </FlowPane.margin>
@@ -302,7 +302,7 @@
                                                         <Insets left="10.0" />
                                                     </FlowPane.margin>
                                                 </Label>
-                                                <ChoiceBox fx:id="comboBoxDailyColumn" prefWidth="150.0">
+                                                <ChoiceBox fx:id="comboBoxDailyColumn" prefWidth="170.0">
                                                     <FlowPane.margin>
                                                         <Insets right="10.0" />
                                                     </FlowPane.margin>
@@ -319,7 +319,7 @@
                                           <Insets left="10.0" />
                                        </FlowPane.margin>
                                     </Label>
-                                    <TextField fx:id="textFieldExcludedValues" text="tu będą excluded values, uzupełnić, podpiąć" />
+                                    <TextField fx:id="textFieldExcludedValues" prefWidth="170.0" promptText="%semicolon separated" />
                                             </children>
                                         </FlowPane>
                                     </children>

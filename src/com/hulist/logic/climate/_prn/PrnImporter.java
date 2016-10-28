@@ -67,16 +67,16 @@ public class PrnImporter extends BaseImporter implements DataImporter<PrnDataCon
                             if( value < PRN_VALUE_MIN || value > PRN_VALUE_MAX ){
                                 StringBuilder sb = new StringBuilder();
                                 if( value < PRN_VALUE_MIN ){
-                                    sb.append(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("ODCZYTANA WARTOŚĆ < ")).append(PRN_VALUE_MIN);
+                                    sb.append(Misc.getInternationalized("ODCZYTANA WARTOŚĆ < ")).append(PRN_VALUE_MIN);
                                 }
                                 if( value > PRN_VALUE_MAX ){
-                                    sb.append(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("ODCZYTANA WARTOŚĆ > ")).append(PRN_VALUE_MAX);
+                                    sb.append(Misc.getInternationalized("ODCZYTANA WARTOŚĆ > ")).append(PRN_VALUE_MAX);
                                 }
                                 sb.append(
-                                        ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString(", W PLIKU "))
+                                        Misc.getInternationalized(", W PLIKU "))
                                         .append(f.getCanonicalPath())
-                                        .append(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString(" DLA ROKU "))
-                                        .append(year).append(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString(", DLA MIESIĄCA "))
+                                        .append(Misc.getInternationalized(" DLA ROKU "))
+                                        .append(year).append(Misc.getInternationalized(", DLA MIESIĄCA "))
                                         .append(month);
                                 throw new IllegalArgumentException(sb.toString());
                             }
@@ -86,7 +86,7 @@ public class PrnImporter extends BaseImporter implements DataImporter<PrnDataCon
                         container.addYearlyData(year, lineData);
                     }
                 } catch( AssertionError | IOException | NumberFormatException e ) {
-                    String msg = String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĘDNY FORMAT PLIKU %S."), f.getName());
+                    String msg = String.format(Misc.getInternationalized("BŁĘDNY FORMAT PLIKU %S."), f.getName());
                     log.warn(msg);
                     log.trace(msg);
                     throw new IOException(msg);

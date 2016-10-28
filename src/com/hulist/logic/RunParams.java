@@ -14,6 +14,7 @@ import com.hulist.logic.daily.DailyFileTypes;
 import com.hulist.util.MonthsPair;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.stage.Stage;
 
 /**
@@ -37,7 +38,7 @@ public class RunParams {
     private File[] dailyFile;
     private DailyFileTypes dailyFileType;
     private DailyColumnTypes dailyColumnType;
-    private String[] excludedValues;
+    private List<String> excludedValues;
     
     private RunParamsPrefs prefs;
     
@@ -65,7 +66,7 @@ public class RunParams {
      */
     public RunParams(RunType runType, boolean allYears, int startYear, int endYear, File[] chronologyFile,
             File[] dailyFile, ChronologyFileTypes chronologyFileType, TabsColumnTypes chronologyType,
-            DailyFileTypes dailyFileType, DailyColumnTypes dailyColumnType, String[] excludedValues) {
+            DailyFileTypes dailyFileType, DailyColumnTypes dailyColumnType, List<String> excludedValues) {
         this.runType = runType;
         this.allYears = allYears;
         this.startYear = startYear;
@@ -183,7 +184,7 @@ public class RunParams {
         return dailyFile;
     }
 
-    public String[] getExcludedValues() {
+    public List<String> getExcludedValues() {
         return excludedValues;
     }
 

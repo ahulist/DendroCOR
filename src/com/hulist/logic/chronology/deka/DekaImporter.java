@@ -81,7 +81,7 @@ public class DekaImporter extends BaseImporter implements DataImporter<DekaSerie
                     }
                 }
             } catch (IOException | NumberFormatException | AssertionError e) {
-                String msg = String.format(ResourceBundle.getBundle(GUIMain.BUNDLE, GUIMain.getCurrLocale()).getString("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), lineCounter);
+                String msg = String.format(Misc.getInternationalized("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), lineCounter);
                 log.warn(msg);
                 log.trace(Misc.stackTraceToString(e));
                 throw new IOException(msg);
