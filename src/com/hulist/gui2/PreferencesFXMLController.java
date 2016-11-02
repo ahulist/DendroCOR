@@ -5,7 +5,7 @@
  */
 package com.hulist.gui2;
 
-import com.hulist.logic.RunParamsPrefs;
+import com.hulist.logic.RunSettings;
 import com.hulist.util.Misc;
 import com.hulist.util.StaticSettings;
 import com.hulist.util.UserPreferences;
@@ -144,8 +144,8 @@ public class PreferencesFXMLController implements Initializable {
         this.mainController = controller;
     }
 
-    public RunParamsPrefs getRunParams() {
-        return new RunParamsPrefs(checkBoxStatSignificance.isSelected(),
+    public RunSettings getRunSettings() {
+        return new RunSettings(checkBoxStatSignificance.isSelected(),
                 checkBoxTwoTailed.isSelected(),
                 Double.parseDouble(textFieldSignifLevelAlpha.getText()),
                 checkBoxRunCorrelation.isSelected(),

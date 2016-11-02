@@ -23,7 +23,7 @@ import com.hulist.logic.daily.YearlyCombinations;
 import com.hulist.logic.daily.type1.Type1DataContainer;
 import com.hulist.logic.daily.type1.Type1Importer;
 import com.hulist.logic.daily.type1.Type1SeriesDataContainer;
-import com.hulist.util.LogsSaver;
+import com.hulist.util.Debug;
 import com.hulist.util.Misc;
 import com.hulist.util.MonthsPair;
 import com.hulist.util.Pair;
@@ -32,6 +32,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import org.slf4j.Logger;
@@ -44,6 +46,8 @@ import org.joda.time.MonthDay;
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
 public class ProcessData implements Runnable {
+    
+    public static BooleanProperty isAnyComputationRunning = new SimpleBooleanProperty(false);
 
     RunParams runParams = null;
     Thread.UncaughtExceptionHandler handler = null;
@@ -132,14 +136,32 @@ public class ProcessData implements Runnable {
     }
 
     private void process() throws IOException, InterruptedException, ExecutionException {
+        log.info(Misc.getInternationalized("rozpoczeto obliczenia"));
+        
+        runParams.getProgress().resetFilesProgress();
+        switch(runParams.getRunType()){
+            case MONTHLY:
+                runParams.getProgress().setHowManyFiles(chronologyDataContainer.size()*climateDataContainer.size());
+                break;
+            case DAILY:
+                runParams.getProgress().setHowManyFiles(chronologyDataContainer.size()*dailyDataContainer.size());
+                break;
+        }
+        
+        int fileCounter = 0;
+        
         for (FileDataContainer chronology : chronologyDataContainer) {
             String primaryColumnNameStart = chronology.getSourceFile().getName();
             String primaryColumnName = "";
 
             switch (runParams.getRunType()) {
                 case MONTHLY:
+                    runParams.getProgress().resetJobsProgress();
+                    runParams.getProgress().setHowManyJobs(1);
 
                     for (FileDataContainer climate : climateDataContainer) {
+                        fileCounter++;
+                        
                         int commonYearStartLimit = Math.max(chronology.getYearMin(), climate.getYearMin());
                         int commonYearEndLimit = Math.min(chronology.getYearMax(), climate.getYearMax());
 
@@ -204,11 +226,15 @@ public class ProcessData implements Runnable {
                             result.climateTitle = climateColumnsName;
                             results.add(result);
                         }
+                        runParams.getProgress().setFilesDone(fileCounter);
                     }
                     break;
                 case DAILY:
-
                     for (FileDataContainer daily : dailyDataContainer) {
+                        fileCounter++;
+                        
+                        runParams.getProgress().resetJobsProgress();
+                        runParams.getProgress().setHowManyJobs(3);
                         int commonYearStartLimit = Math.max(chronology.getYearMin(), daily.getYearMin());
                         int commonYearEndLimit = Math.min(chronology.getYearMax(), daily.getYearMax());
 
@@ -235,20 +261,27 @@ public class ProcessData implements Runnable {
                         Type1DataContainer d = ((Type1DataContainer) daily);
                         // bottleneck 1:
                         long b1s = System.currentTimeMillis();
-                        d.populateYearlyCombinations();
+                        d.setProgress(runParams.getProgress());
+                        d.populateYearlyCombinations(runParams);
                         String secondaryName = d.getSourceFile().getName() + ": "
                                 + d.getStation() + " in years " + commonYearStartLimit
                                 + "-" + commonYearEndLimit;
                         int max = YearlyCombinations.getCombinations().size();
                         float curr = 1;
                         double b1e = (System.currentTimeMillis() - b1s) / 1000.0;
-                        log.debug("Bottleneck 1 (averaging): "+b1e+" ms");
+                        log.debug("Bottleneck 1 (averaging): " + b1e + " ms");
+                        runParams.getProgress().currentJobFinished();
 
                         // bottleneck 2:
                         long b2s = System.currentTimeMillis();
+                        double done = 0;
                         for (Pair<MonthDay, MonthDay> p : YearlyCombinations.getCombinations()) {
 
-                            System.out.println("Values prep.: " + curr / max * 100 + " %");
+                            done = curr / max * 100;
+                            if (Debug.IS_DUBUGGGING) {
+                                System.out.println("Values prep.: " + done + " %");
+                            }
+                            runParams.getProgress().setCurrentJobProgress(done/100);
 
                             ArrayList<Double> priCol = new ArrayList<>(commonYearEndLimit - commonYearStartLimit);
                             ArrayList<Double> daiCol = new ArrayList<>(commonYearEndLimit - commonYearStartLimit);
@@ -288,7 +321,8 @@ public class ProcessData implements Runnable {
                             curr++;
                         }
                         double b2e = (System.currentTimeMillis() - b2s) / 1000.0;
-                        log.debug("Bottleneck 2 (values prep.): "+b2e+" ms");
+                        log.debug("Bottleneck 2 (values prep.): " + b2e + " ms");
+                        runParams.getProgress().currentJobFinished();
 
                         if (chronology.isEmpty() || daily.isEmpty()) {
                             if (chronology.isEmpty()) {
@@ -308,7 +342,8 @@ public class ProcessData implements Runnable {
                         long b3s = System.currentTimeMillis();
                         Results result = pearsons.go(commonYearStartLimit, commonYearEndLimit);
                         double b3e = (System.currentTimeMillis() - b3s) / 1000.0;
-                        log.debug("Bottleneck 3 (correlating): "+b3e+" ms");
+                        log.debug("Bottleneck 3 (correlating): " + b3e + " ms");
+                        runParams.getProgress().currentJobFinished();
                         if (result != null) {
                             result.yearStart = commonYearStartLimit;
                             result.yearEnd = commonYearEndLimit;
@@ -316,6 +351,7 @@ public class ProcessData implements Runnable {
                             result.dailyTitle = secondaryName;
                             results.add(result);
                         }
+                        runParams.getProgress().setFilesDone(fileCounter);
                     }
 
                     break;
@@ -336,9 +372,9 @@ public class ProcessData implements Runnable {
 
     @Override
     public void run() {
-        LogsSaver.getInstance().setIsLoggingOn(true/*wp.getPreferencesFrame().getCheckBoxLogging().isSelected()*/);
         long start = System.currentTimeMillis();
-        log.debug(Misc.getInternationalized("URUCHOMIONO PRZETWARZANIE DANYCH."));
+        isAnyComputationRunning.set(true);
+        log.info(Misc.getInternationalized("Wczytywanie danych z plikow"));
         /*
          load all data to respective data containers
          */
@@ -376,8 +412,9 @@ public class ProcessData implements Runnable {
             }
 
             process();
+            log.info(Misc.getInternationalized("zakonczono obliczenia"));
+            isAnyComputationRunning.set(false);
             long end = System.currentTimeMillis();
-            LogsSaver.getInstance().setIsLoggingOn(true);
             log.trace("runtime: " + (end - start) + "ms");
 
             Platform.runLater(() -> {
@@ -388,13 +425,17 @@ public class ProcessData implements Runnable {
                 javafx.stage.FileChooser fc = new javafx.stage.FileChooser();
                 File file = fc.showSaveDialog(runParams.getRoot());
 
-                new Thread(() -> {
-                    File dst = file;
-                    if (!dst.getName().endsWith(".xlsm")) {
-                        dst = new File(dst.getParent(), dst.getName() + ".xlsm");
-                    }
-                    save(dst);
-                }).start();
+                if (file != null) {
+                    new Thread(() -> {
+                        File dst = file;
+                        if (!dst.getName().endsWith(".xlsm")) {
+                            dst = new File(dst.getParent(), dst.getName() + ".xlsm");
+                        }
+                        save(dst);
+                    }).start();
+                }else{
+                    log.info("");
+                }
             });
         } catch (DataException ex) {
             log.error(ex.getMessage());
@@ -408,6 +449,8 @@ public class ProcessData implements Runnable {
             log.error(Misc.getInternationalized("WYSTĄPIŁ NIEZNANY BŁĄD."));
             log.trace(Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
+        }finally{
+            isAnyComputationRunning.set(false);
         }
     }
 
@@ -433,7 +476,7 @@ public class ProcessData implements Runnable {
         }
     }
 
-    public RunParams getWp() {
+    public RunParams getRunParams() {
         return runParams;
     }
 

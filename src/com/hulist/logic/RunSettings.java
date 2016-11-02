@@ -9,7 +9,7 @@ package com.hulist.logic;
  *
  * @author Aleksander
  */
-public class RunParamsPrefs {
+public class RunSettings {
     private boolean isStatisticalSignificance = false;
     private boolean isTwoTailedTest = false;
     private double significanceLevelAlpha = 0.05;
@@ -18,9 +18,9 @@ public class RunParamsPrefs {
     private boolean isBootstrapSampling = false;
     private int bootstrapSamples = 500;
 
-    public RunParamsPrefs() {}
+    public RunSettings() {}
 
-    public RunParamsPrefs(boolean isStatisticalSignificance, boolean isTwoTailedTest,
+    public RunSettings(boolean isStatisticalSignificance, boolean isTwoTailedTest,
             double significanceLevelAlpha, boolean isRunningCorrelation,
             int runningCorrWindowSize, boolean isBootstrapSampling,int bootstrapSamples) {
         this.isStatisticalSignificance = isStatisticalSignificance;

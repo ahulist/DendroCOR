@@ -6,11 +6,13 @@
 package com.hulist.logic.daily.type1;
 
 import com.hulist.logic.FileDataContainer;
+import com.hulist.logic.RunParams;
 import com.hulist.logic.daily.YearlyCombinations;
+import com.hulist.util.Debug;
 import com.hulist.util.Pair;
+import com.hulist.util.Progress;
 import java.io.File;
 import java.util.HashMap;
-import org.apache.commons.collections4.map.MultiKeyMap;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.MonthDay;
@@ -22,12 +24,12 @@ import org.joda.time.MonthDay;
 public class Type1DataContainer extends FileDataContainer {
 
     private String station;
-    
+
     private HashMap<LocalDate, Type1LineContainer> container = new HashMap<>();
-//    private MultiKeyMap<LocalDate, /*LocalDate, */ Double> values = new MultiKeyMap();   // wszystkie kombinacje dat w ciągu roku + wartość
     // key: pair(year, pair(monthday, monthday))
-    private HashMap<Pair<Integer,Pair<MonthDay,MonthDay>>, Double> v = new HashMap<>(YearlyCombinations.getCardinality(YearlyCombinations.DAYS_IN_YEAR));
+    private HashMap<Pair<Integer, Pair<MonthDay, MonthDay>>, Double> v = new HashMap<>(YearlyCombinations.getCardinality(YearlyCombinations.DAYS_IN_YEAR));
     private boolean isValuesReady = false;
+    private Progress progress;
 
     public Type1DataContainer(File sourceFile) {
         super(sourceFile);
@@ -56,33 +58,44 @@ public class Type1DataContainer extends FileDataContainer {
         this.station = station;
     }
 
+    public void populateYearlyCombinations() {
+        populateYearlyCombinations(null);
+    }
+
     /**
      * Moc zbioru kombinacji to suma od 1 do N (inclusive), gdzie N to ilość
      * elementów
      */
-    public void populateYearlyCombinations() {
-        for (int currYear = getYearMin(); currYear <= getYearMax(); currYear++) {
+    public void populateYearlyCombinations(RunParams rp) {
+        int min = getYearMin(), max = getYearMax();
+        if (rp!=null) {
+            min = Math.max(min, rp.getStartYear());
+            max = Math.min(max, rp.getEndYear());
+        }
+        for (int currYear = min; currYear <= max; currYear++) {
             LocalDate start = new LocalDate(currYear, 1, 1);
             LocalDate end = new LocalDate(currYear, 12, 31);
             LocalDate currStart, currEnd;
 
+            double done = 0;
+
             Pair<Integer, Pair<MonthDay, MonthDay>> pair;
-            
+
             currStart = start;
             currEnd = currStart;
             while (currStart.isBefore(end.plusDays(1))) {
                 boolean isValueMissing = false;
-                
+
                 Double prevVal;
                 while (currEnd.isBefore(end.plusDays(1))) {
-                    pair = new Pair(currStart.getYear(), new Pair(YearlyCombinations.getMDObj(currStart),YearlyCombinations.getMDObj(currEnd)));
+                    pair = new Pair(currStart.getYear(), new Pair(YearlyCombinations.getMDObj(currStart), YearlyCombinations.getMDObj(currEnd)));
                     if (!isValueMissing) {
                         prevVal = v.get(new Pair(currStart.getYear(), new Pair(YearlyCombinations.getMDObj(currStart), YearlyCombinations.getMDObj(currEnd.minusDays(1)))));
                         if (prevVal == null) {
                             prevVal = new Double(0);
                         }
                         Type1LineContainer tdc = container.get(currEnd);
-                        
+
                         if (tdc == null) {    // missing value!
                             v.put(pair, FileDataContainer.MISSING_VALUE);
                             isValueMissing = true;
@@ -90,20 +103,25 @@ public class Type1DataContainer extends FileDataContainer {
                         if (!isValueMissing) {
                             Double thisVal = tdc.getValue();
                             double daysBetween = Days.daysBetween(currStart, currEnd).getDays() + 1;
-                            double newVal = prevVal+(thisVal-prevVal)/daysBetween;
+                            double newVal = prevVal + (thisVal - prevVal) / daysBetween;
 //                            double newVal = ((daysBetween - 1) * prevVal + thisVal) / daysBetween;
                             v.put(pair, newVal);
                         }
-                    }else{
+                    } else {
                         v.put(pair, FileDataContainer.MISSING_VALUE);
                     }
-
                     currEnd = currEnd.plusDays(1);
                 }
                 currStart = currStart.plusDays(1);
                 currEnd = currStart;
             }
-            System.out.println("Averaging: " + ((currYear - getYearMin()) / (1.0 * getYearMax() - getYearMin()) * 100.0) +"%");
+            done = (currYear - getYearMin()) / (1.0 * getYearMax() - getYearMin()) * 100.0;
+            if (Debug.IS_DUBUGGGING) {
+                System.out.println("Averaging: " + done + "%");
+            }
+            if (progress != null) {
+                progress.setCurrentJobProgress(done / 100);
+            }
         }
 
         isValuesReady = true;
@@ -134,6 +152,10 @@ public class Type1DataContainer extends FileDataContainer {
             vals[i - yearStart] = getAvaragedValue(start, end, i);
         }
         return vals;
+    }
+
+    public void setProgress(Progress progress) {
+        this.progress = progress;
     }
 
 }

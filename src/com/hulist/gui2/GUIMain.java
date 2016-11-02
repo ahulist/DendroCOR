@@ -5,6 +5,7 @@
  */
 package com.hulist.gui2;
 
+import com.hulist.util.UserPreferences;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,8 @@ import javafx.stage.Stage;
 public class GUIMain extends Application {
 
     public static final String APP_NAME = "DendroCORR";
-    public static final String APP_VERSION = "2.8.1";
-    private static final int YEAR = 2016;//Calendar.getInstance().get(Calendar.YEAR);
+    public static final String APP_VERSION = "3.0";
+    public static final int YEAR = 2016;//Calendar.getInstance().get(Calendar.YEAR);
     public static final String BUNDLE = "com.hulist.bundles.Bundle";
 
     private Stage mainStage;
@@ -36,7 +37,7 @@ public class GUIMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Locale.setDefault(Locale.ENGLISH);
+        Locale.setDefault(new Locale(UserPreferences.getInstance().getPrefs().get("locale", Locale.ENGLISH.toString())));
         currLocale = Locale.getDefault();
         this.mainStage = stage;
 
@@ -51,6 +52,7 @@ public class GUIMain extends Application {
         mainController.initController();
 
         initMainStage();
+        stage.sizeToScene();
         stage.show();
     }
 
@@ -65,6 +67,8 @@ public class GUIMain extends Application {
 
     void switchLocale(Locale newLocale) {
         currLocale = newLocale;
+        
+        UserPreferences.getInstance().getPrefs().put("locale", getCurrLocale().toString());
         mainController.switchLocale(currLocale);
         if (prefsController != null) {
             prefsController.switchLocale(currLocale);

@@ -2,6 +2,7 @@ package com.hulist.logic;
 
 import com.hulist.logic.correlation.Correlator;
 import com.hulist.logic.correlation.PearsonCorrelation;
+import com.hulist.util.Debug;
 import com.hulist.util.Misc;
 import com.hulist.util.MonthsPair;
 import com.hulist.util.Pair;
@@ -53,6 +54,7 @@ public class CorrelationProcessing {
 
                 int size = data.daily.keySet().size();
                 float counter = 0;
+                double done = 0;
                 for (Pair<MonthDay, MonthDay> p : data.daily.keySet()) {
 
 //                    pairs.add(p);
@@ -68,7 +70,11 @@ public class CorrelationProcessing {
                         }
                     }
                     
-                    System.out.println("Correlation: "+(++counter/size)*100+" %");
+                    done = (++counter/size);
+                    if (Debug.IS_DUBUGGGING) {
+                        System.out.println("Correlation: "+done*100+" %");
+                    }
+                    this.wp.getProgress().setCurrentJobProgress(done);
                 }
 
                 /*//////////////////
@@ -139,11 +145,11 @@ public class CorrelationProcessing {
         /*
          *   CORRELATION / BOOTSTRAP
          */
-        boolean isSignificance = wp.getPrefs().isStatisticalSignificance();
-        boolean isBootstrap = wp.getPrefs().isBootstrapSampling();
-        int bootstrapRepetitions = wp.getPrefs().getBootstrapSamples();
-        double alpha = wp.getPrefs().getSignificanceLevelAlpha();
-        if (wp.getPrefs().isTwoTailedTest()) {
+        boolean isSignificance = wp.getSettings().isStatisticalSignificance();
+        boolean isBootstrap = wp.getSettings().isBootstrapSampling();
+        int bootstrapRepetitions = wp.getSettings().getBootstrapSamples();
+        double alpha = wp.getSettings().getSignificanceLevelAlpha();
+        if (wp.getSettings().isTwoTailedTest()) {
             alpha /= 2;
         }
 
@@ -198,8 +204,8 @@ public class CorrelationProcessing {
         /*
          *   RUNNING CORRELATION
          */
-        if (wp.getPrefs().isRunningCorrelation() && wp.getRunType().equals(RunType.MONTHLY)) {
-            int windowSize = wp.getPrefs().getRunningCorrWindowSize();
+        if (wp.getSettings().isRunningCorrelation() && wp.getRunType().equals(RunType.MONTHLY)) {
+            int windowSize = wp.getSettings().getRunningCorrWindowSize();
 
             if (windowSize >= readyChrono.length) {
                 log.warn(String.format(Misc.getInternationalized("zbyt duże okno korelacji kroczącej")));

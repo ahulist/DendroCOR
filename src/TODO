@@ -1,20 +1,14 @@
-zrobić popup 'Help'
-poprawić napis w helpie na 
-	'Tree Ring Laboratory
-	Faculty of Earth Sciences
-	University of Silesia
-	Poland'
-ustawic progress bar w gui (+ label do niego)
-klasa wysłająca dane do progress baru i labela
-podpiąć progress bar
+progress bar dla danych miesięcznych
 zrobić '?' z opisem każdego pola
-przejrzeć po kolei jak leci program i zrobić porządne logi (mniej outputów)
+! przejrzeć po kolei jak leci program i zrobić porządne logi (mniej outputów)
 errory na czerwono
 
-czemu averaging i values prep. robi się tak długo dla małego zakresu lat?
+poprawić sposób przesyłania danych do logerów (zgodnie z docsami sjf4j, bez długotrwałej konkatenacji, itd.)
+interrupt obliczeń (w czasie obliczeń: zamiast przycisku Start, w wypadku zamknięcia okna DC)
 
 // FUTURE:
 
+statycznie zapisana zawartość pliku (zeby nie trzeba bylo wczytywac kilka razy)
 obliczenia w wątkach (korelacja)
 zapis wartości istotności + krytycznej w Excelu
 co z brakującymi wartościami w plikach dendro/climate?

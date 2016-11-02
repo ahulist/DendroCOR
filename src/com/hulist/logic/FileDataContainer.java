@@ -16,7 +16,7 @@ public abstract class FileDataContainer{
 
     public static final double MISSING_VALUE = Double.MAX_VALUE;
     
-    private File sourceFile;
+    private final File sourceFile;
     private int yearMin = Integer.MAX_VALUE, yearMax = Integer.MIN_VALUE;
 
     public FileDataContainer(File sourceFile) {

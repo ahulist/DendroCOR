@@ -15,6 +15,7 @@ import com.hulist.logic.daily.DailyColumnTypes;
 import com.hulist.logic.daily.DailyFileTypes;
 import com.hulist.logic.daily.YearlyCombinations;
 import com.hulist.util.Misc;
+import com.hulist.util.Progress;
 import com.hulist.util.StaticSettings;
 import com.hulist.util.TextAreaToMonths;
 import com.hulist.util.UserPreferences;
@@ -43,11 +44,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -60,6 +66,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -126,7 +133,19 @@ public class MainFXMLController implements Initializable {
     @FXML
     private Button buttonClearOutput;
     @FXML
+    private Button buttonStart;
+    @FXML
+    private Menu menuLanguage;
+    @FXML
     private TabPane tabPane;
+    @FXML
+    private ProgressBar progressBarJobs;
+    @FXML
+    private ProgressBar progressBarFiles;
+    @FXML
+    private Label labelProgress;
+    @FXML
+    private FlowPane flowPaneProgressContainer;
 
     public static final String MAIN_FXML_NAME = "MainFXML.fxml";
     Logger log = LoggerFactory.getLogger(MainFXMLController.class);
@@ -147,7 +166,11 @@ public class MainFXMLController implements Initializable {
             YearlyCombinations.initialize();
         }).start();
 
+        // TitledPane expansion
         titledpane.heightProperty().addListener((obs, oldHeight, newHeight) -> this.guiMain.getMainStage().sizeToScene());
+        titledpane.expandedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            this.guiMain.getMainStage().sizeToScene();
+        });
 
         // ComboBoxes
         comboBoxClimateFileType.setItems(FXCollections.observableArrayList(ClimateFileTypes.values()));
@@ -188,6 +211,16 @@ public class MainFXMLController implements Initializable {
         buttonClearOutput.setOnMouseClicked((MouseEvent event) -> {
             textAreaOutput.clear();
         });
+        // Start button (when computation is running)
+        ProcessData.isAnyComputationRunning.addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if (newValue) {
+                buttonStart.setDisable(true);
+                menuLanguage.setDisable(true);
+            }else{
+                buttonStart.setDisable(false);
+                menuLanguage.setDisable(false);
+            }
+        });
 
         // Preferences stage
         try {
@@ -207,8 +240,8 @@ public class MainFXMLController implements Initializable {
         // TextField
         textFieldExcludedValues.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (!newValue) {    // focus lost
-                textFieldExcludedValues.setText(textFieldExcludedValues.getText().replace(",","."));
-                textFieldExcludedValues.setText(textFieldExcludedValues.getText().replace(";;",";"));
+                textFieldExcludedValues.setText(textFieldExcludedValues.getText().replace(",", "."));
+                textFieldExcludedValues.setText(textFieldExcludedValues.getText().replace(";;", ";"));
                 String[] ev = textFieldExcludedValues.getText().split(";");
                 boolean ok = true;
                 for (String val : ev) {
@@ -226,14 +259,29 @@ public class MainFXMLController implements Initializable {
                 }
             }
         });
-        
+
         // Tabs
         tabPane.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-            prefs.putInt(tabPane.getId()+":selectedTabIndex", newValue.intValue());
+            prefs.putInt(tabPane.getId() + ":selectedTabIndex", newValue.intValue());
         });
 
         // Set values from UserPreferences
         setValuesFromPrefs();
+    }
+
+    @FXML
+    private void onActionMenuItemAbout(ActionEvent evt) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(Misc.getInternationalized("MainWindow.menuAbout.text"));
+        alert.setHeaderText(GUIMain.APP_NAME + " " + GUIMain.APP_VERSION);
+        StringBuilder sb = new StringBuilder();
+        sb.append(Misc.getInternationalized("tree lab"))
+                .append("\n\n")
+                .append(String.format(Misc.getInternationalized("copyright"), GUIMain.YEAR));
+        alert.setContentText(sb.toString());
+        alert.initOwner(guiMain.getMainStage());
+
+        alert.showAndWait();
     }
 
     @FXML
@@ -316,13 +364,14 @@ public class MainFXMLController implements Initializable {
         }
 
         if (isDataValid()) {
-            RunParams wp = null;
+            RunParams runParams = null;
+            Progress progress = new Progress(flowPaneProgressContainer, progressBarJobs, progressBarFiles, labelProgress);
             StringBuilder sb = new StringBuilder();
 
             switch (tabPane.getSelectionModel().selectedIndexProperty().intValue()) {
                 case 0:
                     ClimateFileTypes climateFileType = comboBoxClimateFileType.getValue();
-                    wp = new RunParams(RunType.MONTHLY,
+                    runParams = new RunParams(RunType.MONTHLY,
                             allYears,
                             startYear,
                             endYear,
@@ -348,7 +397,7 @@ public class MainFXMLController implements Initializable {
                     DailyColumnTypes dct = comboBoxDailyColumn.getValue();
                     List<String> excludedValues = Arrays.asList(textFieldExcludedValues.getText().split(";", -1));
                     excludedValues.removeAll(Arrays.asList(""));
-                    wp = new RunParams(RunType.DAILY,
+                    runParams = new RunParams(RunType.DAILY,
                             allYears,
                             startYear,
                             endYear,
@@ -374,11 +423,13 @@ public class MainFXMLController implements Initializable {
                     break;
             }
 
-            wp.setPrefs(prefsController.getRunParams());
+            runParams.setSettings(prefsController.getRunSettings());
+            runParams.setProgress(progress);
             log.debug(sb.toString());
 
-            ProcessData pd = new ProcessData(wp);
-            pd.getWp().setRoot(guiMain.getMainStage());
+            ProcessData pd = new ProcessData(runParams);
+            pd.getRunParams().setRoot(guiMain.getMainStage());
+            pd.getRunParams().setMainController(this);
             pd.go();
         }
     }
@@ -559,8 +610,8 @@ public class MainFXMLController implements Initializable {
         textAreaMonthsRanges.setText(prefs.get(textAreaMonthsRanges.getId(), StaticSettings.getDefaultMonths()));
         textFieldYearStart.setDisable(checkBoxAllYears.isSelected());
         textFieldYearEnd.setDisable(checkBoxAllYears.isSelected());
-        
-        tabPane.getSelectionModel().select(prefs.getInt(tabPane.getId()+":selectedTabIndex", 0));
+
+        tabPane.getSelectionModel().select(prefs.getInt(tabPane.getId() + ":selectedTabIndex", 0));
     }
 
     private TextFormatter<String> getTextAreaOutputFormatter() {
@@ -653,4 +704,5 @@ public class MainFXMLController implements Initializable {
             return null;
         }
     }
+
 }

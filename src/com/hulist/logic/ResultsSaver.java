@@ -160,7 +160,7 @@ public class ResultsSaver {
                     return false;
                 }
 
-                if (runParams.getPrefs().isRunningCorrelation()) {
+                if (runParams.getSettings().isRunningCorrelation()) {
                     intermediateSuccess = populateRunningCorrelation(wb);
                     if (!intermediateSuccess) {
                         return false;
@@ -183,8 +183,8 @@ public class ResultsSaver {
 
         try {
             ExcelUtil.saveToFile(file, wb);
-            log.info(String.format("\n" + Misc.getInternationalized("DANE ZAPISANO DO PLIKU %S")
-                    + "\n-------------------------------------", file.getName()));
+            log.info(String.format(Misc.getInternationalized("DANE ZAPISANO DO PLIKU %S")
+                    + "\n", file.getName()));
         } catch (IOException ex) {
             log.error(Misc.getInternationalized("BŁĄD ZAPISU PLIKU."));
             log.trace(Misc.stackTraceToString(ex));

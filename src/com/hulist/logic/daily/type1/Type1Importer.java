@@ -17,7 +17,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 /**
@@ -27,7 +26,7 @@ import org.joda.time.LocalDate;
 public class Type1Importer extends BaseImporter implements DataImporter<Type1DataContainer> {
 
     private ArrayList<Type1DataContainer> data;
-    
+
     public Type1Importer(RunParams rp) {
         super(rp);
     }
@@ -36,12 +35,12 @@ public class Type1Importer extends BaseImporter implements DataImporter<Type1Dat
     public ArrayList<Type1DataContainer> getData(File f) throws FileNotFoundException, IOException {
         this.data = new ArrayList<>(1);
         Type1SeriesDataContainer cont = new Type1SeriesDataContainer(data);
-        
+
         InputStream fis;
         BufferedReader br;
         String line;
         String currStation = "";
-        
+
         Type1DataContainer d = null;
 
         fis = new FileInputStream(f);
@@ -51,22 +50,26 @@ public class Type1Importer extends BaseImporter implements DataImporter<Type1Dat
             if (!line.trim().equals("") && !line.startsWith("#")) {
                 String[] elems = line.trim().split("[\\s\\t]+");
                 String station = elems[0];
-                
+
                 if (!station.equals(currStation)) { // new station!
-                    if (d!=null) {  // not first station in a file
+                    if (d != null) {  // not first station in a file
                         cont.add(d);
                     }
                     d = new Type1DataContainer(f, station);
-                    
+
                     currStation = station;
                 }
-                
-                int year = Integer.parseInt( elems[1].substring(0, 4) );
-                int month = Integer.parseInt( elems[1].substring(4, 6) );
-                int day = Integer.parseInt( elems[1].substring(6, 8) );
+
+                int year = Integer.parseInt(elems[1].substring(0, 4));
+                if (year < startYear || year > endYear) {
+                    lineCounter++;
+                    continue;
+                }
+                int month = Integer.parseInt(elems[1].substring(4, 6));
+                int day = Integer.parseInt(elems[1].substring(6, 8));
                 LocalDate date = new LocalDate(year, month, day);
                 String val = null;
-                switch(rp.getDailyColumnType()){
+                switch (rp.getDailyColumnType()) {
                     case PREC:
                         val = elems[2];
                         break;
@@ -88,19 +91,17 @@ public class Type1Importer extends BaseImporter implements DataImporter<Type1Dat
                     continue;
                 }
                 double value = Double.parseDouble(val);
-                
+
                 Type1LineContainer lineCont = new Type1LineContainer(station, date, value);
                 d.add(lineCont);
             }
             lineCounter++;
         }
-        
-        if (d!=null) {
+
+        if (d != null) {
             cont.add(d);
         }
-        
-        
-        
+
         return this.data;
     }
 

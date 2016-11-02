@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.hulist.logic;
 
+import com.hulist.gui2.MainFXMLController;
 import com.hulist.logic.chronology.ChronologyFileTypes;
 import com.hulist.logic.chronology.tabs.TabsColumnTypes;
 import com.hulist.logic.climate.ClimateFileTypes;
 import com.hulist.logic.daily.DailyColumnTypes;
 import com.hulist.logic.daily.DailyFileTypes;
 import com.hulist.util.MonthsPair;
+import com.hulist.util.Progress;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class RunParams {
     private Stage root;
 
     private RunType runType;
-    
+
     private boolean allYears;
     private int startYear;
     private int endYear;
@@ -39,14 +40,16 @@ public class RunParams {
     private DailyFileTypes dailyFileType;
     private DailyColumnTypes dailyColumnType;
     private List<String> excludedValues;
-    
-    private RunParamsPrefs prefs;
-    
+
+    private RunSettings runSettings;
+    private MainFXMLController mainController;
+    private Progress progress;
+
     public RunParams() {
     }
 
     /**
-     Constructor for monthly data
+     * Constructor for monthly data
      */
     public RunParams(RunType runType, boolean allYears, int startYear, int endYear, File[] chronologyFile, File[] climateFile, ChronologyFileTypes chronologyFileType, TabsColumnTypes chronologyType, ClimateFileTypes climateFileType, ArrayList<MonthsPair> monthsColumns) {
         this.runType = runType;
@@ -62,7 +65,7 @@ public class RunParams {
     }
 
     /**
-     Constructor for daily data
+     * Constructor for daily data
      */
     public RunParams(RunType runType, boolean allYears, int startYear, int endYear, File[] chronologyFile,
             File[] dailyFile, ChronologyFileTypes chronologyFileType, TabsColumnTypes chronologyType,
@@ -152,12 +155,12 @@ public class RunParams {
         this.monthsColumns = monthsColumns;
     }
 
-    public RunParamsPrefs getPrefs() {
-        return prefs;
+    public RunSettings getSettings() {
+        return runSettings;
     }
 
-    public void setPrefs(RunParamsPrefs prefs) {
-        this.prefs = prefs;
+    public void setSettings(RunSettings prefs) {
+        this.runSettings = prefs;
     }
 
     public Stage getRoot() {
@@ -188,5 +191,19 @@ public class RunParams {
         return excludedValues;
     }
 
-    
+    public void setMainController(MainFXMLController mc) {
+        this.mainController = mc;
+    }
+
+    public MainFXMLController getMainController() {
+        return mainController;
+    }
+
+    public Progress getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Progress progress) {
+        this.progress = progress;
+    }
 }
