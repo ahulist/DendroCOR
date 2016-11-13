@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -114,7 +115,7 @@ public class ResultsSaver {
         boolean intermediateSuccess;
         XSSFWorkbook wb = null;
         OPCPackage pkg = null;
-        FileInputStream fis = null;
+        InputStream fis = null;
 
         if (file.exists()) {
             appendingToExistingFile = true;
@@ -126,20 +127,22 @@ public class ResultsSaver {
                 throw new RuntimeException();
             }
         } else {
-            try {
-                switch (runParams.getRunType()) {
-                    case MONTHLY:
-                        fis = new FileInputStream(getClass().getClassLoader().getResource(templateMonthlyPath).getPath());
-                        break;
-                    case DAILY:
-                        fis = new FileInputStream(getClass().getClassLoader().getResource(templateEmptyPath).getPath());
-                        break;
-                }
-            } catch (FileNotFoundException ex) {
-                log.error(String.format(Misc.getInternationalized("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
-                log.trace(Misc.stackTraceToString(ex));
-                throw new RuntimeException();
+//            try {
+            switch (runParams.getRunType()) {
+                case MONTHLY:
+//                        fis = new FileInputStream(getClass().getClassLoader().getResource(templateMonthlyPath).getPath());
+                    fis = getClass().getClassLoader().getResourceAsStream(templateMonthlyPath);
+                    break;
+                case DAILY:
+//                        fis = new FileInputStream(getClass().getClassLoader().getResource(templateEmptyPath).getPath());
+                    fis = getClass().getClassLoader().getResourceAsStream(templateEmptyPath);
+                    break;
             }
+//            } catch (FileNotFoundException ex) {
+//                log.error(String.format(Misc.getInternationalized("BŁĄD PODCZAS ZAPISU DO PLIKU %S"), file.getName()));
+//                log.trace(Misc.stackTraceToString(ex));
+//                throw new RuntimeException();
+//            }
         }
 
         try {
