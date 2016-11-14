@@ -3,37 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hulist.logic.daily.type1;
+package com.hulist.logic.daily.Y_M_D_V;
 
+import com.hulist.logic.daily.IDailyLineContainer;
 import org.joda.time.LocalDate;
 
 /**
  *
  * @author Aleksander
  */
-public class Type1LineContainer {
-    private String station;
+public class Y_M_D_VLineContainer implements IDailyLineContainer{
     /**
      * daily date!
      */
     private LocalDate date;
     private double value;
 
-    public Type1LineContainer(String station, LocalDate date, double value) {
-        this.station = station;
+    public Y_M_D_VLineContainer(LocalDate date, double value) {
         this.date = date;
         this.value = value;
     }
 
-    public Type1LineContainer() {
-    }
-
-    public String getStation() {
-        return station;
-    }
-
-    public void setStation(String station) {
-        this.station = station;
+    public Y_M_D_VLineContainer() {
     }
 
     public LocalDate getDate() {

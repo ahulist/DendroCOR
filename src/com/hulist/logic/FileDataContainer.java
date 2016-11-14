@@ -49,4 +49,13 @@ public abstract class FileDataContainer{
      * @return whether container is populated with data or not
      */
     public abstract boolean isEmpty();
+    
+    /**
+     * 
+     * @return text representation of this File/Container/Line
+     */
+    @Override
+    public String toString(){
+        return sourceFile.getName() + " (" + yearMin+"-"+ yearMax +")";
+    }
 }

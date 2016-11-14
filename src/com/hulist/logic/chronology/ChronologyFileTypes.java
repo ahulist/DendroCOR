@@ -27,6 +27,11 @@ public enum ChronologyFileTypes {
         return Misc.getInternationalized(this.displayNameId);
     }
     
+    @Override
+    public String toString() {
+        return getDisplayName();
+    }
+    
     /**
      * array order is consistent with FileTypes.values() order
      * @return 

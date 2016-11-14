@@ -121,6 +121,8 @@ public class MainFXMLController implements Initializable {
     @FXML
     private FlowPane paneColumnDendroDailyTab;
     @FXML
+    private FlowPane paneColumnDaily;
+    @FXML
     private Button buttonResetMonths;
     @FXML
     private CheckBox checkBoxAllYears;
@@ -192,6 +194,13 @@ public class MainFXMLController implements Initializable {
                 paneColumnDendroDailyTab.setVisible(false);
             }
         });
+        comboBoxDailyFileType.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            if (DailyFileTypes.N_YMD_VS.ordinal() == newValue.intValue()) {
+                paneColumnDaily.setVisible(true);
+            } else {
+                paneColumnDaily.setVisible(false);
+            }
+        });
         comboBoxDailyFileType.setItems(FXCollections.observableArrayList(DailyFileTypes.values()));
         comboBoxDailyColumn.setItems(FXCollections.observableArrayList(DailyColumnTypes.values()));
 
@@ -216,7 +225,7 @@ public class MainFXMLController implements Initializable {
             if (newValue) {
                 buttonStart.setDisable(true);
                 menuLanguage.setDisable(true);
-            }else{
+            } else {
                 buttonStart.setDisable(false);
                 menuLanguage.setDisable(false);
             }
@@ -528,7 +537,7 @@ public class MainFXMLController implements Initializable {
             log.warn(bundle.getString("Wybierz typ pliku dziennego"));
             valid = false;
         }
-        if (selectedTabIndex == 1 && comboBoxDailyColumn.getSelectionModel().isEmpty()) {
+        if (selectedTabIndex == 1 && comboBoxDailyFileType.getSelectionModel().getSelectedItem().equals(DailyFileTypes.N_YMD_VS) && comboBoxDailyColumn.getSelectionModel().isEmpty()) {
             log.warn(bundle.getString("Wybierz kolumne dla pliku dziennego"));
             valid = false;
         }

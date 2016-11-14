@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hulist.logic.daily.type1;
+package com.hulist.logic.daily;
 
 import com.hulist.logic.FileDataContainer;
+import com.hulist.logic.IProgressable;
 import com.hulist.logic.RunParams;
-import com.hulist.logic.daily.YearlyCombinations;
 import com.hulist.util.Debug;
 import com.hulist.util.Pair;
 import com.hulist.util.Progress;
@@ -20,55 +20,37 @@ import org.joda.time.MonthDay;
 /**
  *
  * @author Aleksander
+ * @param <T>
  */
-public class Type1DataContainer extends FileDataContainer {
+public abstract class DailyFileDataContainer<T extends IDailyLineContainer> extends FileDataContainer implements IProgressable{
 
-    private String station;
-
-    private HashMap<LocalDate, Type1LineContainer> container = new HashMap<>();
+    protected Progress progress = null;
+    
+    protected HashMap<LocalDate, T> container = new HashMap<>();
     // key: pair(year, pair(monthday, monthday))
-    private HashMap<Pair<Integer, Pair<MonthDay, MonthDay>>, Double> v = new HashMap<>(YearlyCombinations.getCardinality(YearlyCombinations.DAYS_IN_YEAR));
-    private boolean isValuesReady = false;
-    private Progress progress;
-
-    public Type1DataContainer(File sourceFile) {
+    protected HashMap<Pair<Integer, Pair<MonthDay, MonthDay>>, Double> v = new HashMap<>(YearlyCombinations.getCardinality(YearlyCombinations.DAYS_IN_YEAR));
+    protected boolean isValuesReady = false;
+    
+    public DailyFileDataContainer(File sourceFile) {
         super(sourceFile);
     }
-
-    public Type1DataContainer(File sourceFile, String station) {
-        this(sourceFile);
-        this.station = station;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return container.isEmpty();
-    }
-
-    public void add(Type1LineContainer data) {
+    
+    public void add(T data) {
         updateMinMax(data.getDate().getYear());
         this.container.put(data.getDate(), data);
     }
-
-    public String getStation() {
-        return station;
-    }
-
-    public void setStation(String station) {
-        this.station = station;
-    }
-
+    
     public void populateYearlyCombinations() {
         populateYearlyCombinations(null);
     }
-
+    
     /**
      * Moc zbioru kombinacji to suma od 1 do N (inclusive), gdzie N to ilość
      * elementów
      */
     public void populateYearlyCombinations(RunParams rp) {
         int min = getYearMin(), max = getYearMax();
-        if (rp!=null) {
+        if (rp!=null && !rp.isAllYears()) {
             min = Math.max(min, rp.getStartYear());
             max = Math.min(max, rp.getEndYear());
         }
@@ -94,7 +76,7 @@ public class Type1DataContainer extends FileDataContainer {
                         if (prevVal == null) {
                             prevVal = new Double(0);
                         }
-                        Type1LineContainer tdc = container.get(currEnd);
+                        T tdc = container.get(currEnd);
 
                         if (tdc == null) {    // missing value!
                             v.put(pair, FileDataContainer.MISSING_VALUE);
@@ -126,7 +108,7 @@ public class Type1DataContainer extends FileDataContainer {
 
         isValuesReady = true;
     }
-
+    
     /**
      * gets avaraged value for all dates in between <b>start</b> and <b>end</b>
      * (both inclusive)
@@ -154,8 +136,8 @@ public class Type1DataContainer extends FileDataContainer {
         return vals;
     }
 
-    public void setProgress(Progress progress) {
-        this.progress = progress;
+    @Override
+    public String toString() {
+        return super.toString();
     }
-
 }

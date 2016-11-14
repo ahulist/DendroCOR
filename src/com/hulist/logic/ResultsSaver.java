@@ -33,6 +33,7 @@ import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -360,7 +361,9 @@ public class ResultsSaver {
 
                 for (Pair<MonthDay, MonthDay> p : iter) {
                     if (!yearsSet) {
-                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow - 1), 0, Cell.CELL_TYPE_STRING).setCellValue(res.chronoTitle + " / " + res.dailyTitle + " (" + res.params.getDailyColumnType().getDisplayName() + ")");
+                        XSSFCell c = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow - 1), 0, Cell.CELL_TYPE_STRING);
+                        String dailyColName = res.params.getDailyColumnType()!=null?"("+res.params.getDailyColumnType().getDisplayName()+")":"";
+                        c.setCellValue(res.chronoTitle + " / " + res.dailyTitle + dailyColName);
                         yearsSet = true;
                     }
 

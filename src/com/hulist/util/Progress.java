@@ -188,6 +188,8 @@ public class Progress {
 
         jobTxt = "";
         updateLabelText();
+        
+        setVisible(isAnyJobRunning);
     }
 
     /**

@@ -295,7 +295,7 @@
                                                 <Insets bottom="5.0" top="10.0" />
                                             </padding>
                                         </FlowPane>
-                                        <FlowPane>
+                                        <FlowPane fx:id="paneColumnDaily" visible="false">
                                             <children>
                                                 <Label minWidth="150.0" text="%MainWindow.labelColumn.text">
                                                     <FlowPane.margin>

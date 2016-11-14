@@ -18,11 +18,14 @@ import com.hulist.logic.climate.ao.AoDataContainer;
 import com.hulist.logic.climate.ao.AoImporter;
 import com.hulist.logic.climate.icru.IcruDataContainer;
 import com.hulist.logic.climate.icru.IcruImporter;
+import com.hulist.logic.daily.DailyFileDataContainer;
 import com.hulist.logic.daily.DailyResult;
 import com.hulist.logic.daily.YearlyCombinations;
-import com.hulist.logic.daily.type1.Type1DataContainer;
-import com.hulist.logic.daily.type1.Type1Importer;
-import com.hulist.logic.daily.type1.Type1SeriesDataContainer;
+import com.hulist.logic.daily.N_YMD_VS.N_YMD_VSDataContainer;
+import com.hulist.logic.daily.N_YMD_VS.N_YMD_VSImporter;
+import com.hulist.logic.daily.N_YMD_VS.N_YMD_VSSeriesDataContainer;
+import com.hulist.logic.daily.Y_M_D_V.Y_M_D_VImporter;
+import com.hulist.logic.daily.Y_M_D_V.Y_M_D_VSeriesDataContainer;
 import com.hulist.util.Debug;
 import com.hulist.util.Misc;
 import com.hulist.util.MonthsPair;
@@ -34,6 +37,8 @@ import java.util.concurrent.ExecutionException;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import org.slf4j.Logger;
@@ -64,6 +69,12 @@ public class ProcessData implements Runnable {
     public ProcessData(RunParams wp) {
         this.runParams = wp;
         this.computationThread = new Thread(this);
+        
+        isAnyComputationRunning.addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if (!newValue) {
+                runParams.getProgress().resetJobsProgress();
+            }
+        });
     }
 
     public ProcessData(RunParams wp, Thread.UncaughtExceptionHandler handler) {
@@ -108,10 +119,19 @@ public class ProcessData implements Runnable {
         }
     }
 
-    private void getType1() throws IOException {
+    private void getN_YMD_VS() throws IOException {
         for (File file : runParams.getDailyFile()) {
-            Type1Importer type1Importer = new Type1Importer(runParams);
-            Type1SeriesDataContainer seriesCont = new Type1SeriesDataContainer(type1Importer.getData(file));
+            N_YMD_VSImporter type1Importer = new N_YMD_VSImporter(runParams);
+            N_YMD_VSSeriesDataContainer seriesCont = new N_YMD_VSSeriesDataContainer(type1Importer.getData(file));
+
+            dailyDataContainer.addAll(seriesCont.getData());
+        }
+    }
+    
+    private void getY_M_D_V() throws IOException{
+        for (File file : runParams.getDailyFile()) {
+            Y_M_D_VImporter type2Importer = new Y_M_D_VImporter(runParams);
+            Y_M_D_VSeriesDataContainer seriesCont = new Y_M_D_VSeriesDataContainer(type2Importer.getData(file));
 
             dailyDataContainer.addAll(seriesCont.getData());
         }
@@ -258,14 +278,14 @@ public class ProcessData implements Runnable {
                                 primaryColumnName = primaryColumnNameStart + " (" + ((TabsMulticolDataContainer) chronology).getColumnNumber() + ". column)";
                         }
 
-                        Type1DataContainer d = ((Type1DataContainer) daily);
+                        DailyFileDataContainer d = ((DailyFileDataContainer) daily);
                         // bottleneck 1:
                         long b1s = System.currentTimeMillis();
                         d.setProgress(runParams.getProgress());
                         d.populateYearlyCombinations(runParams);
-                        String secondaryName = d.getSourceFile().getName() + ": "
-                                + d.getStation() + " in years " + commonYearStartLimit
-                                + "-" + commonYearEndLimit;
+                        String secondaryName = d.getSourceFile().getName() + " "
+                                + "(" + commonYearStartLimit + "-" + commonYearEndLimit + ") "
+                                + (d instanceof N_YMD_VSDataContainer?((N_YMD_VSDataContainer)d).getStation():"");
                         int max = YearlyCombinations.getCombinations().size();
                         float curr = 1;
                         double b1e = (System.currentTimeMillis() - b1s) / 1000.0;
@@ -311,12 +331,11 @@ public class ProcessData implements Runnable {
 
                             DailyResult res;
 //                            double[] vals = d.getAvaragedValuesForYears(p.getFirst(), p.getSecond(), commonYearStartLimit, commonYearEndLimit);
-                            String colName = d.getSourceFile().getName() + ": "
-                                    + d.getStation() + " (Range: "
-                                    + p.getFirst().toString()
-                                    + p.getSecond().toString()
-                                    + " in years " + commonYearStartLimit
-                                    + "-" + commonYearEndLimit + ")";
+                            String colName = d.getSourceFile().getName() + " "
+                                    + "(" + commonYearStartLimit + "-" + commonYearEndLimit + ") "
+                                    + (d instanceof N_YMD_VSDataContainer?((N_YMD_VSDataContainer)d).getStation():"")
+                                    + "("+p.getFirst().toString()+"-"
+                                    + p.getSecond().toString()+")";
                             dataToCorrelate.daily.put(p, new Pair<>(new Column(primaryColumnName, priVals), new Column(colName, vals)));
                             curr++;
                         }
@@ -391,7 +410,7 @@ public class ProcessData implements Runnable {
                     break;
             }
 
-            if (runParams.getRunType() != RunType.DAILY) {
+            if (runParams.getRunType().equals(RunType.MONTHLY)) {   // MONTHLY
                 switch (runParams.getClimateFileType()) {
                     case ICRU:
                         getIcru();
@@ -403,10 +422,13 @@ public class ProcessData implements Runnable {
                         getAo();
                         break;
                 }
-            } else {
+            } else {        // DAILY
                 switch (runParams.getDailyFileType()) {
-                    case TYPE1:
-                        getType1();
+                    case N_YMD_VS:
+                        getN_YMD_VS();
+                        break;
+                    case Y_M_D_V:
+                        getY_M_D_V();
                         break;
                 }
             }

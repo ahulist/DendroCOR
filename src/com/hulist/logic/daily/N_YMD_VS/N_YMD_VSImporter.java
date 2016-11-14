@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hulist.logic.daily.type1;
+package com.hulist.logic.daily.N_YMD_VS;
 
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
@@ -23,25 +23,25 @@ import org.joda.time.LocalDate;
  *
  * @author Aleksander
  */
-public class Type1Importer extends BaseImporter implements DataImporter<Type1DataContainer> {
+public class N_YMD_VSImporter extends BaseImporter implements DataImporter<N_YMD_VSDataContainer> {
 
-    private ArrayList<Type1DataContainer> data;
+    private ArrayList<N_YMD_VSDataContainer> data;
 
-    public Type1Importer(RunParams rp) {
+    public N_YMD_VSImporter(RunParams rp) {
         super(rp);
     }
 
     @Override
-    public ArrayList<Type1DataContainer> getData(File f) throws FileNotFoundException, IOException {
+    public ArrayList<N_YMD_VSDataContainer> getData(File f) throws FileNotFoundException, IOException {
         this.data = new ArrayList<>(1);
-        Type1SeriesDataContainer cont = new Type1SeriesDataContainer(data);
+        N_YMD_VSSeriesDataContainer cont = new N_YMD_VSSeriesDataContainer(data);
 
         InputStream fis;
         BufferedReader br;
         String line;
         String currStation = "";
 
-        Type1DataContainer d = null;
+        N_YMD_VSDataContainer d = null;
 
         fis = new FileInputStream(f);
         br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
@@ -55,7 +55,7 @@ public class Type1Importer extends BaseImporter implements DataImporter<Type1Dat
                     if (d != null) {  // not first station in a file
                         cont.add(d);
                     }
-                    d = new Type1DataContainer(f, station);
+                    d = new N_YMD_VSDataContainer(f, station);
 
                     currStation = station;
                 }
@@ -92,7 +92,7 @@ public class Type1Importer extends BaseImporter implements DataImporter<Type1Dat
                 }
                 double value = Double.parseDouble(val);
 
-                Type1LineContainer lineCont = new Type1LineContainer(station, date, value);
+                N_YMD_VSLineContainer lineCont = new N_YMD_VSLineContainer(station, date, value);
                 d.add(lineCont);
             }
             lineCounter++;

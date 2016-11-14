@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hulist.logic.daily.type1;
+package com.hulist.logic.daily.N_YMD_VS;
 
 import java.util.ArrayList;
 
@@ -11,19 +11,19 @@ import java.util.ArrayList;
  *
  * @author Aleksander
  */
-public class Type1SeriesDataContainer{
+public class N_YMD_VSSeriesDataContainer{
     
-    private ArrayList<Type1DataContainer> data = new ArrayList<>();
+    private ArrayList<N_YMD_VSDataContainer> data = new ArrayList<>();
 
-    public Type1SeriesDataContainer(ArrayList<Type1DataContainer> data) {
+    public N_YMD_VSSeriesDataContainer(ArrayList<N_YMD_VSDataContainer> data) {
         this.data = data;
     }
 
-    public ArrayList<Type1DataContainer> getData() {
+    public ArrayList<N_YMD_VSDataContainer> getData() {
         return data;
     }
 
-    public void add(Type1DataContainer val){
+    public void add(N_YMD_VSDataContainer val){
         this.data.add(val);
     }
 
