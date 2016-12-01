@@ -11,12 +11,14 @@ package com.hulist.logic;
  */
 public class MetaCorrelation implements Comparable<MetaCorrelation>{
 
-    private double correlation;
+    private final double correlation;
     private double tTestValue;
     private double tTestCritVal;
+    private final int sampleLength;
 
-    public MetaCorrelation(double correlation) {
+    public MetaCorrelation(double correlation, int sampleLength) {
         this.correlation = correlation;
+        this.sampleLength = sampleLength;
     }
 
     public double gettTestValue() {
@@ -39,9 +41,12 @@ public class MetaCorrelation implements Comparable<MetaCorrelation>{
         this.tTestCritVal = tTestCritVal;
     }
 
+    public int getSampleLength() {
+        return sampleLength;
+    }
+    
     @Override
     public int compareTo(MetaCorrelation o) {
         return Double.compare(this.correlation, o.correlation);
     }
-
 }

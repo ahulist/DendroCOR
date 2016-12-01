@@ -15,7 +15,10 @@ import org.apache.commons.math3.util.FastMath;
  */
 public class SignificanceLevel {
 
-    private final static HashMap<Double, Double> T_TEST_CRIT_LOOKUP_CACHE = new HashMap<>();
+    /**
+     * <1-alpha,<tabLength, tTestValue>>
+     */
+    private final static HashMap<Double, HashMap<Integer, Double>> T_TEST_CRIT_LOOKUP_CACHE = new HashMap<>();
     private TDistribution tDist = null;
     private int tabLengthForTDist = 0;
 
@@ -27,14 +30,17 @@ public class SignificanceLevel {
         if (this.tDist==null || this.tabLengthForTDist!=tabLength) {
             this.tDist = new TDistribution(2 * tabLength - 2);
             this.tabLengthForTDist = tabLength;
+            if (T_TEST_CRIT_LOOKUP_CACHE.get(1-alpha)==null) {
+                T_TEST_CRIT_LOOKUP_CACHE.put(1-alpha, new HashMap<>());
+            }
         }
         
-        if (T_TEST_CRIT_LOOKUP_CACHE.get(1 - alpha) == null) {
+        if (T_TEST_CRIT_LOOKUP_CACHE.get(1 - alpha).get(tabLength) == null) {
             double tTestCritVal = this.tDist.inverseCumulativeProbability(1 - alpha);
-            T_TEST_CRIT_LOOKUP_CACHE.put(1 - alpha, tTestCritVal);
+            T_TEST_CRIT_LOOKUP_CACHE.get(1 - alpha).put(tabLength, tTestCritVal);
             return tTestCritVal;
         } else {
-            return T_TEST_CRIT_LOOKUP_CACHE.get(1 - alpha);
+            return T_TEST_CRIT_LOOKUP_CACHE.get(1 - alpha).get(tabLength);
         }
     }
 

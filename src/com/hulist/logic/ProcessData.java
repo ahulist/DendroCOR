@@ -39,8 +39,12 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.image.WritableImage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.joda.time.LocalDate;
@@ -51,7 +55,7 @@ import org.joda.time.MonthDay;
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
 public class ProcessData implements Runnable {
-    
+
     public static BooleanProperty isAnyComputationRunning = new SimpleBooleanProperty(false);
 
     RunParams runParams = null;
@@ -69,7 +73,7 @@ public class ProcessData implements Runnable {
     public ProcessData(RunParams wp) {
         this.runParams = wp;
         this.computationThread = new Thread(this);
-        
+
         isAnyComputationRunning.addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (!newValue) {
                 runParams.getProgress().resetJobsProgress();
@@ -127,8 +131,8 @@ public class ProcessData implements Runnable {
             dailyDataContainer.addAll(seriesCont.getData());
         }
     }
-    
-    private void getY_M_D_V() throws IOException{
+
+    private void getY_M_D_V() throws IOException {
         for (File file : runParams.getDailyFile()) {
             Y_M_D_VImporter type2Importer = new Y_M_D_VImporter(runParams);
             Y_M_D_VSeriesDataContainer seriesCont = new Y_M_D_VSeriesDataContainer(type2Importer.getData(file));
@@ -157,19 +161,19 @@ public class ProcessData implements Runnable {
 
     private void process() throws IOException, InterruptedException, ExecutionException {
         log.info(Misc.getInternationalized("rozpoczeto obliczenia"));
-        
+
         runParams.getProgress().resetFilesProgress();
-        switch(runParams.getRunType()){
+        switch (runParams.getRunType()) {
             case MONTHLY:
-                runParams.getProgress().setHowManyFiles(chronologyDataContainer.size()*climateDataContainer.size());
+                runParams.getProgress().setHowManyFiles(chronologyDataContainer.size() * climateDataContainer.size());
                 break;
             case DAILY:
-                runParams.getProgress().setHowManyFiles(chronologyDataContainer.size()*dailyDataContainer.size());
+                runParams.getProgress().setHowManyFiles(chronologyDataContainer.size() * dailyDataContainer.size());
                 break;
         }
-        
+
         int fileCounter = 0;
-        
+
         for (FileDataContainer chronology : chronologyDataContainer) {
             String primaryColumnNameStart = chronology.getSourceFile().getName();
             String primaryColumnName = "";
@@ -181,7 +185,7 @@ public class ProcessData implements Runnable {
 
                     for (FileDataContainer climate : climateDataContainer) {
                         fileCounter++;
-                        
+
                         int commonYearStartLimit = Math.max(chronology.getYearMin(), climate.getYearMin());
                         int commonYearEndLimit = Math.min(chronology.getYearMax(), climate.getYearMax());
 
@@ -252,7 +256,7 @@ public class ProcessData implements Runnable {
                 case DAILY:
                     for (FileDataContainer daily : dailyDataContainer) {
                         fileCounter++;
-                        
+
                         runParams.getProgress().resetJobsProgress();
                         runParams.getProgress().setHowManyJobs(3);
                         int commonYearStartLimit = Math.max(chronology.getYearMin(), daily.getYearMin());
@@ -285,7 +289,7 @@ public class ProcessData implements Runnable {
                         d.populateYearlyCombinations(runParams);
                         String secondaryName = d.getSourceFile().getName() + " "
                                 + "(" + commonYearStartLimit + "-" + commonYearEndLimit + ") "
-                                + (d instanceof N_YMD_VSDataContainer?((N_YMD_VSDataContainer)d).getStation():"");
+                                + (d instanceof N_YMD_VSDataContainer ? ((N_YMD_VSDataContainer) d).getStation() : "");
                         int max = YearlyCombinations.getCombinations().size();
                         float curr = 1;
                         double b1e = (System.currentTimeMillis() - b1s) / 1000.0;
@@ -301,7 +305,7 @@ public class ProcessData implements Runnable {
                             if (Debug.IS_DUBUGGGING) {
                                 System.out.println("Values prep.: " + done + " %");
                             }
-                            runParams.getProgress().setCurrentJobProgress(done/100);
+                            runParams.getProgress().setCurrentJobProgress(done / 100);
 
                             ArrayList<Double> priCol = new ArrayList<>(commonYearEndLimit - commonYearStartLimit);
                             ArrayList<Double> daiCol = new ArrayList<>(commonYearEndLimit - commonYearStartLimit);
@@ -333,9 +337,9 @@ public class ProcessData implements Runnable {
 //                            double[] vals = d.getAvaragedValuesForYears(p.getFirst(), p.getSecond(), commonYearStartLimit, commonYearEndLimit);
                             String colName = d.getSourceFile().getName() + " "
                                     + "(" + commonYearStartLimit + "-" + commonYearEndLimit + ") "
-                                    + (d instanceof N_YMD_VSDataContainer?((N_YMD_VSDataContainer)d).getStation():"")
-                                    + "("+p.getFirst().toString()+"-"
-                                    + p.getSecond().toString()+")";
+                                    + (d instanceof N_YMD_VSDataContainer ? ((N_YMD_VSDataContainer) d).getStation() : "")
+                                    + "(" + p.getFirst().toString() + "-"
+                                    + p.getSecond().toString() + ")";
                             dataToCorrelate.daily.put(p, new Pair<>(new Column(primaryColumnName, priVals), new Column(colName, vals)));
                             curr++;
                         }
@@ -370,6 +374,9 @@ public class ProcessData implements Runnable {
                             result.dailyTitle = secondaryName;
                             results.add(result);
                         }
+
+                        result.dailyPlot = getDailyPlot(runParams, result);
+
                         runParams.getProgress().setFilesDone(fileCounter);
                     }
 
@@ -455,7 +462,7 @@ public class ProcessData implements Runnable {
                         }
                         save(dst);
                     }).start();
-                }else{
+                } else {
                     log.info("");
                 }
             });
@@ -471,13 +478,72 @@ public class ProcessData implements Runnable {
             log.error(Misc.getInternationalized("WYSTĄPIŁ NIEZNANY BŁĄD."));
             log.trace(Misc.stackTraceToString(ex));
             throw new RuntimeException(ex);
-        }finally{
+        } finally {
             isAnyComputationRunning.set(false);
         }
     }
 
     public void go() {
         computationThread.start();
+    }
+
+    private WritableImage getDailyPlot(RunParams runParams, Results result) {
+        WritableImage wi = new WritableImage(761, 761);
+
+        Platform.runLater(() -> {
+            Canvas canvas = new Canvas(761, 761);
+
+            MonthDay start = new MonthDay(1, 1);
+            MonthDay end = new MonthDay(12, 31);
+            MonthDay currentStart = start;
+            MonthDay currentEnd = start;
+
+            int counter = 1;
+
+            while (currentStart.isBefore(end)) {
+                String monthStart = String.valueOf(currentStart.monthOfYear().get());
+                String dayStart = String.valueOf(currentStart.dayOfMonth().get());
+                DateTime dtS = new DateTime(2016, currentStart.getMonthOfYear(), currentStart.getDayOfMonth(), 0, 1);
+                int x = 18 + dtS.getDayOfYear() * 2 + dtS.getMonthOfYear() - 1;
+                while (currentEnd.isBefore(end)) {
+                    String monthEnd = String.valueOf(currentEnd.monthOfYear().get());
+                    String dayEnd = String.valueOf(currentEnd.dayOfMonth().get());
+                    DateTime dtE = new DateTime(2016, currentEnd.getMonthOfYear(), currentEnd.getDayOfMonth(), 0, 1);
+                    int y = (365 * 2 + 12 - 1) - (dtE.getDayOfYear() * 2 + dtE.getMonthOfYear() - 1);
+
+                    String key = dayStart + monthStart + " " + dayEnd + monthEnd;
+
+                    MetaCorrelation mc = result.dailyMap.get(new Pair<>(currentStart, currentEnd));
+                    if (mc != null) {
+                        if (Math.abs(mc.gettTestValue()) > mc.gettTestCritVal()) {
+                            canvas.getGraphicsContext2D().setGlobalAlpha(Math.abs(mc.getCorrelation()));
+                            if (mc.getCorrelation() > 0) {
+                                canvas.getGraphicsContext2D().setFill(Color.RED);
+                            } else {
+                                canvas.getGraphicsContext2D().setFill(Color.BLUE);
+                            }
+                        } else {
+                            canvas.getGraphicsContext2D().setFill(Color.BLACK);
+                            canvas.getGraphicsContext2D().setGlobalAlpha(0.1/*Math.abs(vals.get(key).val)*/);
+                        }
+                        canvas.getGraphicsContext2D().fillOval(x, y, 2, 2);
+                    }
+
+                    counter++;
+                    if (Debug.IS_DUBUGGGING) {
+                        System.out.println("Plot: "+counter);
+                    }
+                    currentEnd = currentEnd.plusDays(1);
+                }
+
+                currentStart = currentStart.plusDays(1);
+                currentEnd = currentStart;
+            }
+
+            canvas.snapshot(null, wi);
+        });
+
+        return wi;
     }
 
     class DataException extends IOException {

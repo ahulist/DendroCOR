@@ -157,6 +157,14 @@ public class CorrelationProcessing {
         c.setIsSignificanceLevels(isSignificance);
         c.setBootstrapValues(alpha, bootstrapRepetitions);
 
+        if (Debug.IS_DUBUGGGING) {
+            if (p.getFirst().equals(new MonthDay(1, 11)) && p.getSecond().equals(new MonthDay(1, 11))) {
+                int a = 5;
+            }
+            if (p.getFirst().equals(new MonthDay(1, 19)) && p.getSecond().equals(new MonthDay(2, 29))) {
+                int a = 5;
+            }
+        }
         MetaCorrelation correlation = c.correlate(readyChrono, readySecondary);
         switch (wp.getRunType()) {
             case MONTHLY:

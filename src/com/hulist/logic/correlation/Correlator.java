@@ -50,10 +50,10 @@ public class Correlator {
                 corr += newCorr;
             }
             this.bootstrapSamples -= ommited;
-            correlation = new MetaCorrelation(corr / bootstrapSamples);
+            correlation = new MetaCorrelation(corr / bootstrapSamples, a.length);
             correlation.settTestValue(tTestVal / bootstrapSamples);
         } else {
-            correlation = new MetaCorrelation(c.correlation(a, b));
+            correlation = new MetaCorrelation(c.correlation(a, b), a.length);
             if (isSignificanceLevels) {
                 correlation.settTestValue(sl.getTTestSignifLevel(correlation.getCorrelation(), a.length));
             }

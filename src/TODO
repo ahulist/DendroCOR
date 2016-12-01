@@ -1,3 +1,6 @@
+internationalize nagłówki danych dziennych w excelu?
+progressBar jest pusty dla plików 1/1 (pierwszy run)
+
 progress bar dla danych miesięcznych
 zrobić '?' z opisem każdego pola
 ! przejrzeć po kolei jak leci program i zrobić porządne logi (mniej outputów)
@@ -10,7 +13,6 @@ interrupt obliczeń (w czasie obliczeń: zamiast przycisku Start, w wypadku zamk
 
 statycznie zapisana zawartość pliku (zeby nie trzeba bylo wczytywac kilka razy)
 obliczenia w wątkach (korelacja)
-zapis wartości istotności + krytycznej w Excelu
 co z brakującymi wartościami w plikach dendro/climate?
 dodać .rwl_crns do plików chrono
 zrobić running correlation dla daily data

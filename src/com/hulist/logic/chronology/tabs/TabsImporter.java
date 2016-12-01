@@ -44,6 +44,10 @@ public class TabsImporter extends BaseImporter implements DataImporter<TabsDataC
         int counter = 2;
         if ((line = br.readLine()) != null) {           // for omitting first line
             while ((line = br.readLine()) != null) {
+                if (line.trim().isEmpty() || line.trim().startsWith("#")) {     // ommit comments and empty lines
+                    counter++;
+                    continue;
+                }
                 String[] data = line.trim().split("[\\s\\t]+");
                 try {
 //                    assert data.length == 8;

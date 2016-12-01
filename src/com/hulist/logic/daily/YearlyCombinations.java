@@ -24,12 +24,13 @@ public class YearlyCombinations {
     private static boolean isInitializationStarted = false;
 
     public final static int DAYS_IN_YEAR = 366;
-    public final static int SAMPLE_LEAP_YEAR = 2016;
+    public final static int SAMPLE_LEAP_YEAR = 2016;    // 29.02 case (not working right, don't know why correlations are so high)
+    public final static int SAMPLE_NONLEAP_YEAR = SAMPLE_LEAP_YEAR + 1;
     private final static MultiKeyMap<Integer, /*Integer*/ MonthDay> days = new MultiKeyMap();
     private final static Set<Pair<MonthDay, MonthDay>> combinations = new HashSet<>(getCardinality(DAYS_IN_YEAR));
 
     private static final Logger log = LoggerFactory.getLogger(YearlyCombinations.class);
-    
+
     /**
      * This initialization takes ~160 ms
      */
@@ -55,8 +56,8 @@ public class YearlyCombinations {
     private static void initCombinations() {
         LocalDate start, end, currStart, currEnd;
 
-        start = new LocalDate(SAMPLE_LEAP_YEAR, 1, 1);
-        end = new LocalDate(SAMPLE_LEAP_YEAR, 12, 31);
+        start = new LocalDate(SAMPLE_NONLEAP_YEAR, 1, 1);
+        end = new LocalDate(SAMPLE_NONLEAP_YEAR, 12, 31);
         currStart = start;
         currEnd = currStart;
 
@@ -97,7 +98,7 @@ public class YearlyCombinations {
         return days;
     }
 
-    public static MonthDay getMDObj(LocalDate ld){
+    public static MonthDay getMDObj(LocalDate ld) {
         return days.get(ld.getMonthOfYear(), ld.getDayOfMonth());
     }
 }

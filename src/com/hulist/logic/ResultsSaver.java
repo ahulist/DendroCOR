@@ -1,11 +1,14 @@
 package com.hulist.logic;
 
 import com.hulist.gui2.GUIMain;
+import com.hulist.util.Debug;
 import com.hulist.util.ExcelUtil;
 import com.hulist.util.Misc;
 import com.hulist.util.MonthsPair;
 import com.hulist.util.Pair;
 import java.awt.Desktop;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,9 +25,11 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.math3.util.FastMath;
@@ -32,7 +37,11 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.ClientAnchor;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -71,7 +80,7 @@ public class ResultsSaver {
     private final Logger log = LoggerFactory.getLogger(ResultsSaver.class);
     private CellStyle style;
 
-    private final int howManyDaily = 100;     // * 2 for two ends
+    private final int howManyDaily;     // * 2 for two ends
 
     private final String templateEmptyPath = "templates/template_empty.xlsm";
     private final String templateMonthlyPath = "templates/template_monthly.xlsm";
@@ -80,6 +89,12 @@ public class ResultsSaver {
         this.runParams = wp;
         this.file = file;
         this.results = results;
+
+        if (runParams.getSettings().isSaveAllRows()) {
+            howManyDaily = Integer.MAX_VALUE;
+        } else {
+            howManyDaily = runParams.getSettings().getHowManyRowsToSave();
+        }
     }
 
     /**
@@ -240,7 +255,7 @@ public class ResultsSaver {
                 c.setCellValue(res.climateMap.get(col).getCorrelation());
 
                 // significance
-                if (res.isIsTTest() && FastMath.abs(res.climateMap.get(col).gettTestValue()) > FastMath.abs(res.climateMap.get(col).gettTestCritVal())) {
+                if (res.isTTest() && FastMath.abs(res.climateMap.get(col).gettTestValue()) > FastMath.abs(res.climateMap.get(col).gettTestCritVal())) {
                     c.setCellStyle(style);
                 }
 
@@ -283,7 +298,7 @@ public class ResultsSaver {
 
         int firstFreeRow = 1;
         for (Results res : results) {
-            if (res.isIsRunningCorr()) {
+            if (res.isRunningCorr()) {
                 Cell rowName = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 0, Cell.CELL_TYPE_STRING);
                 rowName.setCellValue(res.chronoTitle);
                 Cell rowName2 = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 1, Cell.CELL_TYPE_STRING);
@@ -328,7 +343,7 @@ public class ResultsSaver {
                 }
 
                 boolean isMore = m.size() > howManyDaily * 2;
-                boolean yearsSet = false;
+                boolean headersSet = false;
                 Iterable<Pair<MonthDay, MonthDay>> iter = m.keySet();
 
                 if (isMore) {
@@ -360,20 +375,56 @@ public class ResultsSaver {
                 }
 
                 for (Pair<MonthDay, MonthDay> p : iter) {
-                    if (!yearsSet) {
+                    if (!headersSet) {
                         XSSFCell c = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow - 1), 0, Cell.CELL_TYPE_STRING);
-                        String dailyColName = res.params.getDailyColumnType()!=null?"("+res.params.getDailyColumnType().getDisplayName()+")":"";
+                        String dailyColName = res.params.getDailyColumnType() != null ? "(" + res.params.getDailyColumnType().getDisplayName() + ")" : "";
                         c.setCellValue(res.chronoTitle + " / " + res.dailyTitle + dailyColName);
-                        yearsSet = true;
+
+                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 0, Cell.CELL_TYPE_STRING)
+                                .setCellValue("From date");
+                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 1, Cell.CELL_TYPE_STRING)
+                                .setCellValue("To date");
+                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 2, Cell.CELL_TYPE_STRING)
+                                .setCellValue("Correlation");
+                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 3, Cell.CELL_TYPE_STRING)
+                                .setCellValue("T-Test value");
+                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 4, Cell.CELL_TYPE_STRING)
+                                .setCellValue("T-Test critical value");
+                        ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 5, Cell.CELL_TYPE_STRING)
+                                .setCellValue("Sample size");
+
+                        if (res.dailyPlot != null) {
+                            ByteArrayOutputStream os = new ByteArrayOutputStream();
+                            try {
+                                ImageIO.write(SwingFXUtils.fromFXImage(res.dailyPlot, null), "png", os);
+                            } catch (IOException ex) {
+                                java.util.logging.Logger.getLogger(ResultsSaver.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            int picId = wb.addPicture(os.toByteArray(), Workbook.PICTURE_TYPE_PNG);
+
+                            CreationHelper helper = wb.getCreationHelper();
+                            ClientAnchor anchor = helper.createClientAnchor();
+                            anchor.setCol1(7);
+                            anchor.setRow1(firstFreeRow+1);
+                            anchor.setCol2(13);
+                            anchor.setRow2(firstFreeRow+15);
+                            Drawing drawing = sh.createDrawingPatriarch();
+                            drawing.createPicture(anchor, picId);
+                        }
+
+                        firstFreeRow++;
+                        headersSet = true;
                     }
 
                     ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 0, Cell.CELL_TYPE_STRING)
-                            .setCellValue(p.getFirst().getDayOfMonth() + " " + p.getFirst().toString("MMM"));
+                            .setCellValue(p.getFirst().getDayOfMonth() + " " + p.getFirst().toString("MMM", Locale.ENGLISH));
                     ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 1, Cell.CELL_TYPE_STRING)
-                            .setCellValue(p.getSecond().getDayOfMonth() + " " + p.getSecond().toString("MMM"));
+                            .setCellValue(p.getSecond().getDayOfMonth() + " " + p.getSecond().toString("MMM", Locale.ENGLISH));
                     ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 2, Cell.CELL_TYPE_NUMERIC).setCellValue(m.get(p).getCorrelation());
-                    // significance
-                    if (res.isIsTTest() && FastMath.abs(m.get(p).gettTestValue()) > FastMath.abs(m.get(p).gettTestCritVal())) {
+                    ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 3, Cell.CELL_TYPE_NUMERIC).setCellValue(m.get(p).gettTestValue());    // t-test value
+                    ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 4, Cell.CELL_TYPE_NUMERIC).setCellValue(m.get(p).gettTestCritVal());    // t-crit value
+                    ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 5, Cell.CELL_TYPE_NUMERIC).setCellValue(m.get(p).getSampleLength());    // sample length    
+                    if (res.isTTest() && FastMath.abs(m.get(p).gettTestValue()) > FastMath.abs(m.get(p).gettTestCritVal())) {
                         ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 2, Cell.CELL_TYPE_NUMERIC).setCellStyle(style);
                     }
 

@@ -17,12 +17,14 @@ public class RunSettings {
     private int runningCorrWindowSize = 49;
     private boolean isBootstrapSampling = false;
     private int bootstrapSamples = 500;
+    private int howManyRowsToSave = 100;
+    private boolean isSaveAllRows = false;
 
     public RunSettings() {}
 
     public RunSettings(boolean isStatisticalSignificance, boolean isTwoTailedTest,
             double significanceLevelAlpha, boolean isRunningCorrelation,
-            int runningCorrWindowSize, boolean isBootstrapSampling,int bootstrapSamples) {
+            int runningCorrWindowSize, boolean isBootstrapSampling,int bootstrapSamples, int howManyRowsToSave, boolean isSaveAllRows) {
         this.isStatisticalSignificance = isStatisticalSignificance;
         this.isTwoTailedTest = isTwoTailedTest;
         this.significanceLevelAlpha = significanceLevelAlpha;
@@ -30,6 +32,8 @@ public class RunSettings {
         this.runningCorrWindowSize = runningCorrWindowSize;
         this.isBootstrapSampling = isBootstrapSampling;
         this.bootstrapSamples = bootstrapSamples;
+        this.howManyRowsToSave = howManyRowsToSave;
+        this.isSaveAllRows = isSaveAllRows;
     }
 
     public boolean isStatisticalSignificance() {
@@ -86,6 +90,22 @@ public class RunSettings {
 
     public void setBootstrapSamples(int bootstrapSamples) {
         this.bootstrapSamples = bootstrapSamples;
+    }
+
+    public int getHowManyRowsToSave() {
+        return howManyRowsToSave;
+    }
+
+    public void setHowManyRowsToSave(int howManyRowsToSave) {
+        this.howManyRowsToSave = howManyRowsToSave;
+    }
+
+    public boolean isSaveAllRows() {
+        return isSaveAllRows;
+    }
+
+    public void setSaveAllRows(boolean isSaveAllRows) {
+        this.isSaveAllRows = isSaveAllRows;
     }
     
 }

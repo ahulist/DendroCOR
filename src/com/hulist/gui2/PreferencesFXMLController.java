@@ -48,7 +48,11 @@ public class PreferencesFXMLController implements Initializable {
     @FXML
     private CheckBox checkBoxRunCorrelation;
     @FXML
+    private CheckBox checkBoxAllRows;
+    @FXML
     private TextField textFieldBootstrapSamples;
+    @FXML
+    private TextField textFieldHowManyRows;
 
     public static final String PREFS_FXML_NAME = "PreferencesFXML.fxml";
 
@@ -122,7 +126,27 @@ public class PreferencesFXMLController implements Initializable {
                 textFieldBootstrapSamples.setText(UserPreferences.getInstance().getPrefs().get(textFieldBootstrapSamples.getId(), "10000"));
             }
         });
-        
+        checkBoxAllRows.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            UserPreferences.getInstance().getPrefs().putBoolean(checkBoxAllRows.getId(), newValue);
+            textFieldHowManyRows.setDisable(newValue);
+        });
+        textFieldHowManyRows.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if (!newValue) {
+                try {
+                    int newHowManyRows = Integer.parseInt(textFieldHowManyRows.getText());
+                    if (newHowManyRows < 1) {
+                        log.warn(Misc.getInternationalized("Liczba wierszy do zapisania jest ujemna!"));
+                    } else {
+                        UserPreferences.getInstance().getPrefs().put(textFieldHowManyRows.getId(), textFieldHowManyRows.getText());
+                    }
+                } catch (NumberFormatException | NullPointerException e) {
+                    log.warn(Misc.getInternationalized("Liczba wierszy do zapisania nie jest liczba calkowita"));
+                    log.debug(Misc.stackTraceToString(e));
+                }
+                textFieldHowManyRows.setText(UserPreferences.getInstance().getPrefs().get(textFieldHowManyRows.getId(), "100"));
+            }
+        });
+
         setValuesFromPrefs();
     }
 
@@ -151,7 +175,10 @@ public class PreferencesFXMLController implements Initializable {
                 checkBoxRunCorrelation.isSelected(),
                 (int) sliderCorrWindow.getValue(),
                 checkBoxBootstrapSampling.isSelected(),
-                Integer.parseInt(textFieldBootstrapSamples.getText()));
+                Integer.parseInt(textFieldBootstrapSamples.getText()),
+                Integer.parseInt(textFieldHowManyRows.getText()),
+                checkBoxAllRows.isSelected()
+        );
     }
 
     private void setValuesFromPrefs() {
@@ -166,5 +193,6 @@ public class PreferencesFXMLController implements Initializable {
         checkBoxBootstrapSampling.setSelected(UserPreferences.getInstance().getPrefs().getBoolean(checkBoxBootstrapSampling.getId(), false));
         textFieldBootstrapSamples.setText(UserPreferences.getInstance().getPrefs().get(textFieldBootstrapSamples.getId(), "10000"));
         textFieldBootstrapSamples.setDisable(!checkBoxBootstrapSampling.isSelected());
+        textFieldHowManyRows.setText(UserPreferences.getInstance().getPrefs().get(textFieldHowManyRows.getId(), "100"));
     }
 }

@@ -9,6 +9,7 @@ import com.hulist.util.MonthsPair;
 import com.hulist.util.Pair;
 import java.util.HashMap;
 import java.util.TreeMap;
+import javafx.scene.image.WritableImage;
 import org.joda.time.MonthDay;
 
 /**
@@ -22,6 +23,8 @@ public class Results {
     RunParams params;
     HashMap<MonthsPair, MetaCorrelation> climateMap = new HashMap<>();
     HashMap<Pair<MonthDay, MonthDay>, MetaCorrelation> dailyMap = new HashMap<>();
+    
+    WritableImage dailyPlot = null;
 
     // significance testing
     private boolean isTTest = false;
@@ -38,7 +41,7 @@ public class Results {
         this.params = params;
     }
 
-    public boolean isIsRunningCorr() {
+    public boolean isRunningCorr() {
         return isRunningCorr;
     }
 
@@ -54,7 +57,7 @@ public class Results {
         this.windowSize = windowSize;
     }
 
-    public boolean isIsTTest() {
+    public boolean isTTest() {
         return isTTest;
     }
 
