@@ -82,6 +82,7 @@ public class Progress {
         filesDone = 0;
         currentFileColor = CssColor.RED;
         setFilesProgressBarStyle("-fx-accent: " + currentFileColor.name().toLowerCase() + ";");
+        setFilesProgressBar(filesDone);
 
         fileTxt = Misc.getInternationalized("current file") + (filesDone + 1) + "/" + howManyFiles;
         updateLabelText();
