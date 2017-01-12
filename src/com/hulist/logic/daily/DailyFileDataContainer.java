@@ -57,12 +57,50 @@ public abstract class DailyFileDataContainer<T extends IDailyLineContainer> exte
         for (int currYear = min; currYear <= max; currYear++) {
             LocalDate start = new LocalDate(currYear, 1, 1);
             LocalDate end = new LocalDate(currYear, 12, 31);
-            LocalDate currStart, currEnd;
+            LocalDate currStart = null, currEnd = null;
 
             double done = 0;
-
+            
             Pair<Integer, Pair<MonthDay, MonthDay>> pair;
+            
+            /*MonthDay currStart = null, currEnd = null;
+            boolean newStart, isValueMissing = false;
+            Double prevVal = null;
+            for (Pair<MonthDay, MonthDay> p : YearlyCombinations.getCombinations()) {
+                newStart = currStart==null || currStart!=p.getFirst();
+                
+                if (newStart) {
+                    currStart = p.getFirst();
+                    isValueMissing = false;
+                }
+                
+                /////////
+                pair = new Pair(currYear, p);
+                if (!isValueMissing) {
+                    prevVal = v.get(new Pair(currYear, p));
+                    if (prevVal == null) {
+                        prevVal = new Double(0);
+                    }
+                    T tdc = container.get(new LocalDate(currYear, p.getSecond().monthOfYear().get(), p.getSecond().dayOfMonth().get()));
 
+                    if (tdc == null) {    // missing value!
+                        v.put(pair, FileDataContainer.MISSING_VALUE);
+                        isValueMissing = true;
+                    }
+                    if (!isValueMissing) {
+                        Double thisVal = tdc.getValue();
+                        double daysBetween = Days.daysBetween(p.getFirst(), p.getSecond()).getDays() + 1;
+                        double newVal = prevVal + (thisVal - prevVal) / daysBetween;
+//                            double newVal = ((daysBetween - 1) * prevVal + thisVal) / daysBetween;
+                        v.put(pair, newVal);
+                    }
+                } else {
+                    v.put(pair, FileDataContainer.MISSING_VALUE);
+                }
+                /////////
+            }*/
+            
+            
             currStart = start;
             currEnd = currStart;
             while (currStart.isBefore(end.plusDays(1))) {
@@ -97,6 +135,7 @@ public abstract class DailyFileDataContainer<T extends IDailyLineContainer> exte
                 currStart = currStart.plusDays(1);
                 currEnd = currStart;
             }
+            
             done = (currYear - getYearMin()) / (1.0 * getYearMax() - getYearMin()) * 100.0;
             if (Debug.IS_DUBUGGGING) {
                 System.out.println("Averaging: " + done + "%");

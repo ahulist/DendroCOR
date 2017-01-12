@@ -118,6 +118,16 @@
                         <Insets bottom="10.0" left="40.0" />
                      </VBox.margin>
                   </CheckBox>
+                  <ToggleButton fx:id="toggleButtonPlotBlackWhiteColor" mnemonicParsing="false" selected="true" text="Colored plot mode enabled">
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin>
+                  </ToggleButton>
+                  <ChoiceBox fx:id="choiceBoxPlotPosNeg" prefWidth="150.0">
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin>
+                  </ChoiceBox>
                </children>
             </VBox>
          </content>

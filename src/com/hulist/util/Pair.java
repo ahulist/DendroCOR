@@ -57,10 +57,7 @@ public class Pair<T, K> {
         if( !Objects.equals(this.first, other.first) ){
             return false;
         }
-        if( !Objects.equals(this.second, other.second) ){
-            return false;
-        }
-        return true;
+        return Objects.equals(this.second, other.second);
     }
 
 }

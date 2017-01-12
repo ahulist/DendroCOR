@@ -7,6 +7,7 @@ package com.hulist.logic.daily;
 
 import com.hulist.util.Pair;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import org.apache.commons.collections4.map.MultiKeyMap;
 import org.joda.time.LocalDate;
@@ -27,7 +28,7 @@ public class YearlyCombinations {
     public final static int SAMPLE_LEAP_YEAR = 2016;    // 29.02 case (not working right, don't know why correlations are so high)
     public final static int SAMPLE_NONLEAP_YEAR = SAMPLE_LEAP_YEAR + 1;
     private final static MultiKeyMap<Integer, /*Integer*/ MonthDay> days = new MultiKeyMap();
-    private final static Set<Pair<MonthDay, MonthDay>> combinations = new HashSet<>(getCardinality(DAYS_IN_YEAR));
+    private final static Set<Pair<MonthDay, MonthDay>> combinations = new LinkedHashSet<>(getCardinality(DAYS_IN_YEAR));
 
     private static final Logger log = LoggerFactory.getLogger(YearlyCombinations.class);
 
@@ -39,6 +40,7 @@ public class YearlyCombinations {
         initDays();
         initCombinations();
         isInitialized = true;
+        isInitializationStarted = false;
     }
 
     private static void initDays() {
@@ -63,10 +65,10 @@ public class YearlyCombinations {
 
         while (currStart.isBefore(end.plusDays(1))) {
             while (currEnd.isBefore(end.plusDays(1))) {
-                MonthDay beginning = days.get(currStart.getMonthOfYear(), currStart.getDayOfMonth());
-                MonthDay ending = days.get(currEnd.getMonthOfYear(), currEnd.getDayOfMonth());
-                Pair p = new Pair(beginning, ending);
-                combinations.add(p);
+                /*MonthDay beginning = days.get(currStart.getMonthOfYear(), currStart.getDayOfMonth());
+                 MonthDay ending = days.get(currEnd.getMonthOfYear(), currEnd.getDayOfMonth());
+                 Pair p = new Pair(beginning, ending);*/
+                combinations.add(new Pair(days.get(currStart.getMonthOfYear(), currStart.getDayOfMonth()), days.get(currEnd.getMonthOfYear(), currEnd.getDayOfMonth())));
                 currEnd = currEnd.plusDays(1);
             }
             currStart = currStart.plusDays(1);

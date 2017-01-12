@@ -5,6 +5,8 @@
  */
 package com.hulist.logic;
 
+import com.hulist.gui2.PreferencesFXMLController;
+import com.hulist.gui2.PreferencesFXMLController.PlotColorType;
 import com.hulist.logic.chronology.deka.DekaImporter;
 import com.hulist.logic.chronology.deka.DekaSerie;
 import com.hulist.logic.chronology.deka.DekaSeriesDataContainer;
@@ -39,7 +41,10 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -488,10 +493,11 @@ public class ProcessData implements Runnable {
     }
 
     private WritableImage getDailyPlot(RunParams runParams, Results result) {
-        WritableImage wi = new WritableImage(761, 761);
+        int extraSpace = 80;
+        WritableImage wi = new WritableImage(741 + extraSpace, 741 + extraSpace);
 
         Platform.runLater(() -> {
-            Canvas canvas = new Canvas(761, 761);
+            Canvas canvas = new Canvas(741 + extraSpace, 741 + extraSpace);
 
             MonthDay start = new MonthDay(1, 1);
             MonthDay end = new MonthDay(12, 31);
@@ -500,38 +506,52 @@ public class ProcessData implements Runnable {
 
             int counter = 1;
 
+            boolean isPlotColored = runParams.getSettings().isPlotColored();
+            PlotColorType plotColorType = runParams.getSettings().getPlotColorType();
+
             while (currentStart.isBefore(end)) {
                 String monthStart = String.valueOf(currentStart.monthOfYear().get());
                 String dayStart = String.valueOf(currentStart.dayOfMonth().get());
                 DateTime dtS = new DateTime(2016, currentStart.getMonthOfYear(), currentStart.getDayOfMonth(), 0, 1);
-                int x = 18 + dtS.getDayOfYear() * 2 + dtS.getMonthOfYear() - 1;
+                int x = extraSpace + dtS.getDayOfYear() * 2 + dtS.getMonthOfYear() - 1;
                 while (currentEnd.isBefore(end)) {
                     String monthEnd = String.valueOf(currentEnd.monthOfYear().get());
                     String dayEnd = String.valueOf(currentEnd.dayOfMonth().get());
                     DateTime dtE = new DateTime(2016, currentEnd.getMonthOfYear(), currentEnd.getDayOfMonth(), 0, 1);
-                    int y = (365 * 2 + 12 - 1) - (dtE.getDayOfYear() * 2 + dtE.getMonthOfYear() - 1);
+                    int y = extraSpace + (365 * 2 + 12 - 1) - (dtE.getDayOfYear() * 2 + dtE.getMonthOfYear() - 1);
 
                     String key = dayStart + monthStart + " " + dayEnd + monthEnd;
 
                     MetaCorrelation mc = result.dailyMap.get(new Pair<>(currentStart, currentEnd));
                     if (mc != null) {
-                        if (Math.abs(mc.gettTestValue()) > mc.gettTestCritVal()) {
+                        if (Math.abs(mc.gettTestValue()) > mc.gettTestCritVal() &&
+                                (plotColorType.equals(PlotColorType.ALL) ||
+                                mc.getCorrelation() > 0 && plotColorType.equals(PlotColorType.POSITIVE_ONLY) ||
+                                mc.getCorrelation() < 0 && plotColorType.equals(PlotColorType.NEGATIVE_ONLY))) {
+                            
                             canvas.getGraphicsContext2D().setGlobalAlpha(Math.abs(mc.getCorrelation()));
-                            if (mc.getCorrelation() > 0) {
-                                canvas.getGraphicsContext2D().setFill(Color.RED);
+
+                            if (isPlotColored) {
+                                if (mc.getCorrelation() > 0) {
+                                    canvas.getGraphicsContext2D().setFill(Color.RED);
+                                } else {
+                                    canvas.getGraphicsContext2D().setFill(Color.BLUE);
+                                }
                             } else {
-                                canvas.getGraphicsContext2D().setFill(Color.BLUE);
+                                canvas.getGraphicsContext2D().setFill(Color.BLACK);
+                                canvas.getGraphicsContext2D().setGlobalAlpha(Math.abs(mc.getCorrelation()));
                             }
                         } else {
                             canvas.getGraphicsContext2D().setFill(Color.BLACK);
-                            canvas.getGraphicsContext2D().setGlobalAlpha(0.1/*Math.abs(vals.get(key).val)*/);
+                            canvas.getGraphicsContext2D().setGlobalAlpha(0.1);
                         }
+
                         canvas.getGraphicsContext2D().fillOval(x, y, 2, 2);
                     }
 
                     counter++;
                     if (Debug.IS_DUBUGGGING) {
-                        System.out.println("Plot: "+counter);
+                        System.out.println("Plot: " + counter);
                     }
                     currentEnd = currentEnd.plusDays(1);
                 }
@@ -541,6 +561,12 @@ public class ProcessData implements Runnable {
             }
 
             canvas.snapshot(null, wi);
+
+            ImageView iv = new ImageView(wi);
+            ImageView overlay = new ImageView("file:///C:/Users/Aleksander/Desktop/dc_test.png");
+            overlay.setBlendMode(BlendMode.MULTIPLY);
+            Group blend = new Group(iv, overlay);
+            blend.snapshot(null, wi);
         });
 
         return wi;

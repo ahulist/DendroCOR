@@ -26,9 +26,13 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Group;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
@@ -405,9 +409,9 @@ public class ResultsSaver {
                             CreationHelper helper = wb.getCreationHelper();
                             ClientAnchor anchor = helper.createClientAnchor();
                             anchor.setCol1(7);
-                            anchor.setRow1(firstFreeRow+1);
+                            anchor.setRow1(firstFreeRow + 1);
                             anchor.setCol2(13);
-                            anchor.setRow2(firstFreeRow+15);
+                            anchor.setRow2(firstFreeRow + 20);
                             Drawing drawing = sh.createDrawingPatriarch();
                             drawing.createPicture(anchor, picId);
                         }

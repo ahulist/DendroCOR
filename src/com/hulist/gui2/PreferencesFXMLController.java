@@ -15,14 +15,20 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +59,10 @@ public class PreferencesFXMLController implements Initializable {
     private TextField textFieldBootstrapSamples;
     @FXML
     private TextField textFieldHowManyRows;
+    @FXML
+    private ChoiceBox<PlotColorType> choiceBoxPlotPosNeg;
+    @FXML
+    private ToggleButton toggleButtonPlotBlackWhiteColor;   
 
     public static final String PREFS_FXML_NAME = "PreferencesFXML.fxml";
 
@@ -60,6 +70,12 @@ public class PreferencesFXMLController implements Initializable {
     private MainFXMLController mainController;
 
     Logger log = LoggerFactory.getLogger(PreferencesFXMLController.class);
+    
+    public enum PlotColorType{
+        ALL,
+        POSITIVE_ONLY,
+        NEGATIVE_ONLY
+    }
 
     /**
      * Initializes the controller class.
@@ -146,6 +162,18 @@ public class PreferencesFXMLController implements Initializable {
                 textFieldHowManyRows.setText(UserPreferences.getInstance().getPrefs().get(textFieldHowManyRows.getId(), "100"));
             }
         });
+        choiceBoxPlotPosNeg.setItems(FXCollections.observableArrayList(PlotColorType.values()));
+        choiceBoxPlotPosNeg.getSelectionModel().selectFirst();
+        toggleButtonPlotBlackWhiteColor.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (toggleButtonPlotBlackWhiteColor.isSelected()) {
+                    toggleButtonPlotBlackWhiteColor.setText("Colored plot mode enabled");
+                }else{
+                    toggleButtonPlotBlackWhiteColor.setText("Black & White plot mode enabled");
+                }
+            }
+        });
 
         setValuesFromPrefs();
     }
@@ -177,7 +205,9 @@ public class PreferencesFXMLController implements Initializable {
                 checkBoxBootstrapSampling.isSelected(),
                 Integer.parseInt(textFieldBootstrapSamples.getText()),
                 Integer.parseInt(textFieldHowManyRows.getText()),
-                checkBoxAllRows.isSelected()
+                checkBoxAllRows.isSelected(),
+                toggleButtonPlotBlackWhiteColor.isSelected(),
+                choiceBoxPlotPosNeg.getValue()
         );
     }
 

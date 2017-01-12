@@ -5,6 +5,9 @@
  */
 package com.hulist.logic;
 
+import com.hulist.gui2.PreferencesFXMLController;
+import com.hulist.gui2.PreferencesFXMLController.PlotColorType;
+
 /**
  *
  * @author Aleksander
@@ -19,12 +22,16 @@ public class RunSettings {
     private int bootstrapSamples = 500;
     private int howManyRowsToSave = 100;
     private boolean isSaveAllRows = false;
+    private boolean isPlotColored = true;
+    private PlotColorType plotColorType = PreferencesFXMLController.PlotColorType.ALL;
 
     public RunSettings() {}
 
     public RunSettings(boolean isStatisticalSignificance, boolean isTwoTailedTest,
             double significanceLevelAlpha, boolean isRunningCorrelation,
-            int runningCorrWindowSize, boolean isBootstrapSampling,int bootstrapSamples, int howManyRowsToSave, boolean isSaveAllRows) {
+            int runningCorrWindowSize, boolean isBootstrapSampling, int bootstrapSamples, 
+            int howManyRowsToSave, boolean isSaveAllRows, boolean isPlotColored, 
+            PlotColorType plotColorType) {
         this.isStatisticalSignificance = isStatisticalSignificance;
         this.isTwoTailedTest = isTwoTailedTest;
         this.significanceLevelAlpha = significanceLevelAlpha;
@@ -34,6 +41,8 @@ public class RunSettings {
         this.bootstrapSamples = bootstrapSamples;
         this.howManyRowsToSave = howManyRowsToSave;
         this.isSaveAllRows = isSaveAllRows;
+        this.isPlotColored = isPlotColored;
+        this.plotColorType = plotColorType;
     }
 
     public boolean isStatisticalSignificance() {
@@ -58,6 +67,14 @@ public class RunSettings {
 
     public void setSignificanceLevelAlpha(double significanceLevelAlpha) {
         this.significanceLevelAlpha = significanceLevelAlpha;
+    }
+
+    public boolean isPlotColored() {
+        return isPlotColored;
+    }
+
+    public PlotColorType getPlotColorType() {
+        return plotColorType;
     }
 
     public boolean isRunningCorrelation() {
