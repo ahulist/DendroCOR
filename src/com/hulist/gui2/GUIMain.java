@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 public class GUIMain extends Application {
 
     public static final String APP_NAME = "DendroCORR";
-    public static final String APP_VERSION = "3.2.2";
+    public static final String APP_VERSION = "3.2.3";
     public static final int YEAR = 2017;//Calendar.getInstance().get(Calendar.YEAR);
     public static final String BUNDLE = "com.hulist.bundles.Bundle";
 

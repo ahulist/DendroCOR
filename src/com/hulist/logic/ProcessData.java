@@ -563,7 +563,12 @@ public class ProcessData implements Runnable {
             canvas.snapshot(null, wi);
 
             ImageView iv = new ImageView(wi);
-            ImageView overlay = new ImageView(getClass().getClassLoader().getResource("resources/axes_legend_template.png").toString());
+            ImageView overlay;
+            if(isPlotColored){
+                overlay = new ImageView(getClass().getClassLoader().getResource("resources/axes_legend_template.png").toString());
+            }else{
+                overlay = new ImageView(getClass().getClassLoader().getResource("resources/axes_legend_template_bw.png").toString());
+            }
             overlay.setBlendMode(BlendMode.MULTIPLY);
             Group blend = new Group(iv, overlay);
             blend.snapshot(null, wi);
