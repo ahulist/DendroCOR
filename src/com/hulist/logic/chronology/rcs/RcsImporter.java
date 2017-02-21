@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hulist.logic.chronology.tabs;
+package com.hulist.logic.chronology.rcs;
 
-import com.hulist.logic.chronology.rcs.RcsDataContainer;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
 import com.hulist.logic.RunParams;
@@ -25,11 +24,11 @@ import java.util.ArrayList;
  *
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
-public class TabsImporter extends BaseImporter implements DataImporter<RcsDataContainer> {
+public class RcsImporter extends BaseImporter implements DataImporter<RcsDataContainer> {
 
     public static final int NUM_MIN = 5;
 
-    public TabsImporter(RunParams rp) {
+    public RcsImporter(RunParams rp) {
         super(rp);
     }
 
@@ -52,7 +51,7 @@ public class TabsImporter extends BaseImporter implements DataImporter<RcsDataCo
                 String[] data = line.trim().split("[\\s\\t]+");
                 try {
 //                    assert data.length == 8;
-                    if (!(data.length == 8)) {
+                    if (!(data.length == 13)) {
                         throw new IOException();
                     }
                     int num = Integer.parseInt(data[1].replace(".", ""));

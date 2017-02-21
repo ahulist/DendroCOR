@@ -11,14 +11,14 @@ package com.hulist.logic.chronology.tabs;
  */
 public class TabsLineContainer {
 
-    private int year;
-    private int num;
-    private double seg;
-    private double age;
-    private double raw;
-    private double std;
-    private double res;
-    private double ars;
+    protected int year;
+    protected int num;
+    protected double seg;
+    protected double age;
+    protected double raw;
+    protected double std;
+    protected double res;
+    protected double ars;
 
     public TabsLineContainer() {
     }

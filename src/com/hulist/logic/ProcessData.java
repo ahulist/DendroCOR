@@ -10,6 +10,8 @@ import com.hulist.gui2.PreferencesFXMLController.PlotColorType;
 import com.hulist.logic.chronology.deka.DekaImporter;
 import com.hulist.logic.chronology.deka.DekaSerie;
 import com.hulist.logic.chronology.deka.DekaSeriesDataContainer;
+import com.hulist.logic.chronology.rcs.RcsDataContainer;
+import com.hulist.logic.chronology.rcs.RcsImporter;
 import com.hulist.logic.chronology.tabs.TabsDataContainer;
 import com.hulist.logic.chronology.tabs.TabsImporter;
 import com.hulist.logic.chronology.tabs_multicol.TabsMulticolDataContainer;
@@ -98,6 +100,15 @@ public class ProcessData implements Runnable {
         }
     }
 
+    private void getRcs() throws IOException, NullPointerException {
+        for (File file : runParams.getChronologyFiles()) {
+            RcsImporter rcsImporter = new RcsImporter(runParams);
+            RcsDataContainer rcsCont = rcsImporter.getData(file).get(0);
+
+            chronologyDataContainer.add(rcsCont);
+        }
+    }
+    
     private void getTabs() throws IOException, NullPointerException {
         for (File file : runParams.getChronologyFiles()) {
             TabsImporter tabsImporter = new TabsImporter(runParams);
@@ -201,6 +212,7 @@ public class ProcessData implements Runnable {
                         double[] primaryColumnData = null;
 
                         switch (runParams.getChronologyFileType()) {
+                            case RCS:
                             case TABS:
                                 primaryColumnData = ((TabsDataContainer) chronology).getArray(runParams.getChronologyColumn(), commonYearStartLimit, commonYearEndLimit);
                                 primaryColumnName = primaryColumnNameStart + " (" + runParams.getChronologyColumn() + ")";
@@ -419,6 +431,9 @@ public class ProcessData implements Runnable {
                     break;
                 case TABS_MULTICOL:
                     getTabsExt();
+                    break;
+                case RCS:
+                    getRcs();
                     break;
             }
 

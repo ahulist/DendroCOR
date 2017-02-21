@@ -18,7 +18,7 @@ public class TabsDataContainer extends FileDataContainer {
     /**
      * key (Integer) is a year
      */
-    private final HashMap<Integer, TabsLineContainer> data = new HashMap<>();
+    protected final HashMap<Integer, TabsLineContainer> data = new HashMap<>();
 
     public TabsDataContainer(File sourceFile) {
         super(sourceFile);

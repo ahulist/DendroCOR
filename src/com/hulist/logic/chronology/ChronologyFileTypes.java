@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hulist.logic.chronology;
 
 import com.hulist.util.Misc;
@@ -15,6 +10,7 @@ public enum ChronologyFileTypes {
 
     DEKADOWY("ID Tucson (*.rwl)"/*java.util.Misc.getInternationalized("dekadowy")*/),
     TABS("ID Arstan (*_tabs.txt)"),
+    RCS("Arstan RCS"),
     TABS_MULTICOL("ID Arstan multicol");
 
     String displayNameId;

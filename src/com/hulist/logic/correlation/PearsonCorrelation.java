@@ -26,7 +26,7 @@ public class PearsonCorrelation implements ICorrelation{
 
     @Override
     public double correlation(double[][] ab) {
-        return pc.correlation(ab[0], ab[1]);
+        return this.correlation(ab[0], ab[1]);
     }
     
 }

@@ -181,14 +181,16 @@ public class MainFXMLController implements Initializable {
         comboBoxColSelect.setItems(FXCollections.observableArrayList(TabsColumnTypes.values()));
         comboBoxColSelectDaily.setItems(FXCollections.observableArrayList(TabsColumnTypes.values()));
         comboBoxChronoFileType.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-            if (ChronologyFileTypes.TABS.ordinal() == newValue.intValue()) {
+            if (ChronologyFileTypes.TABS.ordinal() == newValue.intValue()
+                    || ChronologyFileTypes.RCS.ordinal() == newValue.intValue()) {
                 paneColumnDendro.setVisible(true);
             } else {
                 paneColumnDendro.setVisible(false);
             }
         });
         comboBoxChronoFileTypeDailyTab.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-            if (ChronologyFileTypes.TABS.ordinal() == newValue.intValue()) {
+            if (ChronologyFileTypes.TABS.ordinal() == newValue.intValue()
+                    || ChronologyFileTypes.RCS.ordinal() == newValue.intValue()) {
                 paneColumnDendroDailyTab.setVisible(true);
             } else {
                 paneColumnDendroDailyTab.setVisible(false);
@@ -520,10 +522,15 @@ public class MainFXMLController implements Initializable {
             valid = false;
         }
         if (!comboBoxChronoFileTypeGeneral.getSelectionModel().isEmpty()
-                && comboBoxChronoFileTypeGeneral.getSelectionModel().getSelectedItem().equals(ChronologyFileTypes.TABS)
                 && comboBoxColSelectGeneral.getSelectionModel().isEmpty()) {
-            log.warn(String.format(bundle.getString("Wybierz kolumnę"), ChronologyFileTypes.TABS.toString()));
-            valid = false;
+            if (comboBoxChronoFileTypeGeneral.getSelectionModel().getSelectedItem().equals(ChronologyFileTypes.TABS)) {
+                log.warn(String.format(bundle.getString("Wybierz kolumnę"), ChronologyFileTypes.TABS.toString()));
+                valid = false;
+            }
+            if (comboBoxChronoFileTypeGeneral.getSelectionModel().getSelectedItem().equals(ChronologyFileTypes.RCS)) {
+                log.warn(String.format(bundle.getString("Wybierz kolumnę"), ChronologyFileTypes.RCS.toString()));
+                valid = false;
+            }
         }
 
         // ComboBox plików klimatycznych

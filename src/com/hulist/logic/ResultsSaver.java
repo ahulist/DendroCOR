@@ -50,6 +50,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.joda.time.Days;
 import org.joda.time.MonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -427,7 +428,8 @@ public class ResultsSaver {
                     ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 2, Cell.CELL_TYPE_NUMERIC).setCellValue(m.get(p).getCorrelation());
                     ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 3, Cell.CELL_TYPE_NUMERIC).setCellValue(m.get(p).gettTestValue());    // t-test value
                     ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 4, Cell.CELL_TYPE_NUMERIC).setCellValue(m.get(p).gettTestCritVal());    // t-crit value
-                    ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 5, Cell.CELL_TYPE_NUMERIC).setCellValue(m.get(p).getSampleLength());    // sample length    
+                    ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 5, Cell.CELL_TYPE_NUMERIC).setCellValue(m.get(p).getSampleLength());    // sample length
+                    ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 6, Cell.CELL_TYPE_NUMERIC).setCellValue(Days.daysBetween(p.getFirst(), p.getSecond()).getDays());    // długość okresu
                     if (res.isTTest() && FastMath.abs(m.get(p).gettTestValue()) > FastMath.abs(m.get(p).gettTestCritVal())) {
                         ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), 2, Cell.CELL_TYPE_NUMERIC).setCellStyle(style);
                     }
