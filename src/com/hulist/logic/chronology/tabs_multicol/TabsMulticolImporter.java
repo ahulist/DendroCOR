@@ -19,12 +19,13 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-
 /**
  *
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
 public class TabsMulticolImporter extends BaseImporter implements DataImporter<TabsMulticolDataContainer> {
+
+    double excluded = -9.99;
 
     public TabsMulticolImporter(RunParams rp) {
         super(rp);
@@ -45,18 +46,18 @@ public class TabsMulticolImporter extends BaseImporter implements DataImporter<T
             String[] data = line.trim().split("[\\s\\t]+");
             //String[] data = line.split("[\\s\\t]",-1);
             try {
-                if (row==1) {
-                    dataColumnsCount = data.length-1;
+                if (row == 1) {
+                    dataColumnsCount = data.length - 1;
 //                    assert dataColumnsCount>0;
-                    if (!(dataColumnsCount>0)) {
+                    if (!(dataColumnsCount > 0)) {
                         throw new IOException();
                     }
                     res = new ArrayList<>(dataColumnsCount);
                     for (int i = 0; i < dataColumnsCount; i++) {
-                        res.add(new TabsMulticolDataContainer(f, i+1));
+                        res.add(new TabsMulticolDataContainer(f, i + 1));
                     }
                 }
-                
+
                 if ((allYears
                         || (!allYears
                         && Integer.parseInt(data[0]) >= startYear
@@ -64,7 +65,10 @@ public class TabsMulticolImporter extends BaseImporter implements DataImporter<T
 
                     int year = Integer.parseInt(data[0]);
                     for (int i = 0; i < dataColumnsCount; i++) {
-                        res.get(i).addValue(year, Double.parseDouble(data[i+1]));
+                        double val = Double.parseDouble(data[i + 1]);
+                        if (val != excluded) {
+                            res.get(i).addValue(year, val);
+                        }
                     }
                 }
             } catch (IOException | NumberFormatException | AssertionError e) {

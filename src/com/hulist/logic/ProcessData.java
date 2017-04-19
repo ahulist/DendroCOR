@@ -108,7 +108,7 @@ public class ProcessData implements Runnable {
             chronologyDataContainer.add(rcsCont);
         }
     }
-    
+
     private void getTabs() throws IOException, NullPointerException {
         for (File file : runParams.getChronologyFiles()) {
             TabsImporter tabsImporter = new TabsImporter(runParams);
@@ -206,7 +206,16 @@ public class ProcessData implements Runnable {
                         int commonYearEndLimit = Math.min(chronology.getYearMax(), climate.getYearMax());
 
                         if (commonYearStartLimit > commonYearEndLimit) {
-                            throw new DataException(Misc.getInternationalized("niepokrywające się lata"));
+                            String msg = Misc.getInternationalized("niepokrywajace sie lata");
+                            int errCol = -1;
+                            if (chronology instanceof TabsMulticolDataContainer) {
+                                errCol = ((TabsMulticolDataContainer) chronology).getColumnNumber();
+                            }
+                            if (errCol != -1) {
+                                msg = msg + " ("+chronology.getSourceFile().getName()+ ", " + Misc.getInternationalized("MainWindow.labelColumn.text") + ": " + errCol + ")";
+                            }
+
+                            throw new DataException(msg);
                         }
 
                         double[] primaryColumnData = null;
@@ -280,7 +289,7 @@ public class ProcessData implements Runnable {
                         int commonYearEndLimit = Math.min(chronology.getYearMax(), daily.getYearMax());
 
                         if (commonYearStartLimit > commonYearEndLimit) {
-                            throw new DataException(Misc.getInternationalized("niepokrywające się lata"));
+                            throw new DataException(Misc.getInternationalized("niepokrywajace sie lata"));
                         }
 
                         double[] primaryColumnData = null;
@@ -539,11 +548,11 @@ public class ProcessData implements Runnable {
 
                     MetaCorrelation mc = result.dailyMap.get(new Pair<>(currentStart, currentEnd));
                     if (mc != null) {
-                        if (Math.abs(mc.gettTestValue()) > mc.gettTestCritVal() &&
-                                (plotColorType.equals(PlotColorType.ALL) ||
-                                mc.getCorrelation() > 0 && plotColorType.equals(PlotColorType.POSITIVE_ONLY) ||
-                                mc.getCorrelation() < 0 && plotColorType.equals(PlotColorType.NEGATIVE_ONLY))) {
-                            
+                        if (Math.abs(mc.gettTestValue()) > mc.gettTestCritVal()
+                                && (plotColorType.equals(PlotColorType.ALL)
+                                || mc.getCorrelation() > 0 && plotColorType.equals(PlotColorType.POSITIVE_ONLY)
+                                || mc.getCorrelation() < 0 && plotColorType.equals(PlotColorType.NEGATIVE_ONLY))) {
+
                             canvas.getGraphicsContext2D().setGlobalAlpha(Math.abs(mc.getCorrelation()));
 
                             if (isPlotColored) {
@@ -579,9 +588,9 @@ public class ProcessData implements Runnable {
 
             ImageView iv = new ImageView(wi);
             ImageView overlay;
-            if(isPlotColored){
+            if (isPlotColored) {
                 overlay = new ImageView(getClass().getClassLoader().getResource("resources/axes_legend_template.png").toString());
-            }else{
+            } else {
                 overlay = new ImageView(getClass().getClassLoader().getResource("resources/axes_legend_template_bw.png").toString());
             }
             overlay.setBlendMode(BlendMode.MULTIPLY);
