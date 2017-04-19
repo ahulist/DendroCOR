@@ -21,12 +21,18 @@ public class TabsMulticolDataContainer extends FileDataContainer {
      */
     private final HashMap<Integer, Double> data = new HashMap<>();
     private final int columnNumber;
+    private final String name;
+
+    public String getName() {
+        return name;
+    }
     
     //private int colCount = -1;
 
-    public TabsMulticolDataContainer(File sourceFile, int columnNumber) {
+    public TabsMulticolDataContainer(File sourceFile, int columnNumber, String name) {
         super(sourceFile);
         this.columnNumber = columnNumber;
+        this.name = name;
     }
 
     /*public TabsMulticolDataContainer(File sourceFile, int columnsCount) {

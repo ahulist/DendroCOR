@@ -212,9 +212,9 @@ public class ProcessData implements Runnable {
                                 errCol = ((TabsMulticolDataContainer) chronology).getColumnNumber();
                             }
                             if (errCol != -1) {
-                                msg = msg + " ("+chronology.getSourceFile().getName()+ ", " + Misc.getInternationalized("MainWindow.labelColumn.text") + ": " + errCol + ")";
+                                msg = msg + " (" + chronology.getSourceFile().getName() + ", " + Misc.getInternationalized("MainWindow.labelColumn.text") + ": " + errCol + ")";
                             }
-                            
+
                             log.warn(msg);
                             continue;
 //                            throw new DataException(msg);
@@ -234,7 +234,8 @@ public class ProcessData implements Runnable {
                                 break;
                             case TABS_MULTICOL:
                                 primaryColumnData = ((TabsMulticolDataContainer) chronology).getArray(commonYearStartLimit, commonYearEndLimit);
-                                primaryColumnName = primaryColumnNameStart + " (" + ((TabsMulticolDataContainer) chronology).getColumnNumber() + ". column)";
+                                TabsMulticolDataContainer tmdc = (TabsMulticolDataContainer) chronology;
+                                primaryColumnName = primaryColumnNameStart + " (" + tmdc.getColumnNumber() + ": " + tmdc.getName() + ")";
                         }
                         dataToCorrelate.primary = new Column(primaryColumnName, primaryColumnData);
 

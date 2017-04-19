@@ -43,7 +43,7 @@ public class TabsMulticolImporter extends BaseImporter implements DataImporter<T
         br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
         int row = 1;
         while ((line = br.readLine()) != null) {
-            if (line.trim().startsWith("#") || row == 1) {
+            if (line.trim().startsWith("#")) {
                 row++;
                 continue;
             }
@@ -59,8 +59,10 @@ public class TabsMulticolImporter extends BaseImporter implements DataImporter<T
                     }
                     res = new ArrayList<>(dataColumnsCount);
                     for (int i = 0; i < dataColumnsCount; i++) {
-                        res.add(new TabsMulticolDataContainer(f, i + 1));
+                        res.add(new TabsMulticolDataContainer(f, i + 1, data[i + 1]));
                     }
+                    row++;
+                    continue;
                 }
 
                 if ((allYears
