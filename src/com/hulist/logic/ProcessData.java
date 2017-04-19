@@ -214,8 +214,10 @@ public class ProcessData implements Runnable {
                             if (errCol != -1) {
                                 msg = msg + " ("+chronology.getSourceFile().getName()+ ", " + Misc.getInternationalized("MainWindow.labelColumn.text") + ": " + errCol + ")";
                             }
-
-                            throw new DataException(msg);
+                            
+                            log.warn(msg);
+                            continue;
+//                            throw new DataException(msg);
                         }
 
                         double[] primaryColumnData = null;
