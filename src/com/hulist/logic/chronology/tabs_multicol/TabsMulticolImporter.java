@@ -43,7 +43,12 @@ public class TabsMulticolImporter extends BaseImporter implements DataImporter<T
         br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
         int row = 1;
         while ((line = br.readLine()) != null) {
-            String[] data = line.trim().split("[\\s\\t]+");
+            if (line.trim().startsWith("#") || row == 1) {
+                row++;
+                continue;
+            }
+            String[] data = line.trim().split("[\\s\\t]*,[\\s\\t]*");
+            //String[] data = line.trim().split("[\\s\\t]+");
             //String[] data = line.split("[\\s\\t]",-1);
             try {
                 if (row == 1) {
