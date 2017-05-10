@@ -28,14 +28,15 @@ public class SignificanceLevel {
 
     public double getTTestCritLevel(double alpha, int tabLength) {
         if (this.tDist==null || this.tabLengthForTDist!=tabLength) {
-            this.tDist = new TDistribution(2 * tabLength - 2);
-            this.tabLengthForTDist = tabLength;
+            
             if (T_TEST_CRIT_LOOKUP_CACHE.get(1-alpha)==null) {
                 T_TEST_CRIT_LOOKUP_CACHE.put(1-alpha, new HashMap<>());
             }
         }
         
         if (T_TEST_CRIT_LOOKUP_CACHE.get(1 - alpha).get(tabLength) == null) {
+            this.tDist = new TDistribution(/*2 * */tabLength - 2);
+            this.tabLengthForTDist = tabLength;
             double tTestCritVal = this.tDist.inverseCumulativeProbability(1 - alpha);
             T_TEST_CRIT_LOOKUP_CACHE.get(1 - alpha).put(tabLength, tTestCritVal);
             return tTestCritVal;
