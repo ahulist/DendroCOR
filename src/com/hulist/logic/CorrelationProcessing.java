@@ -226,11 +226,11 @@ public class CorrelationProcessing {
                     // TODO równolegle!
                     System.arraycopy(readyChrono, i, chronoSmall, 0, windowSize);
                     System.arraycopy(readySecondary, i, climSmall, 0, windowSize);
-                    double resRunn = c.correlate(chronoSmall, climSmall).getCorrelation();
+                    MetaCorrelation meta = c.correlate(chronoSmall, climSmall);
                     if (!results.runningCorrMap.containsKey(month) || results.runningCorrMap.get(month) == null) {
                         results.runningCorrMap.put(month, new TreeMap<>());
                     }
-                    results.runningCorrMap.get(month).put(yearMin + i, resRunn);
+                    results.runningCorrMap.get(month).put(yearMin + i, meta);
                 }
                 log.info(String.format(Misc.getInternationalized("korel kroczaca obliczona dla"), yearMin, yearMax, windowSize, month));
             }

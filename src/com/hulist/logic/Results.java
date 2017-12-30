@@ -33,7 +33,7 @@ public class Results {
     /**
      * Integer in the inner map is starting year in correlation window
      */
-    HashMap<MonthsPair, TreeMap<Integer, Double>> runningCorrMap = new HashMap<>();
+    HashMap<MonthsPair, TreeMap<Integer, MetaCorrelation>> runningCorrMap = new HashMap<>();
     private boolean isRunningCorr = false;
     private int windowSize;
 

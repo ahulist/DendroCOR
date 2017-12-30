@@ -316,10 +316,15 @@ public class ResultsSaver {
                     Cell c = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), colCounter, Cell.CELL_TYPE_STRING);
                     c.setCellValue(col.toString());
 
-                    for (double value : res.runningCorrMap.get(col).values()) {
+                    for (MetaCorrelation meta : res.runningCorrMap.get(col).values()) {
                         colCounter++;
                         c = ExcelUtil.getCell(ExcelUtil.getRow(sh, firstFreeRow), colCounter + res.yearStart - yearMin, Cell.CELL_TYPE_NUMERIC);
-                        c.setCellValue(value);
+                        c.setCellValue(meta.getCorrelation());
+
+                        // significance
+                        if (res.isTTest() && FastMath.abs(meta.gettTestValue()) > FastMath.abs(meta.gettTestCritVal())) {
+                            c.setCellStyle(style);
+                        }
                     }
                     firstFreeRow++;
                 }
