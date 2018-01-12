@@ -11,7 +11,8 @@ public enum ChronologyFileTypes {
     DEKADOWY("ID Tucson (*.rwl)"/*java.util.Misc.getInternationalized("dekadowy")*/),
     TABS("ID Arstan (*_tabs.txt)"),
     RCS("Arstan RCS"),
-    TABS_MULTICOL("ID Arstan multicol");
+    TABS_MULTICOL("ID Arstan multicol"),
+    CRN("Tucson CRN");
 
     String displayNameId;
 

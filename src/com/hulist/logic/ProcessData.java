@@ -12,6 +12,8 @@ import com.hulist.logic.chronology.deka.DekaSerie;
 import com.hulist.logic.chronology.deka.DekaSeriesDataContainer;
 import com.hulist.logic.chronology.rcs.RcsDataContainer;
 import com.hulist.logic.chronology.rcs.RcsImporter;
+import com.hulist.logic.chronology.crn.CrnDataContainer;
+import com.hulist.logic.chronology.crn.CrnImporter;
 import com.hulist.logic.chronology.tabs.TabsDataContainer;
 import com.hulist.logic.chronology.tabs.TabsImporter;
 import com.hulist.logic.chronology.tabs_multicol.TabsMulticolDataContainer;
@@ -115,6 +117,14 @@ public class ProcessData implements Runnable {
             TabsDataContainer tabsCont = tabsImporter.getData(file).get(0);
 
             chronologyDataContainer.add(tabsCont);
+        }
+    }
+    
+    private void getCrn() throws IOException, NullPointerException {
+        for (File file : runParams.getChronologyFiles()) {
+            CrnImporter crnImporter = new CrnImporter(runParams);
+
+            chronologyDataContainer.addAll(crnImporter.getData(file));
         }
     }
 
@@ -225,8 +235,8 @@ public class ProcessData implements Runnable {
                         switch (runParams.getChronologyFileType()) {
                             case RCS:
                             case TABS:
-                                primaryColumnData = ((TabsDataContainer) chronology).getArray(runParams.getChronologyColumn(), commonYearStartLimit, commonYearEndLimit);
-                                primaryColumnName = primaryColumnNameStart + " (" + runParams.getChronologyColumn() + ")";
+                                primaryColumnData = ((TabsDataContainer) chronology).getArray(runParams.getTabsChronologyColumn(), commonYearStartLimit, commonYearEndLimit);
+                                primaryColumnName = primaryColumnNameStart + " (" + runParams.getTabsChronologyColumn() + ")";
                                 break;
                             case DEKADOWY:
                                 primaryColumnData = ((DekaSerie) chronology).getArrayData(commonYearStartLimit, commonYearEndLimit);
@@ -236,6 +246,11 @@ public class ProcessData implements Runnable {
                                 primaryColumnData = ((TabsMulticolDataContainer) chronology).getArray(commonYearStartLimit, commonYearEndLimit);
                                 TabsMulticolDataContainer tmdc = (TabsMulticolDataContainer) chronology;
                                 primaryColumnName = primaryColumnNameStart + " (" + tmdc.getColumnNumber() + ": " + tmdc.getName() + ")";
+                                break;
+                            case CRN:
+                                primaryColumnData = ((CrnDataContainer) chronology).getArray(runParams.getCrnChronologyColumn(), commonYearStartLimit, commonYearEndLimit);
+                                primaryColumnName = primaryColumnNameStart + " (" + runParams.getCrnChronologyColumn() + ")";
+                                break;
                         }
                         dataToCorrelate.primary = new Column(primaryColumnName, primaryColumnData);
 
@@ -299,8 +314,8 @@ public class ProcessData implements Runnable {
 
                         switch (runParams.getChronologyFileType()) {
                             case TABS:
-                                primaryColumnData = ((TabsDataContainer) chronology).getArray(runParams.getChronologyColumn(), commonYearStartLimit, commonYearEndLimit);
-                                primaryColumnName = primaryColumnNameStart + " (" + runParams.getChronologyColumn() + ")";
+                                primaryColumnData = ((TabsDataContainer) chronology).getArray(runParams.getTabsChronologyColumn(), commonYearStartLimit, commonYearEndLimit);
+                                primaryColumnName = primaryColumnNameStart + " (" + runParams.getTabsChronologyColumn() + ")";
                                 break;
                             case DEKADOWY:
                                 primaryColumnData = ((DekaSerie) chronology).getArrayData(commonYearStartLimit, commonYearEndLimit);
@@ -446,6 +461,9 @@ public class ProcessData implements Runnable {
                     break;
                 case RCS:
                     getRcs();
+                    break;
+                case CRN:
+                    getCrn();
                     break;
             }
 

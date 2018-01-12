@@ -7,6 +7,8 @@
 package com.hulist.logic;
 
 import java.io.File;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -14,6 +16,8 @@ import java.io.File;
  */
 public abstract class FileDataContainer{
 
+    protected final Logger log = LoggerFactory.getLogger(BaseImporter.class);
+    
     public static final double MISSING_VALUE = Double.MAX_VALUE;
     
     private final File sourceFile;

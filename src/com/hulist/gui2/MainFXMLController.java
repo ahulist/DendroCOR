@@ -9,6 +9,7 @@ import com.hulist.logic.ProcessData;
 import com.hulist.logic.RunParams;
 import com.hulist.logic.RunType;
 import com.hulist.logic.chronology.ChronologyFileTypes;
+import com.hulist.logic.chronology.crn.CrnColumnTypes;
 import com.hulist.logic.chronology.tabs.TabsColumnTypes;
 import com.hulist.logic.climate.ClimateFileTypes;
 import com.hulist.logic.daily.DailyColumnTypes;
@@ -390,6 +391,7 @@ public class MainFXMLController implements Initializable {
                             selectedClimateFile,
                             chronologyFileType,
                             tabsColumnType,
+                            CrnColumnTypes.STD, // TODO !!!!!!!!
                             climateFileType,
                             new TextAreaToMonths(textAreaMonthsRanges).getList());
 
@@ -416,6 +418,7 @@ public class MainFXMLController implements Initializable {
                             selectedDailyFile,
                             chronologyFileType,
                             tabsColumnType,
+                            CrnColumnTypes.STD, // TODO !!!!!!!!
                             dft,
                             dct,
                             excludedValues);
