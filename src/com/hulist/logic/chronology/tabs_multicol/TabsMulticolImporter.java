@@ -47,9 +47,9 @@ public class TabsMulticolImporter extends BaseImporter implements DataImporter<T
                 row++;
                 continue;
             }
-            String[] data = line.trim().split("[\\s\\t]*,[\\s\\t]*");
-            //String[] data = line.trim().split("[\\s\\t]+");
-            //String[] data = line.split("[\\s\\t]",-1);
+//            String[] data = line.trim().split("[\\s\\t]*,[\\s\\t]*");
+            String[] data = line.trim().split("[\\s\\t]+");
+//            data = line.split("[\\s\\t]",-1);
             try {
                 if (row == 1) {
                     dataColumnsCount = data.length - 1;
