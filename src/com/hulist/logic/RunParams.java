@@ -7,7 +7,6 @@ package com.hulist.logic;
 
 import com.hulist.gui2.MainFXMLController;
 import com.hulist.logic.chronology.ChronologyFileTypes;
-import com.hulist.logic.chronology.crn.CrnColumnTypes;
 import com.hulist.logic.chronology.tabs.TabsColumnTypes;
 import com.hulist.logic.climate.ClimateFileTypes;
 import com.hulist.logic.daily.DailyColumnTypes;
@@ -34,8 +33,7 @@ public class RunParams {
     private int endYear;
     private File[] chronologyFile, climateFile;
     private ChronologyFileTypes chronologyFileType;
-    private TabsColumnTypes tabsChronologyColumn;
-    private CrnColumnTypes crnChronologyColumn;
+    private IColumnTypes tabsChronologyColumn;
     private ClimateFileTypes climateFileType;
     private ArrayList<MonthsPair> monthsColumns;
     private File[] dailyFile;
@@ -55,8 +53,7 @@ public class RunParams {
      */
     public RunParams(RunType runType, boolean allYears, int startYear, int endYear, 
             File[] chronologyFile, File[] climateFile, ChronologyFileTypes chronologyFileType, 
-            TabsColumnTypes tabsChronologyType, CrnColumnTypes crnChronologyType, 
-            ClimateFileTypes climateFileType, ArrayList<MonthsPair> monthsColumns) {
+            IColumnTypes tabsChronologyType, ClimateFileTypes climateFileType, ArrayList<MonthsPair> monthsColumns) {
         this.runType = runType;
         this.allYears = allYears;
         this.startYear = startYear;
@@ -65,7 +62,6 @@ public class RunParams {
         this.climateFile = climateFile;
         this.chronologyFileType = chronologyFileType;
         this.tabsChronologyColumn = tabsChronologyType;
-        this.crnChronologyColumn = crnChronologyType;
         this.climateFileType = climateFileType;
         this.monthsColumns = monthsColumns;
     }
@@ -74,9 +70,8 @@ public class RunParams {
      * Constructor for daily data
      */
     public RunParams(RunType runType, boolean allYears, int startYear, int endYear, File[] chronologyFile,
-            File[] dailyFile, ChronologyFileTypes chronologyFileType, TabsColumnTypes tabsChronologyType, 
-            CrnColumnTypes crnChronologyType, DailyFileTypes dailyFileType, 
-            DailyColumnTypes dailyColumnType, List<String> excludedValues) {
+            File[] dailyFile, ChronologyFileTypes chronologyFileType, IColumnTypes tabsChronologyType, 
+            DailyFileTypes dailyFileType, DailyColumnTypes dailyColumnType, List<String> excludedValues) {
         this.runType = runType;
         this.allYears = allYears;
         this.startYear = startYear;
@@ -85,7 +80,6 @@ public class RunParams {
         this.dailyFile = dailyFile;
         this.chronologyFileType = chronologyFileType;
         this.tabsChronologyColumn = tabsChronologyType;
-        this.crnChronologyColumn = crnChronologyType;
         this.dailyFileType = dailyFileType;
         this.dailyColumnType = dailyColumnType;
         this.excludedValues = excludedValues;
@@ -139,7 +133,7 @@ public class RunParams {
         this.chronologyFileType = chronologyFileType;
     }
 
-    public TabsColumnTypes getTabsChronologyColumn() {
+    public IColumnTypes getChronologyColumn() {
         return tabsChronologyColumn;
     }
 
@@ -213,13 +207,5 @@ public class RunParams {
 
     public void setProgress(Progress progress) {
         this.progress = progress;
-    }
-    
-    public CrnColumnTypes getCrnChronologyColumn() {
-        return crnChronologyColumn;
-    }
-
-    public void setCrnChronologyColumn(CrnColumnTypes crnChronologyColumn) {
-        this.crnChronologyColumn = crnChronologyColumn;
     }
 }

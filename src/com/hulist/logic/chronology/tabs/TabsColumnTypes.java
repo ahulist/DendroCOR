@@ -6,11 +6,13 @@
 
 package com.hulist.logic.chronology.tabs;
 
+import com.hulist.logic.IColumnTypes;
+
 /**
  *
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
-public enum TabsColumnTypes {
+public enum TabsColumnTypes implements IColumnTypes{
     //SEG,
     //AGE,
     RAW,

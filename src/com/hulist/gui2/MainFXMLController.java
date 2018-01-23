@@ -5,6 +5,7 @@
  */
 package com.hulist.gui2;
 
+import com.hulist.logic.IColumnTypes;
 import com.hulist.logic.ProcessData;
 import com.hulist.logic.RunParams;
 import com.hulist.logic.RunType;
@@ -92,9 +93,9 @@ public class MainFXMLController implements Initializable {
     @FXML
     private TitledPane titledpane;
     @FXML
-    private ChoiceBox<TabsColumnTypes> comboBoxColSelect;
+    private ChoiceBox<IColumnTypes> comboBoxColSelect;
     @FXML
-    private ChoiceBox<TabsColumnTypes> comboBoxColSelectDaily;
+    private ChoiceBox<IColumnTypes> comboBoxColSelectDaily;
     @FXML
     private ChoiceBox<ChronologyFileTypes> comboBoxChronoFileType;
     @FXML
@@ -183,18 +184,32 @@ public class MainFXMLController implements Initializable {
         comboBoxColSelectDaily.setItems(FXCollections.observableArrayList(TabsColumnTypes.values()));
         comboBoxChronoFileType.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if (ChronologyFileTypes.TABS.ordinal() == newValue.intValue()
-                    || ChronologyFileTypes.RCS.ordinal() == newValue.intValue()) {
+                    || ChronologyFileTypes.RCS.ordinal() == newValue.intValue()
+                    || ChronologyFileTypes.CRN.ordinal() == newValue.intValue()) {
                 paneColumnDendro.setVisible(true);
             } else {
                 paneColumnDendro.setVisible(false);
             }
+
+            if (ChronologyFileTypes.CRN.ordinal() == newValue.intValue()) {
+                comboBoxColSelect.setItems(FXCollections.observableArrayList(CrnColumnTypes.values()));
+            } else {
+                comboBoxColSelect.setItems(FXCollections.observableArrayList(TabsColumnTypes.values()));
+            }
         });
         comboBoxChronoFileTypeDailyTab.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if (ChronologyFileTypes.TABS.ordinal() == newValue.intValue()
-                    || ChronologyFileTypes.RCS.ordinal() == newValue.intValue()) {
+                    || ChronologyFileTypes.RCS.ordinal() == newValue.intValue()
+                    || ChronologyFileTypes.CRN.ordinal() == newValue.intValue()) {
                 paneColumnDendroDailyTab.setVisible(true);
             } else {
                 paneColumnDendroDailyTab.setVisible(false);
+            }
+
+            if (ChronologyFileTypes.CRN.ordinal() == newValue.intValue()) {
+                comboBoxColSelectDaily.setItems(FXCollections.observableArrayList(CrnColumnTypes.values()));
+            } else {
+                comboBoxColSelectDaily.setItems(FXCollections.observableArrayList(TabsColumnTypes.values()));
             }
         });
         comboBoxDailyFileType.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
@@ -340,7 +355,7 @@ public class MainFXMLController implements Initializable {
     private void onStart() {
         ObservableList<File> chronoObservableList = null;
         ChronologyFileTypes chronologyFileType = null;
-        TabsColumnTypes tabsColumnType = null;
+        IColumnTypes tabsColumnType = null;
         switch (tabPane.getSelectionModel().selectedIndexProperty().intValue()) {
             case 0:     // tab 0 selected : monthly
                 chronoObservableList = listViewDendroFiles.getItems();
@@ -391,7 +406,7 @@ public class MainFXMLController implements Initializable {
                             selectedClimateFile,
                             chronologyFileType,
                             tabsColumnType,
-                            CrnColumnTypes.STD, // TODO !!!!!!!!
+                            //                            CrnColumnTypes.STD, // TODO !!!!!!!!
                             climateFileType,
                             new TextAreaToMonths(textAreaMonthsRanges).getList());
 
@@ -418,7 +433,7 @@ public class MainFXMLController implements Initializable {
                             selectedDailyFile,
                             chronologyFileType,
                             tabsColumnType,
-                            CrnColumnTypes.STD, // TODO !!!!!!!!
+                            //                            CrnColumnTypes.STD, // TODO !!!!!!!!
                             dft,
                             dct,
                             excludedValues);
@@ -508,7 +523,7 @@ public class MainFXMLController implements Initializable {
 
         // ComboBoxy plików dendro
         ChoiceBox<ChronologyFileTypes> comboBoxChronoFileTypeGeneral = null;
-        ChoiceBox<TabsColumnTypes> comboBoxColSelectGeneral = null;
+        ChoiceBox<IColumnTypes> comboBoxColSelectGeneral = null;
         switch (selectedTabIndex) {
             case 0:
                 comboBoxChronoFileTypeGeneral = comboBoxChronoFileType;

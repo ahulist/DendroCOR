@@ -7,6 +7,7 @@ package com.hulist.logic;
 
 import com.hulist.gui2.PreferencesFXMLController;
 import com.hulist.gui2.PreferencesFXMLController.PlotColorType;
+import com.hulist.logic.chronology.crn.CrnColumnTypes;
 import com.hulist.logic.chronology.deka.DekaImporter;
 import com.hulist.logic.chronology.deka.DekaSerie;
 import com.hulist.logic.chronology.deka.DekaSeriesDataContainer;
@@ -14,6 +15,7 @@ import com.hulist.logic.chronology.rcs.RcsDataContainer;
 import com.hulist.logic.chronology.rcs.RcsImporter;
 import com.hulist.logic.chronology.crn.CrnDataContainer;
 import com.hulist.logic.chronology.crn.CrnImporter;
+import com.hulist.logic.chronology.tabs.TabsColumnTypes;
 import com.hulist.logic.chronology.tabs.TabsDataContainer;
 import com.hulist.logic.chronology.tabs.TabsImporter;
 import com.hulist.logic.chronology.tabs_multicol.TabsMulticolDataContainer;
@@ -235,8 +237,8 @@ public class ProcessData implements Runnable {
                         switch (runParams.getChronologyFileType()) {
                             case RCS:
                             case TABS:
-                                primaryColumnData = ((TabsDataContainer) chronology).getArray(runParams.getTabsChronologyColumn(), commonYearStartLimit, commonYearEndLimit);
-                                primaryColumnName = primaryColumnNameStart + " (" + runParams.getTabsChronologyColumn() + ")";
+                                primaryColumnData = ((TabsDataContainer) chronology).getArray((TabsColumnTypes)runParams.getChronologyColumn(), commonYearStartLimit, commonYearEndLimit);
+                                primaryColumnName = primaryColumnNameStart + " (" + runParams.getChronologyColumn() + ")";
                                 break;
                             case DEKADOWY:
                                 primaryColumnData = ((DekaSerie) chronology).getArrayData(commonYearStartLimit, commonYearEndLimit);
@@ -248,8 +250,8 @@ public class ProcessData implements Runnable {
                                 primaryColumnName = primaryColumnNameStart + " (" + tmdc.getColumnNumber() + ": " + tmdc.getName() + ")";
                                 break;
                             case CRN:
-                                primaryColumnData = ((CrnDataContainer) chronology).getArray(runParams.getCrnChronologyColumn(), commonYearStartLimit, commonYearEndLimit);
-                                primaryColumnName = primaryColumnNameStart + " (" + runParams.getCrnChronologyColumn() + ")";
+                                primaryColumnData = ((CrnDataContainer) chronology).getArray((CrnColumnTypes)runParams.getChronologyColumn(), commonYearStartLimit, commonYearEndLimit);
+                                primaryColumnName = primaryColumnNameStart + " (" + runParams.getChronologyColumn() + ")";
                                 break;
                         }
                         dataToCorrelate.primary = new Column(primaryColumnName, primaryColumnData);
@@ -314,8 +316,8 @@ public class ProcessData implements Runnable {
 
                         switch (runParams.getChronologyFileType()) {
                             case TABS:
-                                primaryColumnData = ((TabsDataContainer) chronology).getArray(runParams.getTabsChronologyColumn(), commonYearStartLimit, commonYearEndLimit);
-                                primaryColumnName = primaryColumnNameStart + " (" + runParams.getTabsChronologyColumn() + ")";
+                                primaryColumnData = ((TabsDataContainer) chronology).getArray((TabsColumnTypes)runParams.getChronologyColumn(), commonYearStartLimit, commonYearEndLimit);
+                                primaryColumnName = primaryColumnNameStart + " (" + runParams.getChronologyColumn() + ")";
                                 break;
                             case DEKADOWY:
                                 primaryColumnData = ((DekaSerie) chronology).getArrayData(commonYearStartLimit, commonYearEndLimit);
@@ -324,6 +326,11 @@ public class ProcessData implements Runnable {
                             case TABS_MULTICOL:
                                 primaryColumnData = ((TabsMulticolDataContainer) chronology).getArray(commonYearStartLimit, commonYearEndLimit);
                                 primaryColumnName = primaryColumnNameStart + " (" + ((TabsMulticolDataContainer) chronology).getColumnNumber() + ". column)";
+                                break;
+                            case CRN:
+                                primaryColumnData = ((CrnDataContainer) chronology).getArray((CrnColumnTypes)runParams.getChronologyColumn(), commonYearStartLimit, commonYearEndLimit);
+                                primaryColumnName = primaryColumnNameStart + " (" + runParams.getChronologyColumn() + ")";
+                                break;
                         }
 
                         DailyFileDataContainer d = ((DailyFileDataContainer) daily);

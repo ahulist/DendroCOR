@@ -5,19 +5,21 @@
  */
 package com.hulist.logic.chronology.crn;
 
+import com.hulist.logic.IColumnTypes;
+
 /**
  *
  * @author Aleksander Hulist <aleksander.hulist@gmail.com>
  */
-public enum CrnColumnTypes {
+public enum CrnColumnTypes implements IColumnTypes{
     SSFCRN,
     STDCRN,
     STDSTB,
-    SSFSTB,
+    SSFSTB;/*,
     RAW,
     STD,
     RES,
-    ARS;
+    ARS;*/
 
     public static CrnColumnTypes fromString(String text) {
         for (CrnColumnTypes type : CrnColumnTypes.values()) {
