@@ -1,9 +1,0 @@
-14:14:45 ===================================================
-
-FINE: Logging level changed to FINER.
-22:18:20 ===================================================
-
-FINE: Logging level changed to FINER.
-22:45:34 ===================================================
-
-FINE: Logging level changed to FINER.

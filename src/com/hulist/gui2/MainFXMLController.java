@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -423,7 +424,9 @@ public class MainFXMLController implements Initializable {
                 case 1:
                     DailyFileTypes dft = comboBoxDailyFileType.getValue();
                     DailyColumnTypes dct = comboBoxDailyColumn.getValue();
-                    List<String> excludedValues = Arrays.asList(textFieldExcludedValues.getText().split(";", -1));
+                    String[] excludedValuesArr = textFieldExcludedValues.getText().split(";", -1);
+                    List<String> excludedValues = new ArrayList<>();
+                    Collections.addAll(excludedValues, excludedValuesArr);
                     excludedValues.removeAll(Arrays.asList(""));
                     runParams = new RunParams(RunType.DAILY,
                             allYears,

@@ -8,6 +8,7 @@ package com.hulist.logic.daily.N_YMD_VS;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
 import com.hulist.logic.RunParams;
+import com.hulist.util.Misc;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -48,52 +49,62 @@ public class N_YMD_VSImporter extends BaseImporter implements DataImporter<N_YMD
         int lineCounter = 1;
         while ((line = br.readLine()) != null) {
             if (!line.trim().equals("") && !line.startsWith("#")) {
-                String[] elems = line.trim().split("[\\s\\t]+");
-                String station = elems[0];
 
-                if (!station.equals(currStation)) { // new station!
-                    if (d != null) {  // not first station in a file
-                        cont.add(d);
+                try {
+
+                    String[] elems = line.trim().split("[\\s\\t]+");
+                    String station = elems[0];
+
+                    if (!station.equals(currStation)) { // new station!
+                        if (d != null) {  // not first station in a file
+                            cont.add(d);
+                        }
+                        d = new N_YMD_VSDataContainer(f, station);
+
+                        currStation = station;
                     }
-                    d = new N_YMD_VSDataContainer(f, station);
 
-                    currStation = station;
-                }
-
-                int year = Integer.parseInt(elems[1].substring(0, 4));
-                if (year < startYear || year > endYear) {
-                    lineCounter++;
-                    continue;
-                }
-                int month = Integer.parseInt(elems[1].substring(4, 6));
-                int day = Integer.parseInt(elems[1].substring(6, 8));
-                LocalDate date = new LocalDate(year, month, day);
-                String val = null;
-                switch (rp.getDailyColumnType()) {
-                    case PREC:
-                        val = elems[2];
-                        break;
-                    case TEMP:
-                        val = elems[3];
-                        break;
-                }
-                boolean isExcluded = false;
-                for (String excluded : rp.getExcludedValues()) {
-                    if (val.equals(excluded)) {
-                        // TODO: jeśli będzie za mało kolumn w pliku
-                        // to tutaj wyskoczy błąd!
-                        isExcluded = true;
-                        break;
+                    int year = Integer.parseInt(elems[1].substring(0, 4));
+                    if (year < startYear || year > endYear) {
+                        lineCounter++;
+                        continue;
                     }
-                }
-                if (isExcluded) {
-                    lineCounter++;
-                    continue;
-                }
-                double value = Double.parseDouble(val);
+                    int month = Integer.parseInt(elems[1].substring(4, 6));
+                    int day = Integer.parseInt(elems[1].substring(6, 8));
+                    LocalDate date = new LocalDate(year, month, day);
+                    String val = null;
+                    switch (rp.getDailyColumnType()) {
+                        case PREC:
+                            val = elems[2];
+                            break;
+                        case TEMP:
+                            val = elems[3];
+                            break;
+                    }
+                    boolean isExcluded = false;
+                    for (String excluded : rp.getExcludedValues()) {
+                        if (val.equals(excluded)) {
+                            // TODO: jeśli będzie za mało kolumn w pliku
+                            // to tutaj wyskoczy błąd!
+                            isExcluded = true;
+                            break;
+                        }
+                    }
+                    if (isExcluded) {
+                        lineCounter++;
+                        continue;
+                    }
+                    double value = Double.parseDouble(val);
 
-                N_YMD_VSLineContainer lineCont = new N_YMD_VSLineContainer(station, date, value);
-                d.add(lineCont);
+                    N_YMD_VSLineContainer lineCont = new N_YMD_VSLineContainer(station, date, value);
+                    d.add(lineCont);
+
+                } catch (Exception e) {
+                    String msg = String.format(Misc.getInternationalized("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), lineCounter);
+                    log.warn(msg);
+                    log.trace(msg);
+                    throw new IOException(msg);
+                }
             }
             lineCounter++;
         }
