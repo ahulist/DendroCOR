@@ -8,6 +8,7 @@ package com.hulist.logic.daily.Y_M_D_V;
 import com.hulist.logic.BaseImporter;
 import com.hulist.logic.DataImporter;
 import com.hulist.logic.RunParams;
+import com.hulist.util.Misc;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,33 +50,42 @@ public class Y_M_D_VImporter extends BaseImporter implements DataImporter<Y_M_D_
             if (!line.trim().equals("") && !line.trim().startsWith("#")) {
                 String[] elems = line.trim().split("[\\s\\t]+");
 
-                int year = Integer.parseInt(elems[0]);
-                if (year < startYear || year > endYear) {
-                    lineCounter++;
-                    continue;
-                }
-                int month = Integer.parseInt(elems[1]);
-                int day = Integer.parseInt(elems[2]);
-                LocalDate date = new LocalDate(year, month, day);
+                try {
 
-                String val = elems[3];
-
-                boolean isExcluded = false;
-                for (String excluded : rp.getExcludedValues()) {
-                    if (val.equals(excluded)) {
-                        isExcluded = true;
-                        break;
+                    int year = Integer.parseInt(elems[0]);
+                    if (year < startYear || year > endYear) {
+                        lineCounter++;
+                        continue;
                     }
-                }
+                    int month = Integer.parseInt(elems[1]);
+                    int day = Integer.parseInt(elems[2]);
+                    LocalDate date = new LocalDate(year, month, day);
 
-                if (isExcluded) {
-                    lineCounter++;
-                    continue;
-                }
-                double value = Double.parseDouble(val);
+                    String val = elems[3];
 
-                Y_M_D_VLineContainer lineCont = new Y_M_D_VLineContainer(date, value);
-                d.add(lineCont);
+                    boolean isExcluded = false;
+                    for (String excluded : rp.getExcludedValues()) {
+                        if (val.equals(excluded)) {
+                            isExcluded = true;
+                            break;
+                        }
+                    }
+
+                    if (isExcluded) {
+                        lineCounter++;
+                        continue;
+                    }
+                    double value = Double.parseDouble(val);
+
+                    Y_M_D_VLineContainer lineCont = new Y_M_D_VLineContainer(date, value);
+                    d.add(lineCont);
+
+                } catch (Exception e) {
+                    String msg = String.format(Misc.getInternationalized("BŁĘDNY FORMAT PLIKU %S W LINII %S."), f.getName(), lineCounter);
+                    log.warn(msg);
+                    log.trace(msg);
+                    throw new IOException(msg);
+                }
             }
             lineCounter++;
         }
